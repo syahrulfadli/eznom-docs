@@ -1,0 +1,1 @@
+import{c as i,Q as n,j as e,m as t}from"./chunks/framework.BPKcPtvA.js";const g=JSON.parse('{"title":"FAQ","description":"","frontmatter":{},"headers":[],"relativePath":"faq.md","filePath":"faq.md"}'),r={name:"faq.md"};function s(o,a,u,k,l,h){return n(),e("div",null,[...a[0]||(a[0]=[t("",48)])])}const p=i(r,[["render",s]]);export{g as __pageData,p as default};
