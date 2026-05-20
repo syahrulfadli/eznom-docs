@@ -15,7 +15,7 @@ Jawab pertanyaannya:
 │  ./docs                        ← ketik: ./docs
 │
 ◇  Site title:
-│  Eznom Docs                    ← atau nama lain
+│  eznom Docs                    ← atau nama lain
 │
 ◇  Site description:
 │  Dokumentasi platform eznom
@@ -43,7 +43,7 @@ eznom-docs/
 
 // docs/.vitepress/config.js
 export default {
-  title: 'Eznom Docs',
+  title: 'eznom Docs',
   description: 'Dokumentasi platform manajemen jaringan RT/RW net',
   themeConfig: {
     nav: [

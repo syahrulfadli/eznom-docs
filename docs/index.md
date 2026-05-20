@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: Eznom
+  name: eznom
   text: Platform Manajemen ISP
   tagline: Kelola pelanggan PPPoE, hotspot, tagihan, dan notifikasi otomatis dari satu dasbor.
   actions:

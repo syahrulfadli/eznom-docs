@@ -1,6 +1,6 @@
 # Tambah & Konfigurasi Router
 
-Router adalah unit utama di Eznom. Setiap router MikroTik yang Anda kelola perlu didaftarkan agar pelanggan dan layanan bisa dikelola melalui platform.
+Router adalah unit utama di eznom. Setiap router MikroTik yang Anda kelola perlu didaftarkan agar pelanggan dan layanan bisa dikelola melalui platform.
 
 ---
 
@@ -21,12 +21,12 @@ Router adalah unit utama di Eznom. Setiap router MikroTik yang Anda kelola perlu
 
 ### Langkah 2 — Protokol VPN
 
-Pilih protokol VPN yang akan digunakan untuk menghubungkan server Eznom ke router MikroTik Anda:
+Pilih protokol VPN yang akan digunakan untuk menghubungkan server eznom ke router MikroTik Anda:
 
 - **L2TP/IPsec** — lebih mudah dikonfigurasi, cocok untuk sebagian besar setup
 - **OpenVPN** — lebih fleksibel, melewati NAT dengan lebih baik
 
-Setelah memilih protokol, Eznom akan menampilkan **konfigurasi yang perlu diterapkan di MikroTik** Anda (IP server, secret/konfigurasi).
+Setelah memilih protokol, eznom akan menampilkan **konfigurasi yang perlu diterapkan di MikroTik** Anda (IP server, secret/konfigurasi).
 
 ### Langkah 3 — Pengaturan Tagihan
 
@@ -45,7 +45,7 @@ Setelah router terdaftar, Anda dapat mengubah konfigurasi kapan saja melalui men
 
 ### Koneksi API MikroTik
 
-Eznom perlu terhubung ke API MikroTik untuk sinkronisasi data PPPoE.
+eznom perlu terhubung ke API MikroTik untuk sinkronisasi data PPPoE.
 
 | Field | Keterangan |
 |---|---|
@@ -59,7 +59,7 @@ Klik **Test Koneksi** untuk memverifikasi sebelum menyimpan.
 
 ### Remote Modem Pelanggan
 
-Fitur ini memungkinkan admin mengakses web interface modem pelanggan (webfig) dari dasbor Eznom melalui tunnel VPN.
+Fitur ini memungkinkan admin mengakses web interface modem pelanggan (webfig) dari dasbor eznom melalui tunnel VPN.
 
 | Field | Keterangan |
 |---|---|

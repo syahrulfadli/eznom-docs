@@ -68,9 +68,9 @@ Klik ikon **pensil** untuk mengubah izin atau data, atau ikon **hapus** untuk me
 
 ---
 
-## Langganan Eznom
+## Langganan eznom
 
-Buka **Pengaturan → Langganan** untuk melihat status langganan Anda ke platform Eznom, termasuk:
+Buka **Pengaturan → Langganan** untuk melihat status langganan Anda ke platform eznom, termasuk:
 
 - Paket yang aktif
 - Tanggal kedaluwarsa

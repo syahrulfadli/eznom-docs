@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: 'Dokumentasi Eznom',
-  description: 'Panduan lengkap penggunaan platform manajemen ISP Eznom',
+  title: 'Dokumentasi eznom',
+  description: 'Panduan lengkap penggunaan platform manajemen ISP eznom',
   lang: 'id-ID',
 
   themeConfig: {
@@ -53,12 +53,12 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/eznom' },
+      { icon: 'github', link: 'https://github.com/syahrulfadli' },
     ],
 
     footer: {
-      message: 'Dokumentasi Eznom',
-      copyright: 'Copyright © 2025 Eznom',
+      message: 'Dokumentasi eznom',
+      copyright: 'Copyright © 2026 eznom',
     },
 
     search: {

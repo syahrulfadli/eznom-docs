@@ -1,6 +1,6 @@
 # Kontrak Digital
 
-Eznom mendukung kontrak berlangganan digital — pelanggan dapat membaca dan menandatangani kontrak dari ponsel tanpa perlu temu fisik.
+eznom mendukung kontrak berlangganan digital — pelanggan dapat membaca dan menandatangani kontrak dari ponsel tanpa perlu temu fisik.
 
 ---
 

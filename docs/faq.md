@@ -1,18 +1,18 @@
 # FAQ
 
-Pertanyaan yang sering ditanyakan tentang penggunaan Eznom.
+Pertanyaan yang sering ditanyakan tentang penggunaan eznom.
 
 ---
 
 ## Umum
 
-### Apa itu Eznom?
+### Apa itu eznom?
 
-Eznom adalah platform manajemen ISP berbasis web untuk operator RT/RW Net dan WISP. Eznom membantu mengelola pelanggan PPPoE, hotspot, tagihan bulanan, dan notifikasi otomatis dari satu dasbor.
+eznom adalah platform manajemen ISP berbasis web untuk operator RT/RW Net dan WISP. eznom membantu mengelola pelanggan PPPoE, hotspot, tagihan bulanan, dan notifikasi otomatis dari satu dasbor.
 
-### Apakah Eznom mendukung beberapa router?
+### Apakah eznom mendukung beberapa router?
 
-Ya. Satu akun Eznom bisa mengelola banyak router MikroTik. Setiap router dikelola secara terpisah dengan data pelanggan, tagihan, dan keuangan masing-masing.
+Ya. Satu akun eznom bisa mengelola banyak router MikroTik. Setiap router dikelola secara terpisah dengan data pelanggan, tagihan, dan keuangan masing-masing.
 
 ### Router MikroTik versi berapa yang didukung?
 
@@ -24,18 +24,18 @@ Semua versi RouterOS yang mendukung API (v6 dan v7). Untuk REST API, diperlukan 
 
 ### Mengapa router perlu terhubung via VPN?
 
-API MikroTik biasanya hanya bisa diakses dari jaringan lokal. VPN memungkinkan server Eznom berkomunikasi dengan router Anda secara aman melalui internet.
+API MikroTik biasanya hanya bisa diakses dari jaringan lokal. VPN memungkinkan server eznom berkomunikasi dengan router Anda secara aman melalui internet.
 
 ### Router saya status VPN "Terputus", apa yang harus dilakukan?
 
 1. Pastikan konfigurasi VPN di MikroTik sudah benar sesuai panduan wizard
 2. Cek apakah port VPN tidak diblokir oleh firewall ISP upstream
 3. Coba restart interface VPN di MikroTik
-4. Jika masih gagal, buka tiket ke tim support Eznom
+4. Jika masih gagal, buka tiket ke tim support eznom
 
 ### Apakah sinkronisasi PPPoE berjalan otomatis?
 
-Ya. Eznom melakukan sinkronisasi status pelanggan (online/offline, IP, uptime) setiap **1 menit** secara otomatis selama VPN router terhubung.
+Ya. eznom melakukan sinkronisasi status pelanggan (online/offline, IP, uptime) setiap **1 menit** secara otomatis selama VPN router terhubung.
 
 ---
 
@@ -94,7 +94,7 @@ Pastikan pelanggan memasukkan **ID Pelanggan** yang tepat di halaman verifikasi.
 
 ### Voucher yang di-generate tidak muncul di MikroTik.
 
-Pastikan koneksi VPN router aktif (status 🟢 Terhubung) saat generate voucher. Jika VPN terputus, voucher tersimpan di database Eznom tetapi tidak tersync ke MikroTik.
+Pastikan koneksi VPN router aktif (status 🟢 Terhubung) saat generate voucher. Jika VPN terputus, voucher tersimpan di database eznom tetapi tidak tersync ke MikroTik.
 
 ### Berapa maksimum voucher yang bisa di-generate sekaligus?
 

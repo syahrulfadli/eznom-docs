@@ -45,10 +45,10 @@ Sisi kanan halaman konfigurasi menampilkan **preview real-time** tampilan halama
 URL halaman isolir pelanggan ditampilkan di bagian bawah panel preview:
 
 ```
-https://app.eznom.com/isolir/{router-uuid}/{customer-id}
+https://eznom.noahresourcetech.om/isolir/{router-uuid}/{customer-id}
 ```
 
-URL ini otomatis diisi ke konfigurasi walled garden MikroTik saat pelanggan diisolir dari sistem Eznom.
+URL ini otomatis diisi ke konfigurasi walled garden MikroTik saat pelanggan diisolir dari sistem eznom.
 
 ---
 

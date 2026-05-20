@@ -28,7 +28,7 @@ Profil akan otomatis di-sync ke PPPoE Profile di router MikroTik.
 
 ## Rate Limit Format
 
-Eznom menggunakan format rate limit MikroTik standar:
+eznom menggunakan format rate limit MikroTik standar:
 
 ```
 upload/download

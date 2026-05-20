@@ -1,6 +1,6 @@
 # Notifikasi Otomatis
 
-Eznom mengirim notifikasi pengingat tagihan ke pelanggan secara otomatis via **WhatsApp** (Fonnte) dan/atau **Email**.
+eznom mengirim notifikasi pengingat tagihan ke pelanggan secara otomatis via **WhatsApp** (Fonnte) dan/atau **Email**.
 
 ---
 
@@ -18,7 +18,7 @@ Buka **Pengaturan → Notifikasi**
 
 ### WhatsApp via Fonnte
 
-Eznom menggunakan [Fonnte](https://fonnte.com) sebagai gateway WhatsApp. Daftarkan perangkat WA Anda di Fonnte terlebih dahulu.
+eznom menggunakan [Fonnte](https://fonnte.com) sebagai gateway WhatsApp. Daftarkan perangkat WA Anda di Fonnte terlebih dahulu.
 
 | Field | Keterangan |
 |---|---|
