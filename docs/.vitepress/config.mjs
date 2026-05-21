@@ -40,6 +40,7 @@ export default defineConfig({
         text: 'Pengaturan',
         items: [
           { text: 'Notifikasi Otomatis', link: '/panduan/notifikasi' },
+          { text: 'Pengaturan Pembayaran', link: '/panduan/pembayaran' },
           { text: 'Halaman Isolir', link: '/panduan/isolir' },
           { text: 'Profil Bisnis & Akun', link: '/panduan/pengaturan' },
         ],

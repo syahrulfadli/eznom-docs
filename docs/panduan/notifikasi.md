@@ -91,8 +91,13 @@ Pesan yang dikirim ke pelanggan sudah diformat otomatis, berisi:
 
 - Salam + nama pelanggan
 - Jumlah tagihan dan tanggal jatuh tempo
-- Link pembayaran (jika Midtrans aktif)
+- Link pembayaran online (jika Midtrans aktif di Pengaturan Pembayaran)
+- Informasi rekening bank (jika pembayaran manual aktif di Pengaturan Pembayaran)
 - Informasi kontak bisnis Anda (dari pengaturan profil bisnis)
+
+::: tip
+Pengaturan metode pembayaran (online/manual/keduanya) dikonfigurasi di **Pengaturan → Pembayaran**. Pesan notifikasi otomatis menyesuaikan isi berdasarkan metode yang aktif.
+:::
 
 ---
 

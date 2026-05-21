@@ -36,16 +36,29 @@ Gunakan filter **Status** dan kolom **Pencarian** di atas tabel untuk mempersemp
 
 ---
 
-## Mengirim Link Pembayaran ke Pelanggan
+## Mengirim Tagihan ke Pelanggan
 
-Jika pembayaran online via Midtrans sudah dikonfigurasi:
+Tombol **Buat & Kirim Tagihan** mengirimkan informasi tagihan sesuai metode pembayaran yang dikonfigurasi di **Pengaturan → Pembayaran**.
 
-1. Buka halaman **Detail Pelanggan**
-2. Pilih tagihan yang ingin dibayar
-3. Klik **Buat Link Bayar** — sistem menyiapkan halaman pembayaran untuk pelanggan
-4. Klik **Kirim WA** — link dikirim otomatis ke nomor WhatsApp pelanggan
+### Syarat
 
-Pelanggan tinggal membuka link tersebut, memilih metode pembayaran, dan melakukan pembayaran. Status tagihan akan berubah menjadi **Lunas** secara otomatis setelah pembayaran berhasil.
+Minimal satu metode pembayaran harus aktif di halaman [Pengaturan Pembayaran](/panduan/pembayaran):
+- **Pembayaran Online** (Midtrans) — pelanggan mendapat link bayar
+- **Pembayaran Manual** — pelanggan mendapat informasi rekening bank
+
+### Cara Mengirim
+
+1. Di halaman **Billing**, cari tagihan yang ingin dikirim
+2. Klik menu tiga titik (⋮) pada baris tagihan tersebut
+3. Pilih **Buat & Kirim Tagihan**
+
+Pesan tagihan dikirim ke pelanggan via WhatsApp dan/atau Email sesuai pengaturan notifikasi. Isi pesannya:
+
+| Metode Aktif | Isi Pesan |
+|---|---|
+| Online saja | Nama, jumlah, jatuh tempo + **link pembayaran Midtrans** |
+| Manual saja | Nama, jumlah, jatuh tempo + **info rekening bank** |
+| Keduanya | Link pembayaran Midtrans + info rekening sebagai alternatif |
 
 ---
 
@@ -74,10 +87,24 @@ Buka router → **Keuangan** untuk melihat ringkasan finansial router:
 
 ---
 
+## Laporan Pelanggan
+
+Buka router → **PPPoE → Laporan** untuk melihat ringkasan status pelanggan:
+
+- Jumlah pelanggan aktif, online, terisolir
+- Jumlah dan total nilai tunggakan
+- Distribusi pelanggan per profil layanan
+- Daftar pelanggan dengan tunggakan aktif
+
+---
+
 ## Pertanyaan Umum
 
 **Pelanggan bilang sudah bayar tapi status masih "Belum Bayar".**
 Gunakan fitur **Konfirmasi Pembayaran Manual** di atas untuk mencatat pembayaran yang diterima di luar sistem.
+
+**Tombol "Buat & Kirim Tagihan" muncul pesan error.**
+Pastikan minimal satu metode pembayaran sudah diaktifkan di **Pengaturan → Pembayaran**.
 
 **Jumlah tagihan pelanggan salah.**
 Jumlah tagihan diambil dari harga yang tercantum di profil layanan. Periksa dan sesuaikan harga di menu **PPPoE → Profil Layanan**.

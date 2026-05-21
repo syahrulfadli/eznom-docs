@@ -8,14 +8,15 @@ Buka **Pengaturan → Profil Bisnis**
 
 Informasi ini digunakan di berbagai tempat: kop surat kontrak, invoice, halaman tanda tangan, dan footer email notifikasi.
 
-| Field | Digunakan di |
-|---|---|
-| **Nama Bisnis** | Kop surat, header invoice, email |
-| **Alamat Bisnis** | Kop surat, invoice, footer email |
-| **Nomor Telepon** | Kop surat, invoice, halaman verifikasi kontrak |
-| **Email Bisnis** | Kop surat, invoice |
-| **Logo** | Invoice, halaman tanda tangan kontrak |
-| **Tanda Tangan Admin** | Tampil di halaman kontrak sebagai tanda tangan pihak operator |
+| Field | Wajib | Digunakan di |
+|---|---|---|
+| **Nama Bisnis** | ✅ | Kop surat, header invoice, email |
+| **Alamat Bisnis** | — | Kop surat, invoice, footer email |
+| **Nomor Telepon** | — | Kop surat, invoice, halaman verifikasi kontrak |
+| **Email Bisnis** | — | Kop surat, invoice |
+| **Alamat Website** | — | Kop surat kontrak |
+| **Logo** | — | Invoice, halaman tanda tangan kontrak |
+| **Tanda Tangan Admin** | — | Tampil di halaman kontrak sebagai tanda tangan pihak operator |
 
 ### Mengganti Logo
 
