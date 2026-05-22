@@ -16,7 +16,13 @@ export default defineConfig({
         text: 'Memulai',
         items: [
           { text: 'Pendahuluan', link: '/panduan/mulai' },
-          { text: 'Tambah Router', link: '/panduan/router' },
+        ],
+      },
+      {
+        text: 'Router',
+        items: [
+          { text: 'Tambah & Konfigurasi', link: '/panduan/router' },
+          { text: 'Remote Perangkat', link: '/panduan/remote-perangkat' },
         ],
       },
       {
