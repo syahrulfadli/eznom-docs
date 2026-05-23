@@ -25,12 +25,46 @@ Tabel menampilkan semua voucher dengan status:
 |---|---|
 | **Profil** | Pilih profil hotspot yang sudah dibuat |
 | **Jumlah** | Berapa voucher yang ingin dibuat (1–500) |
-| **Panjang Username** | Jumlah karakter username (default 6–8) |
-| **Panjang Password** | Jumlah karakter password (default 6–8) |
+| **Template Cetak** | Layout kartu saat dicetak (A4 / thermal) |
+| **Panjang Username** | Jumlah karakter username |
+| **Panjang Password** | Jumlah karakter password |
 | **Charset Username** | Karakter yang digunakan untuk username: huruf, angka, atau kombinasi |
 | **Charset Password** | Karakter yang digunakan untuk password |
+| **Warna Kartu** | Warna latar, teks, dan aksen kartu voucher |
+| **Ukuran Font** | Ukuran font username dan password di kartu cetak |
+| **Kolom (A4)** | Jumlah kolom kartu per baris saat cetak A4 |
 
 3. Klik **Generate** — voucher langsung dibuat dan disync ke MikroTik
+
+---
+
+## Preset Pengaturan Voucher
+
+Preset menyimpan kombinasi pengaturan **Karakter Voucher** dan **Tampilan Kartu** sebagai template bernama. Saat generate berikutnya, cukup pilih preset dan semua field terisi otomatis — Anda hanya perlu memilih profil dan jumlah voucher.
+
+### Menyimpan Preset
+
+1. Isi semua pengaturan karakter & tampilan sesuai kebutuhan
+2. Klik **Simpan sebagai Preset** di footer modal
+3. Masukkan nama preset (contoh: "Kartu Merah A4", "Thermal Harian")
+4. Klik **Simpan** — preset tersimpan dan langsung muncul di dropdown
+
+### Menggunakan Preset
+
+Di bagian atas form generate, pilih preset dari dropdown **Preset**. Semua field karakter dan tampilan akan terisi otomatis sesuai preset yang dipilih.
+
+Dropdown hanya muncul jika sudah ada minimal satu preset yang tersimpan.
+
+### Preset Default
+
+Preset yang ditandai sebagai default akan dimuat otomatis setiap kali modal generate dibuka.
+
+- Klik **★ Default** di samping dropdown untuk menjadikan preset yang sedang dipilih sebagai default
+- Tanda `★` di nama preset menandakan preset default saat ini
+
+### Menghapus Preset
+
+Pilih preset dari dropdown, lalu klik **Hapus** di samping tombol Default. Konfirmasi penghapusan di dialog yang muncul.
 
 ---
 

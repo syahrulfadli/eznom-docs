@@ -9,6 +9,7 @@ export default defineConfig({
     nav: [
       { text: 'Panduan', link: '/panduan/mulai' },
       { text: 'FAQ', link: '/faq' },
+      { text: '🟢 Status', link: 'https://uptime.noahresourcetech.com', target: '_blank' },
     ],
 
     sidebar: [
@@ -47,6 +48,7 @@ export default defineConfig({
         items: [
           { text: 'Notifikasi Otomatis', link: '/panduan/notifikasi' },
           { text: 'Pengaturan Pembayaran', link: '/panduan/pembayaran' },
+          { text: 'Halaman Publik Bisnis', link: '/panduan/halaman-publik' },
           { text: 'Halaman Isolir', link: '/panduan/isolir' },
           { text: 'Profil Bisnis & Akun', link: '/panduan/pengaturan' },
         ],

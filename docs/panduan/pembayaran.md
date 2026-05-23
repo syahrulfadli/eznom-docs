@@ -6,6 +6,55 @@ Tersedia dua metode yang dapat diaktifkan secara independen — salah satu, kedu
 
 ---
 
+## Mendaftar ke Midtrans
+
+Sebelum bisa menggunakan pembayaran online, Anda perlu mendaftar dan mendapatkan API key dari Midtrans. Panduan registrasi juga tersedia langsung di halaman **Pengaturan → Pembayaran**.
+
+### Langkah Pendaftaran
+
+**1. Daftar akun Midtrans**
+
+Buka [dashboard.midtrans.com](https://dashboard.midtrans.com) dan klik **Register**.
+
+- **Personal** — cocok untuk yang baru mulai. Cukup dengan KTP. Limit transaksi lebih rendah.
+- **Business** — direkomendasikan jika sudah punya banyak pelanggan. Membutuhkan dokumen usaha (SIUP/NIB) dan memiliki limit transaksi yang jauh lebih tinggi.
+
+**2. Siapkan halaman publik bisnis**
+
+Midtrans membutuhkan URL website bisnis saat proses review. Gunakan halaman publik eznom sebagai website resmi bisnis Anda.
+
+Pastikan sudah mengatur slug dan konten di **Pengaturan → Halaman Publik**. Lihat panduan [Halaman Publik](/panduan/halaman-publik).
+
+**3. Lengkapi profil bisnis di Midtrans**
+
+Isi di dashboard Midtrans:
+- Nama bisnis, nomor telepon, email bisnis
+- Kategori usaha: pilih **"Internet Service Provider"** atau **"Utilities & Telecom"**
+- URL website, Kebijakan Privasi, dan Syarat & Ketentuan — gunakan URL dari halaman publik eznom
+
+**4. Upload dokumen legalitas**
+
+Midtrans meminta setidaknya salah satu:
+- KTP pemilik usaha
+- SIUP / NIB
+- Akta perusahaan
+
+Siapkan scan atau foto yang jelas (format JPG/PNG, maks 5 MB).
+
+**5. Isi informasi rekening bank**
+
+Tambahkan rekening bank penerima dana. Nama pemilik rekening harus sesuai dengan nama bisnis atau pemilik yang terdaftar di KTP.
+
+**6. Aktifkan mode Production**
+
+Setelah akun diverifikasi (biasanya 1–3 hari kerja), Midtrans akan mengirim email konfirmasi. Buka **Settings → Access Keys** di dashboard Midtrans, salin **Server Key** dan **Client Key** Production, lalu tempel di kolom di halaman **Pengaturan → Pembayaran**.
+
+::: tip Sandbox dulu
+Gunakan mode Sandbox untuk testing sebelum Production. Transaksi Sandbox tidak menggunakan uang nyata.
+:::
+
+---
+
 ## Pembayaran Online (Midtrans)
 
 Pelanggan menerima link pembayaran dan dapat membayar langsung via kartu kredit, transfer bank virtual account, e-wallet, dan metode lain yang tersedia di Midtrans.
@@ -18,22 +67,12 @@ Pelanggan menerima link pembayaran dan dapat membayar langsung via kartu kredit,
 4. Atur mode: **Sandbox** untuk testing, **Production** untuk transaksi nyata
 5. Klik **Simpan**
 
-### Mendapatkan API Key Midtrans
-
-1. Login ke [Midtrans Dashboard](https://dashboard.midtrans.com)
-2. Buka **Settings → Access Keys**
-3. Salin **Server Key** (dan **Client Key** jika diperlukan)
-
-::: tip Sandbox vs Production
-Gunakan Sandbox saat masih testing — transaksi tidak menggunakan uang nyata. Aktifkan Production hanya saat siap menerima pembayaran sungguhan.
-:::
-
 ### Konfigurasi Webhook
 
 Agar status tagihan diperbarui otomatis setelah pelanggan membayar, daftarkan URL ini di Midtrans Dashboard → **Settings → Payment → Payment Notification URL**:
 
 ```
-https://yourdomain.com/midtrans/webhook
+https://app.eznom.com/midtrans/webhook
 ```
 
 ---

@@ -6,7 +6,7 @@
 
 Buka **Pengaturan → Profil Bisnis**
 
-Informasi ini digunakan di berbagai tempat: kop surat kontrak, invoice, halaman tanda tangan, dan footer email notifikasi.
+Informasi ini digunakan di berbagai tempat: kop surat kontrak, invoice, halaman tanda tangan, footer email notifikasi, dan **halaman publik bisnis** (logo, nama, alamat, kontak).
 
 | Field | Wajib | Digunakan di |
 |---|---|---|
@@ -17,6 +17,10 @@ Informasi ini digunakan di berbagai tempat: kop surat kontrak, invoice, halaman 
 | **Alamat Website** | — | Kop surat kontrak |
 | **Logo** | — | Invoice, halaman tanda tangan kontrak |
 | **Tanda Tangan Admin** | — | Tampil di halaman kontrak sebagai tanda tangan pihak operator |
+
+::: tip Halaman Publik
+Untuk mengatur URL slug, deskripsi bisnis, dan paket yang ditampilkan ke calon pelanggan, buka **Pengaturan → Halaman Publik**. Lihat [Halaman Publik Bisnis](/panduan/halaman-publik).
+:::
 
 ### Mengganti Logo
 
