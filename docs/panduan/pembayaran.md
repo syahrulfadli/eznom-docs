@@ -73,7 +73,7 @@ Pelanggan menerima link pembayaran dan dapat membayar langsung via kartu kredit,
 Agar status tagihan diperbarui otomatis setelah pelanggan membayar, daftarkan URL ini di Midtrans Dashboard → **Settings → Payment → Payment Notification URL**:
 
 ```
-https://app.eznom.com/midtrans/webhook
+https://eznom.noahresourcetech.com.com/midtrans/webhook
 ```
 
 ---

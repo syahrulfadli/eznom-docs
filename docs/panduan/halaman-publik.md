@@ -69,9 +69,9 @@ Saat mendaftar sebagai merchant Midtrans, Anda akan diminta mengisi URL website 
 
 | Kolom di Midtrans | URL yang Diisi |
 |---|---|
-| Website bisnis | `https://app.eznom.com/bisnis/{slug}` |
-| Kebijakan Privasi | `https://app.eznom.com/bisnis/{slug}/privacy` |
-| Syarat & Ketentuan | `https://app.eznom.com/bisnis/{slug}/tos` |
+| Website bisnis | `https://eznom.noahresourcetech.com.com/bisnis/{slug}` |
+| Kebijakan Privasi | `https://eznom.noahresourcetech.com.com/bisnis/{slug}/privacy` |
+| Syarat & Ketentuan | `https://eznom.noahresourcetech.com.com/bisnis/{slug}/tos` |
 
 URL ini tersedia langsung di halaman pengaturan — cukup klik **Salin**, lalu paste ke form Midtrans.
 
