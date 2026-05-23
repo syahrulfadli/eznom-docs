@@ -19,11 +19,12 @@ Buka [dashboard.midtrans.com](https://dashboard.midtrans.com) dan klik **Registe
 - **Personal** — cocok untuk yang baru mulai. Cukup dengan KTP. Limit transaksi lebih rendah.
 - **Business** — direkomendasikan jika sudah punya banyak pelanggan. Membutuhkan dokumen usaha (SIUP/NIB) dan memiliki limit transaksi yang jauh lebih tinggi.
 
-**2. Siapkan halaman publik bisnis**
+**2. Siapkan halaman website bisnis**
 
-Midtrans membutuhkan URL website bisnis saat proses review. Gunakan halaman publik eznom sebagai website resmi bisnis Anda.
+Midtrans membutuhkan URL website bisnis, Kebijakan Privasi, dan Syarat & Ketentuan saat proses review. Pilih salah satu cara:
 
-Pastikan sudah mengatur slug dan konten di **Pengaturan → Halaman Publik**. Lihat panduan [Halaman Publik](/panduan/halaman-publik).
+- **Gunakan halaman publik eznom** — Atur slug di **Pengaturan → Halaman Publik**. Eznom otomatis menyediakan ketiga URL yang dibutuhkan. Lihat panduan [Halaman Publik](/panduan/halaman-publik).
+- **Gunakan website sendiri** — Pastikan website Anda sudah memiliki halaman Kebijakan Privasi dan Syarat & Ketentuan. Halaman Syarat & Ketentuan sebaiknya menyertakan kebijakan refund agar lolos review Midtrans.
 
 **3. Lengkapi profil bisnis di Midtrans**
 
