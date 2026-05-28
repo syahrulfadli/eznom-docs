@@ -36,6 +36,18 @@ Tabel menampilkan semua voucher dengan status:
 
 3. Klik **Generate** — voucher langsung dibuat dan disync ke MikroTik
 
+### Generate untuk Reseller
+
+Jika ada reseller yang terdaftar di router ini, dropdown **Reseller** akan muncul di form generate. Pilih reseller yang membeli batch ini.
+
+Setelah reseller dipilih, kotak informasi akan menampilkan harga per voucher dan total yang akan dicatat ke keuangan.
+
+Lihat: [Reseller Hotspot](/panduan/hotspot/reseller)
+
+### Pencatatan Keuangan
+
+Setiap batch yang di-generate otomatis dicatat ke halaman [Keuangan](/panduan/keuangan) sebagai transaksi penjualan voucher. Tidak perlu input manual.
+
 ---
 
 ## Preset Pengaturan Voucher

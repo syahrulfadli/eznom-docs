@@ -59,9 +59,16 @@ Buka **Pengaturan → Sub-Pengguna**
 |---|---|
 | PPPoE Pelanggan | Lihat / Tambah & Edit / Hapus |
 | Tagihan | Lihat / Konfirmasi Pembayaran |
+| PPPoE Profil | Lihat / Edit |
 | Hotspot Voucher | Lihat / Generate / Hapus |
+| Hotspot Profil | Lihat / Edit |
+| Hotspot Reseller | Lihat / Tambah & Edit / Hapus |
+| Monitor Interface | Lihat |
+| Remote Perangkat | Lihat |
 | Keuangan | Lihat |
 | Pengaturan Router | Lihat / Edit |
+| Info VPN | Lihat |
+| Log Notifikasi | Lihat |
 
 4. Klik **Simpan**
 

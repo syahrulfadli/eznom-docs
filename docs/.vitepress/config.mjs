@@ -42,6 +42,14 @@ export default defineConfig({
         items: [
           { text: 'Profil Hotspot', link: '/panduan/hotspot/profil' },
           { text: 'Voucher', link: '/panduan/hotspot/voucher' },
+          { text: 'Reseller', link: '/panduan/hotspot/reseller' },
+          { text: 'Laporan Voucher', link: '/panduan/hotspot/laporan' },
+        ],
+      },
+      {
+        text: 'Keuangan',
+        items: [
+          { text: 'Halaman Keuangan', link: '/panduan/keuangan' },
         ],
       },
       {
