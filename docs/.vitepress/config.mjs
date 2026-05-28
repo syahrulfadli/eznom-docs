@@ -5,6 +5,10 @@ export default defineConfig({
   description: 'Panduan lengkap penggunaan platform manajemen ISP eznom',
   lang: 'id-ID',
 
+  head: [
+    ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+  ],
+
   themeConfig: {
     nav: [
       { text: 'Panduan', link: '/panduan/mulai' },
