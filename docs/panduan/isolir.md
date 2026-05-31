@@ -1,62 +1,109 @@
 # Halaman Isolir
 
-Saat pelanggan diisolir, koneksinya dialihkan ke halaman khusus yang menginformasikan alasan penonaktifan dan cara menghubungi operator.
+Saat pelanggan PPPoE diisolir dari dasbor eznom, koneksinya secara otomatis dialihkan ke halaman khusus yang menginformasikan alasan penonaktifan dan cara menghubungi operator. WhatsApp tetap dapat diakses sehingga pelanggan dapat langsung menghubungi Anda.
+
+---
+
+## Cara Kerja
+
+### 1. Assign IP Statis
+
+Ketika pelanggan diisolir, eznom menetapkan IP statis dari subnet `172.18.39.0/24` ke PPPoE secret pelanggan. Sesi aktif di-kick agar pelanggan reconnect dan mendapatkan IP statis tersebut. Semua operasi dilakukan via MikroTik API secara otomatis.
+
+### 2. Firewall Address-List
+
+IP statis pelanggan yang diisolir dimasukkan ke address-list `eznom-isolated` di MikroTik. Address-list ini menjadi acuan semua rule firewall izolasi.
+
+### 3. Aturan Firewall Otomatis
+
+Saat ada pelanggan pertama yang diisolir, eznom secara otomatis membuat aturan firewall berikut di MikroTik:
+
+| Jenis | Nama Rule | Fungsi |
+|---|---|---|
+| **Mangle** | `Bypass IP Hotspot dan ISOLIR by eznom` | Bypass hotspot marking agar traffic isolir bisa diarahkan |
+| **NAT** | `Redirect Isolir PPPoE by eznom` | Redirect HTTP/HTTPS dari `eznom-isolated` ke web proxy `:8383`, kecuali traffic WhatsApp |
+| **Filter** | `wa.me bypass by eznom` | Izinkan akses wa.me |
+| **Filter** | `whatsapp.com bypass by eznom` | Izinkan akses whatsapp.com (via Layer7) |
+| **Filter** | `allow connection established related by eznom` | Izinkan koneksi yang sudah established |
+| **Filter** | `Bypass WA by eznom` | Izinkan traffic ke IP WhatsApp (dari DNS resolve) |
+| **Filter** | `Drop Isolir by eznom` | Blokir semua traffic lain dari `eznom-isolated` |
+
+Semua rule dihapus otomatis ketika tidak ada lagi pelanggan yang diisolir.
+
+### 4. WhatsApp Tetap Aktif
+
+eznom membuat script DNS (`eznom-wa-dns`) yang berjalan setiap jam dan saat router startup. Script ini me-resolve domain WhatsApp (`whatsapp.com`, `whatsapp.net`, `wa.me`, dll.) dan menyimpan hasilnya ke address-list `WA_eznom` dengan TTL 2 jam. IP-IP inilah yang dikecualikan dari redirect agar pelanggan tetap bisa mengakses WhatsApp.
+
+### 5. Halaman Isolir di Web Proxy
+
+Saat konfigurasi halaman isolir disimpan, eznom secara otomatis mengirim HTML halaman ke MikroTik (via `/tool/fetch`) dan menyimpannya di `webproxy/error.html`. Web proxy MikroTik berjalan di port `:8383` dan menampilkan halaman ini ke pelanggan yang mencoba browsing.
+
+HTML yang dikirim bersifat **standalone** — semua CSS sudah tertanam di dalamnya, tidak ada dependensi eksternal, sehingga tampil dengan benar meski router tidak bisa mengakses internet.
+
+### 6. Reconnect Pelanggan
+
+Saat pelanggan di-unrestore (diaktifkan kembali):
+- IP dihapus dari address-list `eznom-isolated`
+- IP statis dihapus dari PPPoE secret (kembali ke pool DHCP)
+- Sesi aktif di-kick agar pelanggan reconnect dan mendapatkan IP normal
 
 ---
 
 ## Konfigurasi Halaman Isolir
 
-Buka router → **Pengaturan → Halaman Isolir**
+Buka **Router → Pengaturan → Halaman Isolir**.
 
 ### Konten Halaman
 
 | Field | Keterangan |
 |---|---|
-| **Judul** | Judul utama halaman, misal `Akses Internet Dinonaktifkan` |
-| **Pesan** | Pesan penjelas, misal `Layanan Anda dinonaktifkan karena tagihan belum dibayar.` |
+| **Judul** | Judul utama kartu, misal `Akses Internet Dinonaktifkan` |
+| **Pesan** | Kalimat penjelas di bawah judul |
 
 ### Background
 
-Pilih salah satu:
-- **Warna Solid** — pilih warna menggunakan color picker atau masukkan kode hex
-- **Gambar (URL)** — masukkan URL gambar publik sebagai background
+| Pilihan | Keterangan |
+|---|---|
+| **Warna Solid** | Pilih warna via color picker atau masukkan kode hex |
+| **Gambar (URL)** | URL gambar publik sebagai background halaman |
 
 ### Logo
 
-Upload logo bisnis Anda (PNG, JPG, SVG, WebP — maks 2 MB). Logo tampil di bagian atas kartu isolir.
+Upload logo bisnis (PNG, JPG, SVG, WebP — maks 2 MB). Logo tampil di bagian atas kartu. Gambar otomatis di-resize ke lebar maksimal 200 px dan dikompresi sebelum dikirim ke router.
 
 ### Informasi Kontak
 
 | Field | Keterangan |
 |---|---|
 | **Label Kontak** | Teks tombol, misal `Hubungi Kami` |
-| **Nomor / Kontak** | Nomor WhatsApp (otomatis dijadikan link `wa.me`) |
+| **Nomor / Kontak** | Nomor WhatsApp — otomatis dijadikan link `wa.me` |
+
+Jika field ini kosong, nomor dari **Pengaturan Bisnis** digunakan sebagai fallback.
+
+### Paket Layanan
+
+Tampilkan daftar paket PPPoE yang tersedia di halaman isolir agar pelanggan mengetahui pilihan upgrade. Aktifkan toggle, lalu centang paket-paket yang ingin ditampilkan.
+
+Urutan tampilan dapat diatur dengan tombol panah atas/bawah di bagian **Urutan Tampilan**.
+
+Nama paket ditampilkan dengan prioritas: **Nama Group** → **Service Name** → **Nama Profile**.
+
+### Footer
+
+Teks di bagian bawah halaman. Default: `Powered by eznom`. Kosongkan untuk menggunakan default, atau isi dengan teks custom misal nama bisnis Anda.
+
+### Custom CSS
+
+CSS tambahan yang diinjeksi ke halaman isolir. Gunakan ini untuk mengubah warna, font, atau tata letak sesuai identitas bisnis Anda.
 
 ---
 
-## Live Preview
+## Preview
 
-Sisi kanan halaman konfigurasi menampilkan **preview real-time** tampilan halaman isolir saat Anda mengubah pengaturan.
-
----
-
-## URL Halaman Isolir
-
-URL halaman isolir pelanggan ditampilkan di bagian bawah panel preview:
-
-```
-https://eznom.noahresourcetech.om/isolir/{router-uuid}/{customer-id}
-```
-
-URL ini otomatis diisi ke konfigurasi walled garden MikroTik saat pelanggan diisolir dari sistem eznom.
+Sisi kanan halaman konfigurasi menampilkan **preview** yang merender HTML persis sama dengan yang akan dikirim ke router. Preview diperbarui setiap kali Anda menyimpan konfigurasi.
 
 ---
 
-## Informasi yang Tampil ke Pelanggan
+## Kirim Ulang ke Router
 
-Kartu di halaman isolir menampilkan:
-
-- Logo bisnis (jika diupload)
-- Judul & pesan
-- Nama dan username pelanggan (untuk memastikan pelanggan tahu akun siapa yang terkena)
-- Tombol kontak menuju WhatsApp operator
+Klik **Simpan Konfigurasi** untuk menyimpan dan langsung mengirim halaman isolir terbaru ke router. Jika router sedang offline, konfigurasi tetap tersimpan dan akan dikirim saat koneksi tersedia.

@@ -59,6 +59,7 @@ Klik **Pin di Peta** untuk memilih lokasi secara visual dari peta interaktif.
 | **Tanggal Pemasangan** | Tanggal instalasi |
 | **Jatuh Tempo Override** | Ubah tanggal JT khusus untuk pelanggan ini (default mengikuti router) |
 | **Auto Isolir** | Aktifkan agar pelanggan otomatis diisolir saat tagihan lewat jatuh tempo |
+| **Notifikasi WhatsApp** | Aktifkan jika pelanggan menyetujui menerima pesan WA dari Anda. Wajib aktif agar notifikasi tagihan terkirim ke nomor HP pelanggan ini |
 
 3. Klik **Simpan** — pelanggan akan otomatis disync ke PPPoE Secret di MikroTik
 

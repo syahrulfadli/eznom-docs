@@ -33,6 +33,29 @@ Status gateway ditampilkan di bagian **WhatsApp Gateway** pada halaman pengatura
 
 ---
 
+## Persetujuan Pelanggan (Opt-in WhatsApp)
+
+Sesuai [Kebijakan Bisnis WhatsApp](https://www.whatsapp.com/legal/business-terms), notifikasi hanya boleh dikirim ke nomor pelanggan yang telah memberikan **persetujuan eksplisit**.
+
+### Cara Mengaktifkan
+
+Buka form **Tambah / Edit Pelanggan** → aktifkan toggle **Notifikasi WhatsApp**.
+
+Pelanggan yang sudah opt-in ditandai badge hijau **WA** di kolom nomor HP pada tabel pelanggan.
+
+### Dampak
+
+| Kondisi | Perilaku Sistem |
+|---|---|
+| `Notifikasi WhatsApp` **aktif** | Semua notifikasi WA (pengingat, JT, isolir, konfirmasi bayar) dikirim ke pelanggan ini |
+| `Notifikasi WhatsApp` **nonaktif** | Tidak ada WA yang dikirim, meskipun channel notifikasi di pengaturan = WhatsApp |
+
+::: warning Catatan Kepatuhan
+Mengirim pesan WhatsApp tanpa persetujuan pelanggan melanggar ketentuan Meta dan dapat mengakibatkan nomor bisnis Anda diblokir. Pastikan Anda mendapatkan persetujuan pelanggan sebelum mengaktifkan opsi ini — misalnya melalui formulir pendaftaran, kontrak berlangganan, atau konfirmasi lisan yang tercatat.
+:::
+
+---
+
 ## Jadwal Pengingat
 
 ### Pengingat Sebelum Jatuh Tempo (H-N)
@@ -110,8 +133,12 @@ Kirim pengingat secara berkala ke pelanggan yang sudah melewati jatuh tempo dan 
 | Nilai | Efek |
 |---|---|
 | **0** | Nonaktif — tidak ada pengingat tunggakan otomatis |
-| **3** | Kirim ulang setiap 3 hari selama masih belum bayar |
-| **7** | Kirim ulang setiap 7 hari |
+| **7** | Kirim ulang setiap 7 hari selama masih belum bayar |
+| **14** | Kirim ulang setiap 14 hari |
+
+::: info Minimum 7 Hari
+Sesuai kebijakan WhatsApp Business, interval pengingat tunggakan ditetapkan **minimal 7 hari**. Nilai 1–6 tidak dapat disimpan.
+:::
 
 ---
 
@@ -123,6 +150,8 @@ Kirim pengingat secara berkala ke pelanggan yang sudah melewati jatuh tempo dan 
 | Proses isolir otomatis | Setiap hari **08:00** |
 | Generate tagihan bulanan | Setiap hari **01:00** |
 
+Saat proses isolir berjalan, notifikasi WA dikirim **secara bertahap** (selang 5 detik per pelanggan) agar tidak membebani gateway Meta sekaligus. Notifikasi tetap akan terkirim meski dengan sedikit jeda dari waktu isolir.
+
 ---
 
 ## Ringkasan Semua Notifikasi
@@ -131,11 +160,13 @@ Kirim pengingat secara berkala ke pelanggan yang sudah melewati jatuh tempo dan 
 |---|---|---|
 | Pengingat H-N sebelum jatuh tempo | WA + Email | Scheduler 07:00 |
 | Jatuh tempo hari ini (H-0) | WA + Email | Scheduler 07:00 |
+| Pelanggan diisolir otomatis | WA | Scheduler 08:00 (bertahap, selang 5 detik) |
+| Tunggakan berulang | WA + Email | Scheduler 07:00 (sesuai interval yang diset) |
 | Konfirmasi tagihan lunas | WA + Email | Midtrans webhook / admin catat bayar / admin prabayar |
 | Kirim link bayar (admin) | WA + Email | Admin klik "Buat & Kirim Tagihan" |
 
 ::: tip
-Semua notifikasi mengikuti channel yang dipilih di **Pengaturan → Notifikasi**. Jika channel **Email** aktif, email hanya dikirim jika alamat email pelanggan tersimpan di data pelanggan.
+Semua notifikasi WA hanya dikirim ke pelanggan yang telah mengaktifkan **Notifikasi WhatsApp** di data pelanggan. Notifikasi Email mengikuti channel yang dipilih di **Pengaturan → Notifikasi** dan hanya dikirim jika alamat email pelanggan tersimpan.
 :::
 
 ---
