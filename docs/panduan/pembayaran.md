@@ -12,9 +12,13 @@ Pelanggan menerima link dan dapat membayar langsung secara online. Eznom menduku
 
 | Gateway | Cocok untuk | Metode bayar | Tampilan |
 |---|---|---|---|
-| **Midtrans** | Bisnis yang butuh reputasi/brand kuat | VA, Kartu Kredit, GoPay, QRIS, dll. | Snap popup |
-| **Duitku** | Usaha kecil, persyaratan mudah | VA, OVO, DANA, ShopeePay, LinkAja | POP popup di halaman Eznom |
-| **Xendit** | Onboarding cepat | VA, QRIS, e-Wallet, Kartu | Payment link halaman Xendit |
+| **Duitku** | Perorangan & usaha kecil, pendaftaran mudah | VA, OVO, DANA, ShopeePay, LinkAja | POP popup di halaman Eznom |
+| **Midtrans** | Usaha yang butuh reputasi/brand kuat | VA, Kartu Kredit, GoPay, QRIS, dll. | Snap popup |
+| **Xendit** | Badan usaha (CV/PT) — tidak tersedia untuk perorangan | VA, QRIS, e-Wallet, Kartu | Payment link halaman Xendit |
+
+::: tip Rekomendasi untuk RT/RW net
+Jika Anda belum memiliki badan usaha, gunakan **Duitku** — pendaftaran bisa dengan KTP perorangan dan persyaratannya paling ringan.
+:::
 
 ### Cara Mengaktifkan
 
@@ -114,12 +118,17 @@ Jika popup tidak terbuka, pastikan browser tidak memblokir popup. Jika masih gag
 
 Xendit menggunakan **Payment Sessions** — pelanggan diarahkan ke halaman payment link Xendit yang menampilkan semua metode pembayaran aktif sekaligus.
 
+::: warning Hanya untuk badan usaha
+Xendit **tidak menerima pendaftaran perorangan**. Anda memerlukan CV, PT, atau badan usaha lain yang terdaftar. Jika belum punya badan usaha, gunakan Duitku.
+:::
+
 ### Pendaftaran
 
-1. Daftar di [xendit.co](https://xendit.co) — onboarding tercepat, cocok untuk usaha kecil
-2. Verifikasi KTP + selfie (biasanya selesai dalam 1 hari kerja)
-3. Salin **Secret Key** dari `Dashboard → Settings → API Keys`
-4. Aktifkan metode pembayaran di menu **Payment Channels**
+1. Daftar di [xendit.co](https://xendit.co) dengan akun badan usaha
+2. Siapkan dokumen badan usaha (SIUP/NIB/akta), KTP pengurus, dan rekening bank atas nama badan usaha
+3. Proses verifikasi biasanya 1–3 hari kerja
+4. Salin **Secret Key** dari `Dashboard → Settings → API Keys`
+5. Aktifkan metode pembayaran di menu **Payment Channels**
 
 ### Konfigurasi Webhook
 
