@@ -15,19 +15,19 @@ Pelanggan menerima link dan dapat membayar langsung secara online. Eznom menduku
 | **Duitku** | Perorangan & usaha kecil | VA, OVO, DANA, ShopeePay, LinkAja | POP popup di halaman Eznom |
 | **iPaymu** | Perorangan dengan NPWP | VA, QRIS, e-Wallet | Redirect halaman iPaymu |
 | **Midtrans** | Usaha yang butuh reputasi/brand kuat | VA, Kartu Kredit, GoPay, QRIS, dll. | Snap popup |
-| **Xendit** | Badan usaha (CV/PT) saja | VA, QRIS, e-Wallet, Kartu | Payment link halaman Xendit |
+| **DOKU** | Perorangan & badan usaha | VA, QRIS, OVO, ShopeePay, DANA, Kartu | Checkout popup di halaman Eznom |
 
 ::: tip Rekomendasi untuk RT/RW net
 - **Belum punya NPWP atau badan usaha** → gunakan **Duitku** (paling ringan persyaratannya)
-- **Punya NPWP, belum ada badan usaha** → bisa pilih **iPaymu** sebagai alternatif
-- **Punya badan usaha** → semua gateway tersedia
+- **Punya NPWP, belum ada badan usaha** → bisa pilih **iPaymu** atau **DOKU** sebagai alternatif
+- **Punya badan usaha** → semua gateway tersedia; **DOKU** jadi pilihan solid dengan metode terlengkap
 :::
 
 ### Cara Mengaktifkan
 
 1. Buka **Pengaturan → Pembayaran**
 2. Aktifkan toggle **"Aktifkan pembayaran online"**
-3. Pilih gateway yang diinginkan (Midtrans / Duitku / Xendit)
+3. Pilih gateway yang diinginkan (Midtrans / Duitku / DOKU / iPaymu)
 4. Isi kredensial sesuai gateway yang dipilih
 5. Klik **Simpan**
 
@@ -166,51 +166,56 @@ https://eznom.noahresourcetech.com/ipaymu/webhook
 
 ---
 
-## Xendit
+## DOKU
 
-Xendit menggunakan **Payment Sessions** — pelanggan diarahkan ke halaman payment link Xendit yang menampilkan semua metode pembayaran aktif sekaligus.
+DOKU menggunakan **DOKU Checkout** — popup muncul langsung di halaman Eznom (mirip Midtrans Snap) menggunakan DOKU JS SDK (`loadJokulCheckout`). Pelanggan memilih metode pembayaran di dalam popup tanpa meninggalkan halaman.
 
-::: warning Hanya untuk badan usaha
-Xendit **tidak menerima pendaftaran perorangan**. Anda memerlukan CV, PT, atau badan usaha lain yang terdaftar. Jika belum punya badan usaha, gunakan Duitku.
+::: tip Tersedia untuk perorangan & badan usaha
+DOKU menerima pendaftaran **Personal** (KTP + selfie, tanpa NPWP) maupun **Corporate** (badan usaha). Akun bisa langsung menerima pembayaran setelah aktivasi — dana baru dicairkan setelah verifikasi (48 jam).
 :::
 
 ### Pendaftaran
 
-1. Daftar di [xendit.co](https://xendit.co) dengan akun badan usaha
-2. Siapkan dokumen badan usaha (SIUP/NIB/akta), KTP pengurus, dan rekening bank atas nama badan usaha
-3. Proses verifikasi biasanya 1–3 hari kerja
-4. Salin **Secret Key** dari `Dashboard → Settings → API Keys`
-5. Aktifkan metode pembayaran di menu **Payment Channels**
+1. Daftar di [dashboard.doku.com/bo/register](https://dashboard.doku.com/bo/register)
+2. Pilih tipe akun:
+   - **Personal** — cukup KTP + selfie + foto bukti usaha (tanpa NPWP, tanpa badan usaha). Limit sebelum verifikasi: 5 transaksi / Rp 1 juta
+   - **Corporate** — butuh NIB, Akta Pendirian, SK Kemenkumham, dan NPWP. Limit sebelum verifikasi: 5 transaksi / Rp 10 juta
+3. Lengkapi profil bisnis: nama brand, lini bisnis (**Internet Service Provider**), estimasi volume transaksi, dan rekening bank penerima dana
+4. Upload dokumen sesuai tipe akun
+5. Setelah aktivasi (verifikasi maks 48 jam), buka **Back Office → Settings → API Keys**
+6. Salin **Client ID** dan **Secret Key** — tersedia versi Sandbox dan Production secara terpisah
 
-### Konfigurasi Webhook
+### Konfigurasi Notification URL
 
-Tambahkan URL berikut di `Dashboard → Settings → Webhooks`:
-- Event: **payment_session.completed**
+Isi **Notification URL** di `DOKU Back Office → Checkout Settings`:
 
 ```
-https://eznom.noahresourcetech.com/xendit/webhook
+https://eznom.noahresourcetech.com/doku/webhook
 ```
-
-Salin **Webhook Verification Token** dari dashboard dan isi di kolom **Webhook Token** di Eznom.
 
 ### Field yang Diisi di Eznom
 
 | Field | Keterangan |
 |---|---|
-| Mode | Development atau Production |
-| Secret Key | Dimulai `xnd_development_` atau `xnd_production_` |
-| Webhook Token | Untuk verifikasi keaslian notifikasi (sangat disarankan diisi) |
+| Mode | Sandbox (testing) atau Production (live) |
+| Client ID | Dari Back Office → Settings → API Keys (contoh: `MCH-0001-xxxxxxxxxxxxxxx`) |
+| Secret Key | Digunakan untuk HMAC signature setiap request |
+
+::: warning Sandbox dan Production terpisah
+Client ID dan Secret Key berbeda antara mode Sandbox dan Production. Pastikan menggunakan pasangan yang sesuai dengan mode yang dipilih.
+:::
 
 ### Testing Sandbox
 
-1. Gunakan Secret Key mode **Development** (`xnd_development_...`)
-2. Buka link pembayaran → diarahkan ke halaman Xendit
-3. Pilih metode test (kartu: `4000 0000 0000 0002` / exp: bulan/tahun masa depan / CVV: `123`)
-4. Untuk mensimulasikan webhook: di Xendit Dashboard → **Payment Sessions** → cari session yang baru dibuat → klik **Simulate Payment**
-5. Cek log Laravel untuk konfirmasi webhook `payment_session.completed` diterima
+1. Daftar akun sandbox di [sandbox.doku.com/bo/sandbox-registration](https://sandbox.doku.com/bo/sandbox-registration) (tidak perlu OTP)
+2. Salin **Client ID** dan **Secret Key** sandbox
+3. Aktifkan mode **Sandbox** di Eznom
+4. Buka link pembayaran dari billing pelanggan → popup DOKU Checkout terbuka di atas halaman
+5. Pilih metode test yang tersedia dan selesaikan simulasi pembayaran
+6. Cek log Laravel (`storage/logs/laravel.log`) untuk konfirmasi webhook `transaction.status = SUCCESS` diterima
 
-::: tip Semua metode dalam satu halaman
-Xendit menampilkan semua metode pembayaran aktif dalam satu payment link — pelanggan memilih sendiri tanpa konfigurasi tambahan di Eznom.
+::: tip Semua metode dalam satu popup
+DOKU Checkout menampilkan semua metode aktif dalam satu popup — VA bank utama (BCA, Mandiri, BRI, BNI, dll.), QRIS, OVO, ShopeePay, DANA, LinkAja, kartu kredit, dan Alfamart/Indomaret.
 :::
 
 ---
