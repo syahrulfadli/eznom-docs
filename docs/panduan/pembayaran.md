@@ -8,16 +8,19 @@ Tersedia dua jenis metode yang dapat diaktifkan secara independen — salah satu
 
 ## Pembayaran Online (Payment Gateway)
 
-Pelanggan menerima link dan dapat membayar langsung secara online. Eznom mendukung tiga pilihan payment gateway, pilih salah satu sesuai kemudahan pendaftaran dan kebutuhan pelanggan Anda.
+Pelanggan menerima link dan dapat membayar langsung secara online. Eznom mendukung empat pilihan payment gateway, pilih salah satu sesuai kemudahan pendaftaran dan kebutuhan pelanggan Anda.
 
 | Gateway | Cocok untuk | Metode bayar | Tampilan |
 |---|---|---|---|
-| **Duitku** | Perorangan & usaha kecil, pendaftaran mudah | VA, OVO, DANA, ShopeePay, LinkAja | POP popup di halaman Eznom |
+| **Duitku** | Perorangan & usaha kecil | VA, OVO, DANA, ShopeePay, LinkAja | POP popup di halaman Eznom |
+| **iPaymu** | Perorangan dengan NPWP | VA, QRIS, e-Wallet | Redirect halaman iPaymu |
 | **Midtrans** | Usaha yang butuh reputasi/brand kuat | VA, Kartu Kredit, GoPay, QRIS, dll. | Snap popup |
-| **Xendit** | Badan usaha (CV/PT) — tidak tersedia untuk perorangan | VA, QRIS, e-Wallet, Kartu | Payment link halaman Xendit |
+| **Xendit** | Badan usaha (CV/PT) saja | VA, QRIS, e-Wallet, Kartu | Payment link halaman Xendit |
 
 ::: tip Rekomendasi untuk RT/RW net
-Jika Anda belum memiliki badan usaha, gunakan **Duitku** — pendaftaran bisa dengan KTP perorangan dan persyaratannya paling ringan.
+- **Belum punya NPWP atau badan usaha** → gunakan **Duitku** (paling ringan persyaratannya)
+- **Punya NPWP, belum ada badan usaha** → bisa pilih **iPaymu** sebagai alternatif
+- **Punya badan usaha** → semua gateway tersedia
 :::
 
 ### Cara Mengaktifkan
@@ -36,11 +39,11 @@ Jika Anda belum memiliki badan usaha, gunakan **Duitku** — pendaftaran bisa de
 
 1. Daftar di [dashboard.midtrans.com](https://dashboard.midtrans.com)
 2. Pilih tipe akun:
-   - **Personal** — cukup KTP, limit transaksi lebih rendah
-   - **Business** — butuh SIUP/NIB, limit lebih tinggi
-3. Siapkan URL website, Kebijakan Privasi, dan Syarat & Ketentuan (gunakan halaman publik eznom atau website sendiri)
+   - **Personal** — cukup KTP, metode pembayaran yang tersedia lebih terbatas
+   - **Business** — butuh SIUP/NIB, akses semua metode (VA bank, kartu kredit, dll.)
+3. **Website wajib** — Midtrans memerlukan URL website beserta halaman Kebijakan Privasi dan Syarat & Ketentuan. Gunakan halaman publik Eznom atau website sendiri
 4. Upload KTP / SIUP / NIB
-5. Isi rekening bank penerima dana
+5. Isi rekening bank penerima dana (nama rekening harus sesuai tipe akun)
 6. Setelah diverifikasi (1–3 hari kerja), salin **Server Key** dari `Settings → Access Keys`
 
 ::: warning PKS
@@ -111,6 +114,55 @@ https://eznom.noahresourcetech.com/duitku/webhook
 ::: tip
 Jika popup tidak terbuka, pastikan browser tidak memblokir popup. Jika masih gagal, gunakan tombol **"Coba via Browser"** sebagai fallback ke halaman Duitku.
 :::
+
+---
+
+## iPaymu
+
+iPaymu menggunakan **redirect payment** — pelanggan diarahkan ke halaman pembayaran iPaymu yang menampilkan berbagai metode (VA, QRIS, e-wallet) lalu kembali ke Eznom setelah selesai.
+
+::: warning Wajib NPWP + batas transaksi
+iPaymu **mewajibkan NPWP** saat pendaftaran. Tanpa NPWP, gunakan Duitku sebagai alternatif.
+Akun tanpa upgrade ke Premium dibatasi: **Rp 2 juta / transaksi**, **Rp 5 juta / bulan**.
+Untuk ISP aktif, pastikan mengajukan upgrade akun setelah terdaftar.
+:::
+
+### Pendaftaran
+
+1. Daftar di [ipaymu.com](https://ipaymu.com)
+2. Siapkan dokumen:
+   - KTP dan NPWP (wajib)
+   - Foto selfie memegang KTP
+   - Rekening koran / buku tabungan (3 bulan terakhir)
+   - URL website atau akun media sosial dengan minimal **5 produk/postingan**
+3. Lengkapi profil bisnis di dashboard iPaymu
+4. Tunggu verifikasi (1–3 hari kerja)
+5. Salin **VA Number** dan **API Key** dari menu **Integrasi → API** di dashboard
+
+### Konfigurasi Webhook
+
+Isi **Notify URL** di dashboard iPaymu (menu **Integrasi → Notifikasi**):
+
+```
+https://eznom.noahresourcetech.com/ipaymu/webhook
+```
+
+### Field yang Diisi di Eznom
+
+| Field | Keterangan |
+|---|---|
+| Mode | Sandbox atau Production |
+| VA Number | Nomor VA akun iPaymu Anda |
+| API Key | Secret key dari menu Integrasi |
+
+### Testing Sandbox
+
+1. Daftar akun sandbox di [sandbox.ipaymu.com](https://sandbox.ipaymu.com)
+2. Salin **VA Number** dan **API Key** sandbox
+3. Aktifkan mode **Sandbox** di Eznom
+4. Buka link pembayaran dari billing pelanggan → diarahkan ke halaman iPaymu sandbox
+5. Pilih metode pembayaran test yang tersedia dan selesaikan simulasi
+6. Cek log Laravel (`storage/logs/laravel.log`) untuk konfirmasi webhook `berhasil` diterima
 
 ---
 
