@@ -25,14 +25,15 @@ Tabel menampilkan semua voucher dengan status:
 |---|---|
 | **Profil** | Pilih profil hotspot yang sudah dibuat |
 | **Jumlah** | Berapa voucher yang ingin dibuat (1–500) |
-| **Template Cetak** | Layout kartu saat dicetak (A4 / thermal) |
+| **Template Cetak** | Layout kartu saat dicetak: template tetap (A4, Letter Compact, F4, Thermal) atau **Ukuran Kustom** (tentukan sendiri ukuran kartu) |
 | **Panjang Username** | Jumlah karakter username |
 | **Panjang Password** | Jumlah karakter password |
 | **Charset Username** | Karakter yang digunakan untuk username: huruf, angka, atau kombinasi |
 | **Charset Password** | Karakter yang digunakan untuk password |
 | **Warna Kartu** | Warna latar, teks, dan aksen kartu voucher |
 | **Ukuran Font** | Ukuran font username dan password di kartu cetak |
-| **Kolom (A4)** | Jumlah kolom kartu per baris saat cetak A4 |
+| **Kolom (A4)** | Jumlah kolom kartu per baris saat cetak A4 (muncul jika template A4) |
+| **Lebar / Tinggi / Kertas** | Ukuran fisik kartu (mm) dan kertas (A4/F4/Letter) — muncul jika template **Ukuran Kustom** |
 
 3. Klik **Generate** — voucher langsung dibuat dan disync ke MikroTik
 
@@ -90,6 +91,37 @@ Setiap kartu voucher menampilkan:
 - Username & password
 - Profil/paket
 - Durasi akses
+
+---
+
+## Mode Cetak Ukuran Kustom
+
+Selain template tetap (A4 grid kolom, Letter, F4, Thermal), tersedia mode **Ukuran Kustom** yang membalik cara kerja layout: alih-alih memilih "berapa kolom", Anda menentukan **ukuran fisik kartu** dan eznom mengisi kertas sebanyak yang muat secara otomatis.
+
+### Cara pakai
+
+1. Saat generate, pilih **Template Cetak → Ukuran Kustom**
+2. Isi field yang muncul:
+   - **Lebar (mm)** — lebar fisik satu voucher (20–210 mm)
+   - **Tinggi (mm)** — tinggi fisik satu voucher (15–330 mm)
+   - **Kertas** — A4, F4, atau Letter
+3. Generate seperti biasa, lalu cetak dari menu printer di daftar batch → **Ukuran Kustom**
+
+### Cara kerja
+
+eznom mengisi kertas dengan kartu seukuran yang Anda tentukan, sebanyak yang muat per baris, lalu di tengahkan. Ukuran yang didesain = ukuran yang tercetak.
+
+| Ukuran kartu | Kertas | Hasil per halaman |
+|---|---|---|
+| 55 × 35 mm | A4 | ± 3 kolom × 8 baris |
+| 85 × 54 mm (kartu nama) | A4 | 2 kolom × 5 baris = 10 |
+| 40 × 25 mm | A4 | ± 5 kolom × 11 baris |
+
+Tinggi kartu dikunci sesuai field tinggi, sehingga garis potong tiap baris sejajar — rapi untuk dipotong massal dengan pemotong kertas.
+
+::: tip Padukan dengan Template HTML Kustom
+Mode Ukuran Kustom paling optimal dipadukan dengan template HTML kustom: rancang desain voucher Anda, lalu set ukuran fisiknya agar pas dan hemat kertas. Field ukuran tetap tampil baik di mode tampilan visual maupun mode template HTML.
+:::
 
 ---
 
