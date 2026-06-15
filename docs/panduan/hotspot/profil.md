@@ -58,3 +58,12 @@ Setiap profil bisa memiliki **harga reseller** yang berbeda dengan harga eceran.
 Saat generate batch:
 - Reseller dipilih + harga reseller ada → dicatat ke keuangan dengan harga reseller
 - Reseller dipilih + harga reseller kosong → dicatat dengan harga eceran (ada peringatan di modal)
+
+### Tampil ke Reseller
+
+Di daftar profil ada toggle **Tampil ke reseller** untuk tiap profil. Ini menentukan apakah profil muncul sebagai pilihan beli voucher di [Portal Reseller](/panduan/hotspot/reseller#portal-reseller-self-service):
+
+- **Aktif** → profil jadi opsi di portal (pastikan **Harga Reseller** sudah diisi)
+- **Disembunyikan** → profil tidak muncul di portal
+
+Profil yang sudah punya Harga Reseller otomatis ditandai "Tampil ke reseller" agar perilaku lama terjaga. Toggle ini tidak memengaruhi generate manual oleh operator.
