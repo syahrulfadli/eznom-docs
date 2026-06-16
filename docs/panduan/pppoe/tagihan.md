@@ -62,17 +62,34 @@ Pesan tagihan dikirim ke pelanggan via WhatsApp dan/atau Email sesuai pengaturan
 
 ---
 
-## Konfirmasi Pembayaran Manual
+## Mencatat Pembayaran
+
+### Pembayaran Manual (Tunai / Transfer)
 
 Untuk pembayaran yang diterima langsung (tunai, transfer bank, atau metode lain di luar sistem):
 
-1. Buka halaman **Detail Pelanggan**
-2. Di tab **Tagihan**, klik tombol **Catat Pembayaran** pada tagihan yang bersangkutan
-3. Pilih metode pembayaran (Tunai, Transfer, dll)
+1. Di halaman **Billing**, klik menu tiga titik (⋮) pada baris tagihan
+2. Pilih **Catat Bayar**
+3. Pilih metode pembayaran manual (Tunai, Transfer Bank, dll.)
 4. Isi nomor referensi jika ada (opsional)
-5. Klik **Konfirmasi**
+5. Klik **Simpan**
 
-Status tagihan akan berubah menjadi **Lunas**.
+Status tagihan langsung berubah menjadi **Lunas**. Jika pelanggan sebelumnya terisolir, layanan otomatis disambung kembali. Kuitansi dikirim ke email pelanggan jika notifikasi email aktif.
+
+### Pembayaran Online (Payment Gateway)
+
+Untuk tagihan yang akan dibayar pelanggan via transfer VA, QRIS, atau e-wallet:
+
+1. Di halaman **Billing**, klik menu tiga titik (⋮) pada baris tagihan
+2. Pilih **Catat Bayar**
+3. Pilih metode **Online (Payment Gateway)**
+4. Klik **Simpan**
+
+Sistem akan mengirim **link pembayaran** ke pelanggan via WhatsApp dan/atau Email. Pelanggan membuka link dan menyelesaikan pembayaran. Setelah gateway mengkonfirmasi (webhook), tagihan otomatis menjadi **Lunas** dan kuitansi dikirim ke email pelanggan.
+
+::: tip Link pembayaran aman
+Link yang dikirim adalah link dari eznom — bukan link gateway langsung. Sesi pembayaran di gateway baru dibuat saat pelanggan membuka link, sehingga link tidak kadaluarsa sebelum dibuka.
+:::
 
 ---
 
@@ -100,8 +117,11 @@ Buka router → **PPPoE → Laporan** untuk melihat ringkasan status pelanggan:
 
 ## Pertanyaan Umum
 
-**Pelanggan bilang sudah bayar tapi status masih "Belum Bayar".**
-Gunakan fitur **Konfirmasi Pembayaran Manual** di atas untuk mencatat pembayaran yang diterima di luar sistem.
+**Pelanggan bilang sudah bayar (manual/tunai) tapi status masih "Belum Bayar".**
+Gunakan fitur **Catat Bayar** di menu tiga titik (⋮) pada baris tagihan untuk mencatat pembayaran manual.
+
+**Sudah pilih metode online, tapi tagihan belum berubah jadi Lunas.**
+Tagihan online baru berubah Lunas setelah pelanggan menyelesaikan pembayaran di gateway dan sistem menerima konfirmasi (webhook). Pastikan pelanggan sudah membuka link pembayaran dan menyelesaikannya.
 
 **Tombol "Buat & Kirim Tagihan" muncul pesan error.**
 Pastikan minimal satu metode pembayaran sudah diaktifkan di **Pengaturan → Pembayaran**.

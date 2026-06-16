@@ -78,6 +78,23 @@ Pada prabayar, admin yang memulai siklus pembayaran — bukan sistem. Saat admin
 
 Saat masa berlaku habis, sistem otomatis membuat tagihan renewal dengan status **Belum Bayar**. Jika dalam waktu tertentu tidak ada pembayaran dan auto-isolir aktif, layanan diputus.
 
+### Metode Pembayaran saat Catat Pembayaran Prabayar
+
+Saat admin mencatat pembayaran prabayar, terdapat dua jalur berdasarkan metode yang dipilih:
+
+| Metode | Alur |
+|---|---|
+| **Tunai / Transfer / Manual** | Tagihan langsung dibuat & berstatus **Lunas**; kuitansi dikirim ke pelanggan; layanan disambung jika sebelumnya terisolir |
+| **Online (Payment Gateway)** | Tagihan dibuat dengan status **Belum Bayar**; **link pembayaran** dikirim ke pelanggan via WhatsApp/Email; tagihan baru menjadi **Lunas** setelah pelanggan menyelesaikan pembayaran di gateway (webhook) |
+
+::: tip Link pembayaran prabayar
+Link yang dikirim adalah link aman dari eznom (`/billing/pay/...`), bukan link gateway langsung. Sesi gateway baru dibuat saat pelanggan membuka link — bukan saat admin mencatat. Setelah gateway mengkonfirmasi pembayaran, eznom otomatis mengirim **kuitansi/invoice** ke email pelanggan.
+:::
+
+::: warning Masa berlaku & metode online
+Saat memilih metode online, field **"Berlaku Sampai Periode Berikutnya"** tidak tersedia — masa berlaku baru ditentukan setelah pembayaran dikonfirmasi oleh gateway, bukan saat admin membuat tagihan.
+:::
+
 ---
 
 ## Isolasi & Reconnect

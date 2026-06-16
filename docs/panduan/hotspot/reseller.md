@@ -80,9 +80,11 @@ Portal default **nonaktif** — selama belum diaktifkan, alur lama (Anda generat
 
 ### Yang bisa dilakukan reseller
 
-- **Lihat saldo** dan riwayat transaksi
+- **Dashboard stok & penjualan** — ringkasan saldo aktif, total voucher terjual, dan pendapatan bulan ini; kartu cepat per profil menampilkan stok tersisa, harga, dan margin keuntungan
+- **Lihat saldo** dan riwayat transaksi lengkap
 - **Top up saldo** — transfer manual (upload bukti, Anda konfirmasi) atau pembayaran online (jika gateway aktif)
-- **Beli voucher** — saldo otomatis terpotong, voucher langsung dibuat & tersinkron ke MikroTik
+- **Beli voucher** — saldo otomatis terpotong, voucher langsung dibuat & tersinkron ke MikroTik; tombol **Beli Lagi** muncul di kartu profil yang pernah dibeli untuk reorder cepat
+- **Kelola & bagikan kode voucher** — cari kode, salin satu per satu, atau bagikan via WhatsApp langsung dari portal
 - **Cetak voucher** — mengikuti style preset cetak default Anda; voucher "kode tunggal" otomatis hanya menampilkan username
 
 ### Mengatur profil yang muncul ke reseller
@@ -101,6 +103,14 @@ Penjualan voucher lewat portal **otomatis tercatat di [Keuangan](/panduan/keuang
 ::: tip Kapan pendapatan dihitung
 Pendapatan diakui **saat reseller membeli voucher**, bukan saat top up. Top up diperlakukan sebagai **saldo/deposit** dan belum dihitung sebagai pemasukan — supaya tidak dobel hitung. Contoh: reseller top up Rp 100.000 lalu beli voucher senilai Rp 60.000 → yang tercatat sebagai pemasukan baru Rp 60.000; sisa saldo Rp 40.000 baru jadi pemasukan setelah ditukar voucher.
 :::
+
+---
+
+### Harga eceran & margin reseller
+
+Setiap profil yang ditampilkan di portal memiliki kolom **Harga Eceran** — harga jual yang Anda sarankan ke pelanggan akhir. Eznom menghitung dan menampilkan margin keuntungan reseller secara otomatis (`Harga Eceran − Harga Reseller`), sehingga reseller tahu berapa keuntungan per voucher tanpa perlu hitung manual.
+
+Isi **Harga Eceran** di **Hotspot → Profil** pada masing-masing profil yang ingin ditampilkan margin-nya.
 
 ---
 
