@@ -62,9 +62,51 @@ pengiriman ke 50 pelanggan tersebar ±4 menit, bukan dalam sekejap. Ini berjalan
 perlu diatur.
 :::
 
+### Batas Kirim Harian (Warm-up)
+
+Selain dijeda bertahap, ada juga **batas jumlah kirim per hari** yang naik otomatis seiring umur
+koneksi nomor Anda — nomor yang baru saja di-link lalu langsung kirim banyak pesan adalah pola
+yang paling mudah dicurigai WhatsApp sebagai bot.
+
+| Umur koneksi | Batas per hari |
+|---|---|
+| Hari 1–3 | 20 pesan |
+| Hari 4–7 | 50 pesan |
+| Hari 8–14 | 100 pesan |
+| Hari 15 ke atas | 200 pesan |
+
+Progress bar di card **WhatsApp Gateway** menunjukkan pemakaian hari ini terhadap batas tersebut
+(reset tiap hari). Kalau batas tercapai, pesan yang tersisa hari itu **tidak terkirim** — bukan
+ditunda otomatis ke besok, jadi periksa progress bar kalau ada pelanggan yang merasa belum
+menerima notifikasi padahal sudah seharusnya.
+
+::: info Kapan Hitungan Umur Koneksi Dimulai Ulang
+Hitungan **tidak** reset kalau koneksi sempat putus sebentar lalu otomatis tersambung lagi
+(gangguan jaringan biasa). Hitungan **reset ke hari ke-1** hanya kalau nomor benar-benar
+ter-logout/diputus permanen dan Anda scan QR ulang — termasuk kalau nomor Anda diblokir
+WhatsApp dan Anda menghubungkan nomor baru.
+:::
+
+### Pemberitahuan Otomatis Saat Terputus
+
+Kalau koneksi WhatsApp Anda terputus secara **tidak terduga** (bukan karena Anda klik "Putuskan
+Koneksi" sendiri), eznom otomatis mengirim **email** ke alamat akun Anda — supaya Anda tidak
+baru sadar berhari-hari kemudian setelah pelanggan komplain tidak menerima notifikasi.
+
+Isi email berbeda sesuai sebabnya: kalau kemungkinan terblokir WhatsApp, email menyarankan
+menghubungkan nomor **lain** (karena nomor yang sama biasanya tidak akan berhasil terhubung
+lagi); kalau sebab lain (misal ditautkan ke perangkat lain), email menyebutkan Anda bisa
+menghubungkan ulang nomor yang sama.
+
 **Memutuskan koneksi:** klik **Putuskan Koneksi** di card yang sama jika ingin berhenti
 menggunakan nomor tersebut (misal mau ganti nomor). Setelah diputuskan, perlu scan QR ulang
 dengan nomor (baru atau sama) untuk menghubungkan kembali.
+
+::: tip Jaga Nomor Tetap "Hidup" Secara Wajar
+Nomor yang hanya dipakai mengirim otomatis tanpa pernah dibuka manusia lebih mudah dicurigai
+sistem deteksi WhatsApp dibanding nomor yang juga dipakai normal. Sesekali buka WhatsApp di HP
+yang nomornya terhubung, baca pesan masuk seperti biasa — jangan biarkan nomor itu pasif total.
+:::
 
 ---
 
