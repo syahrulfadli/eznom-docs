@@ -22,20 +22,57 @@ Buka **Pengaturan → Notifikasi**
 
 ### WhatsApp Gateway
 
-eznom menggunakan gateway WhatsApp terpusat berbasis **Meta Cloud API**. Tidak diperlukan konfigurasi API key per akun — Anda cukup mengaktifkan channel WhatsApp dan sistem siap digunakan.
+Berbeda dari gateway terpusat sebelumnya, eznom sekarang menghubungkan **nomor WhatsApp Anda
+sendiri** (BYO — Bring Your Own number) untuk mengirim notifikasi ke pelanggan. Anda yang
+menentukan nomor mana yang dipakai, bukan eznom.
 
-Status gateway ditampilkan di bagian **WhatsApp Gateway** pada halaman pengaturan notifikasi:
+#### Cara Menghubungkan
+
+1. Buka **Pengaturan → Notifikasi**, scroll ke card **WhatsApp Gateway**.
+2. Klik **Hubungkan Nomor WhatsApp**.
+3. Buka WhatsApp di HP yang nomornya ingin dipakai → **Linked Devices** → **Link a Device**.
+4. Scan QR yang muncul di layar eznom.
+5. Status berubah ke **Terhubung** secara otomatis begitu QR berhasil di-scan (tidak perlu refresh).
+
+Status gateway ditampilkan di card yang sama:
 
 | Status | Arti |
 |---|---|
-| 🟢 **Aktif** | Gateway siap mengirim notifikasi |
-| 🟡 **Belum aktif** | Gateway sedang dalam konfigurasi — hubungi tim eznom jika mendesak |
+| 🟢 **Terhubung** | Nomor siap mengirim notifikasi — nomor yang terhubung ditampilkan di card |
+| 🟡 **Menunggu Scan** | QR sudah dibuat, belum di-scan — QR otomatis diperbarui tiap ~20–60 detik jika belum di-scan |
+| ⚪ **Belum Terhubung** | Belum ada nomor yang dihubungkan, atau sudah diputuskan |
+
+::: danger Risiko: Nomor Bisa Diblokir WhatsApp
+Cara menghubungkan ini **tidak resmi** (bukan WhatsApp Business API), sehingga melanggar
+Ketentuan Layanan WhatsApp. WhatsApp bisa memblokir nomor yang Anda hubungkan sewaktu-waktu tanpa
+pemberitahuan, dan **tidak ada jalur komplain resmi** ke WhatsApp/Meta karena ini bukan channel
+resmi mereka. Jika terblokir, nomor tersebut tidak bisa dipakai lagi sama sekali — perlu
+menghubungkan nomor lain dari awal.
+
+**Saran:** jangan gunakan nomor WhatsApp utama bisnis Anda (yang dipakai untuk komunikasi
+penting/CS pelanggan). Gunakan nomor cadangan atau nomor baru khusus untuk notifikasi otomatis
+ini, supaya jika terjadi pemblokiran, operasional utama bisnis Anda tidak terganggu.
+:::
+
+::: tip Mitigasi: Pengiriman Otomatis Dijeda Bertahap
+Untuk mengecilkan risiko di atas, sistem **tidak** mengirim notifikasi massal (pengingat tagihan
+harian ke banyak pelanggan, aksi isolir borongan, atau catat-bayar prabayar borongan) sekaligus
+dalam hitungan detik. Setiap pesan diberi jeda sekitar **5 detik** dari pesan sebelumnya — jadi
+pengiriman ke 50 pelanggan tersebar ±4 menit, bukan dalam sekejap. Ini berjalan otomatis, tidak
+perlu diatur.
+:::
+
+**Memutuskan koneksi:** klik **Putuskan Koneksi** di card yang sama jika ingin berhenti
+menggunakan nomor tersebut (misal mau ganti nomor). Setelah diputuskan, perlu scan QR ulang
+dengan nomor (baru atau sama) untuk menghubungkan kembali.
 
 ---
 
 ## Persetujuan Pelanggan (Opt-in WhatsApp)
 
-Sesuai [Kebijakan Bisnis WhatsApp](https://www.whatsapp.com/legal/business-terms), notifikasi hanya boleh dikirim ke nomor pelanggan yang telah memberikan **persetujuan eksplisit**.
+Notifikasi hanya boleh dikirim ke nomor pelanggan yang telah memberikan **persetujuan eksplisit**
+— ini berlaku terlepas dari channel WA yang dipakai, dan juga melindungi nomor WA Anda sendiri
+dari laporan spam oleh pelanggan yang tidak menyangka menerima pesan otomatis.
 
 ### Cara Mengaktifkan
 
@@ -51,7 +88,7 @@ Pelanggan yang sudah opt-in ditandai badge hijau **WA** di kolom nomor HP pada t
 | `Notifikasi WhatsApp` **nonaktif** | Tidak ada WA yang dikirim, meskipun channel notifikasi di pengaturan = WhatsApp |
 
 ::: warning Catatan Kepatuhan
-Mengirim pesan WhatsApp tanpa persetujuan pelanggan melanggar ketentuan Meta dan dapat mengakibatkan nomor bisnis Anda diblokir. Pastikan Anda mendapatkan persetujuan pelanggan sebelum mengaktifkan opsi ini — misalnya melalui formulir pendaftaran, kontrak berlangganan, atau konfirmasi lisan yang tercatat.
+Mengirim pesan WhatsApp tanpa persetujuan pelanggan melanggar Ketentuan Layanan WhatsApp dan dapat mengakibatkan nomor yang Anda hubungkan diblokir. Pastikan Anda mendapatkan persetujuan pelanggan sebelum mengaktifkan opsi ini — misalnya melalui formulir pendaftaran, kontrak berlangganan, atau konfirmasi lisan yang tercatat.
 :::
 
 ---
@@ -150,7 +187,12 @@ Sesuai kebijakan WhatsApp Business, interval pengingat tunggakan ditetapkan **mi
 | Proses isolir otomatis | Setiap hari **08:00** |
 | Generate tagihan bulanan | Setiap hari **01:00** |
 
-Saat proses isolir berjalan, notifikasi WA dikirim **secara bertahap** (selang 5 detik per pelanggan) agar tidak membebani gateway Meta sekaligus. Notifikasi tetap akan terkirim meski dengan sedikit jeda dari waktu isolir.
+Setiap kali sistem mengirim notifikasi WA ke **banyak** pelanggan sekaligus (pengingat harian,
+isolir otomatis, tunggakan berulang, atau aksi borongan seperti catat-bayar prabayar massal),
+pesan dijeda **bertahap** (selang 5 detik per pelanggan) supaya tidak terkirim sekaligus dalam
+hitungan detik dari satu nomor — lihat kotak "Mitigasi" di bagian WhatsApp Gateway di atas.
+Notifikasi tetap akan terkirim, hanya dengan jeda beberapa detik hingga beberapa menit dari waktu
+prosesnya dimulai, tergantung jumlah pelanggan dalam batch tersebut.
 
 ---
 
@@ -158,11 +200,11 @@ Saat proses isolir berjalan, notifikasi WA dikirim **secara bertahap** (selang 5
 
 | Event | Channel | Pemicu |
 |---|---|---|
-| Pengingat H-N sebelum jatuh tempo | WA + Email | Scheduler 07:00 |
-| Jatuh tempo hari ini (H-0) | WA + Email | Scheduler 07:00 |
-| Pelanggan diisolir otomatis | WA | Scheduler 08:00 (bertahap, selang 5 detik) |
-| Tunggakan berulang | WA + Email | Scheduler 07:00 (sesuai interval yang diset) |
-| Konfirmasi tagihan lunas | WA + Email | Midtrans webhook / admin catat bayar / admin prabayar |
+| Pengingat H-N sebelum jatuh tempo | WA + Email | Scheduler 07:00 (bertahap) |
+| Jatuh tempo hari ini (H-0) | WA + Email | Scheduler 07:00 (bertahap) |
+| Pelanggan diisolir otomatis | WA | Scheduler 08:00 (bertahap) |
+| Tunggakan berulang | WA + Email | Scheduler 07:00, sesuai interval yang diset (bertahap) |
+| Konfirmasi tagihan lunas | WA + Email | Midtrans webhook / admin catat bayar / admin catat-bayar prabayar (borongan → bertahap) |
 | Kirim link bayar (admin) | WA + Email | Admin klik "Buat & Kirim Tagihan" |
 
 ::: tip

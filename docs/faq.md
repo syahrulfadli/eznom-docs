@@ -63,10 +63,15 @@ Ya. Anda bisa mengatur **tanggal jatuh tempo khusus** per-pelanggan yang akan ov
 
 ### Notifikasi WhatsApp tidak terkirim, apa penyebabnya?
 
-1. Pastikan API Key dan nomor pengirim Fonnte sudah diisi dengan benar
-2. Cek apakah nomor WA Fonnte Anda masih aktif (tidak terlogout dari perangkat)
+1. Cek status di **Pengaturan → Notifikasi**, card **WhatsApp Gateway** — harus **Terhubung**.
+   Kalau status **Belum Terhubung** atau **Menunggu Scan**, hubungkan/scan ulang nomor WA Anda.
+2. Pastikan pelanggan yang dimaksud sudah mengaktifkan toggle **Notifikasi WhatsApp** di data
+   pelanggannya — tanpa ini, sistem tidak akan mengirim WA ke pelanggan tersebut sama sekali.
 3. Pastikan nomor pelanggan diisi dengan format yang valid (08xxx atau +62xxx)
-4. Cek **Tab Notifikasi** di detail pelanggan untuk melihat pesan error
+4. Cek **Tab Notifikasi** di detail pelanggan untuk melihat pesan error spesifik
+5. Kalau nomor WA Anda tiba-tiba logout sendiri dari WhatsApp di HP (bukan Anda yang putuskan
+   manual), kemungkinan nomor tersebut diblokir WhatsApp — lihat peringatan risiko di halaman
+   Pengaturan → Notifikasi. Anda perlu menghubungkan nomor lain.
 
 ### Bisa ganti isi pesan notifikasi?
 
