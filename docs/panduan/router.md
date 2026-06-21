@@ -71,6 +71,11 @@ Fitur ini memungkinkan admin mengakses web interface modem pelanggan (webfig) da
 Jika interface VPN dikosongkan, NAT rule berlaku untuk semua interface termasuk jalur publik. Selalu isi nama interface VPN yang spesifik.
 :::
 
+### Notifikasi WhatsApp Default
+
+Atur apakah pelanggan baru di router ini langsung dianggap setuju menerima notifikasi WhatsApp
+secara default — lihat [Mengubah Default untuk Pelanggan Baru](/panduan/notifikasi#mengubah-default-untuk-pelanggan-baru).
+
 ---
 
 ## Dasbor Router

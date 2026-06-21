@@ -91,6 +91,27 @@ Pelanggan yang sudah opt-in ditandai badge hijau **WA** di kolom nomor HP pada t
 Mengirim pesan WhatsApp tanpa persetujuan pelanggan melanggar Ketentuan Layanan WhatsApp dan dapat mengakibatkan nomor yang Anda hubungkan diblokir. Pastikan Anda mendapatkan persetujuan pelanggan sebelum mengaktifkan opsi ini — misalnya melalui formulir pendaftaran, kontrak berlangganan, atau konfirmasi lisan yang tercatat.
 :::
 
+### Mengubah Default untuk Pelanggan Baru
+
+Secara default, pelanggan baru selalu dimulai dengan toggle **Notifikasi WhatsApp nonaktif** —
+admin harus mengaktifkannya manual satu-per-satu setelah pelanggan menyetujui. Kalau proses
+pendaftaran Anda **sudah** mengumpulkan persetujuan pelanggan secara konsisten (misal lewat
+formulir pendaftaran atau klausul kontrak), Anda bisa mengubah nilai default ini per router.
+
+Buka **Router → Pengaturan**, cari card **"Notifikasi WhatsApp"**, aktifkan toggle **"Aktifkan
+opt-in WhatsApp secara default untuk pelanggan baru"**.
+
+::: danger Bukan Pengganti Persetujuan Sungguhan
+Opsi ini hanya mengubah **nilai default** saat pelanggan baru dibuat — bukan persetujuan
+sungguhan dari pelanggan tersebut. Hanya aktifkan kalau proses pendaftaran Anda benar-benar
+mengumpulkan persetujuan tiap pelanggan, bukan sekadar untuk menghindari toggle manual.
+Mengaktifkan opsi ini tanpa persetujuan nyata sama saja dengan melanggar Ketentuan Layanan
+WhatsApp seperti dijelaskan di atas — risikonya tetap nomor WhatsApp Anda yang diblokir.
+:::
+
+Berlaku untuk pelanggan baru yang ditambah lewat form **maupun** yang diimpor dari MikroTik.
+**Pelanggan yang sudah ada tidak terpengaruh** — perubahan default ini tidak retroaktif.
+
 ---
 
 ## Jadwal Pengingat
