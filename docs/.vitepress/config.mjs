@@ -13,7 +13,7 @@ export default defineConfig({
     nav: [
       { text: 'Panduan', link: '/panduan/mulai' },
       { text: 'FAQ', link: '/faq' },
-      { text: '🟢 Status', link: 'https://uptime.noahresourcetech.com', target: '_blank' },
+      { text: '🟢 Status', link: 'https://status.noahresourcetech.com', target: '_blank' },
     ],
 
     sidebar: [
