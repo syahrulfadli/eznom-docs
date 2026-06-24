@@ -37,6 +37,7 @@ export default defineConfig({
           { text: 'Kelola Pelanggan', link: '/panduan/pppoe/pelanggan' },
           { text: 'Skema Pembayaran', link: '/panduan/pppoe/skema-pembayaran' },
           { text: 'Tagihan & Pembayaran', link: '/panduan/pppoe/tagihan' },
+          { text: 'Portal Bayar Pelanggan', link: '/panduan/pppoe/portal-pembayaran' },
           { text: 'Kontrak Digital', link: '/panduan/pppoe/kontrak' },
           { text: 'Peta Pelanggan', link: '/panduan/pppoe/peta' },
         ],

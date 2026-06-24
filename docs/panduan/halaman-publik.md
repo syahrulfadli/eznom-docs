@@ -15,6 +15,7 @@ Fitur ini menghasilkan tiga halaman web yang bisa diakses siapa saja tanpa login
 | URL | Isi |
 |---|---|
 | `/bisnis/{slug}` | Beranda bisnis — logo, deskripsi, daftar paket, kontak |
+| `/bisnis/{slug}/bayar` | [Portal pembayaran mandiri](/panduan/pppoe/portal-pembayaran) — pelanggan PPPoE cek tagihan & bayar dengan ID Pelanggan |
 | `/bisnis/{slug}/privacy` | Kebijakan Privasi |
 | `/bisnis/{slug}/tos` | Syarat & Ketentuan + Kebijakan Refund |
 
