@@ -10,6 +10,10 @@ Pertanyaan yang sering ditanyakan tentang penggunaan eznom.
 
 eznom adalah platform manajemen ISP berbasis web untuk operator RT/RW Net dan WISP. eznom membantu mengelola pelanggan PPPoE, hotspot, tagihan bulanan, dan notifikasi otomatis dari satu dasbor.
 
+### Apakah eznom adalah RADIUS server?
+
+Tidak. eznom bukan RADIUS server. eznom adalah panel manajemen ISP yang berkomunikasi langsung dengan MikroTik melalui **MikroTik API**. Router MikroTik tetap menangani autentikasi PPPoE-nya sendiri (menggunakan Secrets & Profiles bawaan MikroTik), dan eznom bertugas mengelola data pelanggan, tagihan, sinkronisasi status, serta aksi isolir/reconnect melalui API tersebut — tanpa menggantikan mekanisme autentikasi di router.
+
 ### Apakah eznom mendukung beberapa router?
 
 Ya. Satu akun eznom bisa mengelola banyak router MikroTik. Setiap router dikelola secara terpisah dengan data pelanggan, tagihan, dan keuangan masing-masing.
@@ -21,6 +25,10 @@ Semua versi RouterOS yang mendukung API (v6 dan v7). Untuk REST API, diperlukan 
 ---
 
 ## Router & VPN
+
+### Apakah saya harus membeli layanan VPN terpisah?
+
+Tidak. Infrastruktur VPN untuk menghubungkan router MikroTik ke server eznom sudah **termasuk dalam semua paket berlangganan** — tidak perlu berlangganan layanan VPN pihak ketiga. Anda cukup mengikuti wizard konfigurasi VPN di eznom untuk mendapatkan kredensial dan menginstalnya di MikroTik.
 
 ### Mengapa router perlu terhubung via VPN?
 
@@ -80,6 +88,22 @@ Untuk saat ini, template pesan sudah ditentukan oleh sistem dan tidak bisa dikus
 ### Notifikasi H-7 sudah dikirim tapi tidak ada H-3. Kenapa?
 
 Pastikan **H-3 dicentang** di pengaturan notifikasi. Jika baru saja dicentang setelah H-7 sudah terkirim, notifikasi H-3 akan dikirim saat tiba 3 hari sebelum JT.
+
+---
+
+## Payment Gateway
+
+### Apakah eznom menyediakan payment gateway sendiri?
+
+Tidak. eznom tidak memiliki payment gateway sendiri. eznom berfungsi sebagai **jembatan integrasi** (driver) yang menghubungkan sistem tagihan Anda dengan payment gateway pilihan: **Midtrans**, **Duitku**, **iPaymu**, dan **DOKU**. Anda tetap perlu mendaftar dan mendapatkan akun merchant sendiri di gateway yang dipilih, lalu mengisikan API key-nya di pengaturan eznom.
+
+### Payment gateway mana yang direkomendasikan?
+
+Tergantung kebutuhan:
+
+- **Duitku** — direkomendasikan untuk operator perorangan, proses pendaftaran mudah dan tidak memerlukan badan usaha resmi.
+- **Midtrans** — pilihan populer dengan metode pembayaran yang lengkap, cocok jika sudah punya akun merchant.
+- **iPaymu & DOKU** — alternatif lain yang juga didukung penuh oleh eznom.
 
 ---
 
