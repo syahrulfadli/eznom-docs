@@ -5,6 +5,10 @@ export default defineConfig({
   description: 'Panduan lengkap penggunaan platform manajemen ISP eznom',
   lang: 'id-ID',
 
+  // Timestamp per halaman diambil dari waktu commit git terakhir file .md-nya,
+  // bukan ditulis manual di frontmatter — supaya tidak pernah basi.
+  lastUpdated: true,
+
   head: [
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   ],
@@ -83,6 +87,18 @@ export default defineConfig({
         ],
       },
     ],
+
+    lastUpdated: {
+      text: 'Terakhir diperbarui',
+      formatOptions: {
+        dateStyle: 'long',
+        timeStyle: 'short',
+        // Ikuti lang situs (id-ID), bukan locale browser pembaca — kalau tidak,
+        // pembaca dengan browser berbahasa Inggris melihat "August 7, 2026"
+        // di tengah halaman berbahasa Indonesia.
+        forceLocale: true,
+      },
+    },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/syahrulfadli' },
