@@ -50,6 +50,29 @@ Catatan masuk otomatis saat operator meng-generate batch voucher. Nominal yang d
 
 Batch dengan harga profil = 0 tidak menghasilkan catatan keuangan.
 
+### Top Up Reseller Bukan Pendapatan
+
+Top up saldo reseller **tidak** dicatat sebagai pemasukan — itu deposit. Pendapatan baru diakui
+saat reseller menukar saldonya menjadi voucher, supaya tidak ada penghitungan ganda. Lihat
+[Portal Reseller](/panduan/hotspot/reseller#pencatatan-keuangan).
+
+---
+
+## Insight Bisnis
+
+Selain daftar transaksi, tersedia halaman **Insight Bisnis** per router yang menyajikan ringkasan
+analitik: indikator kinerja utama, tren pendapatan, dan komposisi pelanggan.
+
+Buka router → **Insight Bisnis**
+
+::: info Izin terpisah
+Akses ke Insight Bisnis dikontrol modul izin **Insight Bisnis** yang terpisah dari modul
+**Keuangan** — sehingga Anda bisa memberi seseorang gambaran besar bisnis tanpa memberinya akses ke
+catatan transaksi per baris, atau sebaliknya.
+:::
+
+---
+
 ::: tip
 Untuk laporan khusus hotspot — performa per profil, pendapatan reseller, dan tren pemakaian voucher — gunakan halaman [Laporan Voucher](/panduan/hotspot/laporan).
 :::

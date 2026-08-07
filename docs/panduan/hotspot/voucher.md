@@ -23,19 +23,48 @@ Tabel menampilkan semua voucher dengan status:
 
 | Field | Keterangan |
 |---|---|
+| **Preset** | Opsional — muat seluruh pengaturan karakter & tampilan dari preset tersimpan |
 | **Profil** | Pilih profil hotspot yang sudah dibuat |
 | **Jumlah** | Berapa voucher yang ingin dibuat (1–500) |
-| **Template Cetak** | Layout kartu saat dicetak: template tetap (A4, Letter Compact, F4, Thermal) atau **Ukuran Kustom** (tentukan sendiri ukuran kartu) |
-| **Panjang Username** | Jumlah karakter username |
-| **Panjang Password** | Jumlah karakter password |
-| **Charset Username** | Karakter yang digunakan untuk username: huruf, angka, atau kombinasi |
-| **Charset Password** | Karakter yang digunakan untuk password |
+| **Reseller** | Opsional — pilih reseller yang membeli batch ini |
+| **Template Cetak** | Layout kartu saat dicetak (lihat tabel di bawah) |
+| **Jenis Voucher** | **User + Password** (berbeda) atau **Kode Tunggal** (password sama dengan username) |
+| **Desain Kartu** | **Visual Builder** (atur warna & font via panel) atau **HTML Kustom** (pakai [Template Kartu](/panduan/hotspot/template-kartu)) |
+| **Panjang Username / Password** | Diatur lewat slider |
+| **Charset Username / Password** | Huruf besar, huruf kecil, campuran, huruf saja, atau angka saja (min. 9 digit) |
+| **QR Code** | Aktifkan untuk mencetak QR login di kartu, beserta URL dasarnya |
+| **Logo / Nama Bisnis / Tagline** | Pilih elemen bisnis mana yang ikut tampil di kartu |
 | **Warna Kartu** | Warna latar, teks, dan aksen kartu voucher |
+| **Font Kartu & Font Teks** | Font kode voucher dan font teks lain diatur **terpisah** |
 | **Ukuran Font** | Ukuran font username dan password di kartu cetak |
 | **Kolom (A4)** | Jumlah kolom kartu per baris saat cetak A4 (muncul jika template A4) |
 | **Lebar / Tinggi / Kertas** | Ukuran fisik kartu (mm) dan kertas (A4/F4/Letter) — muncul jika template **Ukuran Kustom** |
 
 3. Klik **Generate** — voucher langsung dibuat dan disync ke MikroTik
+
+### Pilihan Template Cetak
+
+| Template | Hasil |
+|---|---|
+| **A4 — Grid kolom** | Grid A4 dengan jumlah kolom yang Anda tentukan |
+| **Ukuran Kustom** | Anda tentukan ukuran fisik kartu, eznom mengisi kertas sebanyak yang muat |
+| **Letter Compact** | 5 kolom × 9 baris |
+| **F4 — 5 × 10** | 50 voucher per halaman |
+| **F4 — 5 × 11** | 55 voucher per halaman |
+| **Thermal 58 mm** | Struk printer thermal 58 mm |
+| **Thermal 80 mm** | Struk printer thermal 80 mm |
+
+### Jenis Voucher
+
+| Jenis | Keterangan |
+|---|---|
+| **User + Password** | Username dan password berbeda, dicetak keduanya di kartu |
+| **Kode Tunggal** | Password sama dengan username — pelanggan cukup mengingat satu kode. Kartu otomatis hanya menampilkan satu kode |
+
+### Tagline di Kartu
+
+Toggle **Tagline** menampilkan tagline bisnis Anda di kartu voucher. Isinya diambil dari
+**Pengaturan → Profil Bisnis**, jadi cukup diubah di satu tempat untuk semua batch berikutnya.
 
 ### Generate untuk Reseller
 
@@ -79,6 +108,29 @@ Preset yang ditandai sebagai default akan dimuat otomatis setiap kali modal gene
 
 Pilih preset dari dropdown, lalu klik **Hapus** di samping tombol Default. Konfirmasi penghapusan di dialog yang muncul.
 
+::: info Nama preset unik per bisnis
+Nama preset dan nama template kartu bersifat unik di dalam bisnis Anda — bukan unik secara global.
+Bisnis lain boleh memakai nama yang sama tanpa saling mengganggu.
+:::
+
+---
+
+## Sinkronisasi Voucher ke MikroTik
+
+Voucher dikirim ke MikroTik lewat antrean latar belakang yang **terpisah dari antrean tugas lain**,
+sehingga batch besar tidak menghambat sinkronisasi PPPoE atau notifikasi.
+
+Status pengiriman batch ditampilkan di daftar batch. Kalau ada batch yang berhenti di tengah jalan,
+Anda akan menerima [notifikasi operator](/panduan/notifikasi-operator) **Batch voucher berhenti** —
+batch yang berhenti tidak melanjutkan sendiri dan perlu dikirim ulang setelah masalahnya beres.
+Notifikasi **Batch voucher selesai dikirim** menandakan semua voucher sudah masuk ke MikroTik.
+
+::: tip Batch tidak lagi macet permanen
+Batch voucher reseller yang dulu bisa tersangkut selamanya di status "menunggu antrian" sudah
+diperbaiki. Kalau Anda masih menemukan batch dalam status itu untuk waktu lama, periksa koneksi VPN
+router terlebih dahulu.
+:::
+
 ---
 
 ## Cetak Voucher
@@ -86,11 +138,15 @@ Pilih preset dari dropdown, lalu klik **Hapus** di samping tombol Default. Konfi
 1. Centang voucher yang ingin dicetak, atau centang semua
 2. Klik **Cetak** — halaman cetak terbuka dengan tampilan kartu voucher yang siap dicetak
 
-Setiap kartu voucher menampilkan:
-- Nama bisnis Anda
-- Username & password
-- Profil/paket
-- Durasi akses
+Setiap kartu voucher menampilkan (tergantung pengaturan saat generate):
+- Logo dan nama bisnis Anda
+- Tagline bisnis
+- Username & password (atau kode tunggal)
+- Harga dan profil/paket
+- Durasi akses — otomatis menyertakan kuota bila profil punya batas, misal `7 hari | 4 GB`
+- QR code login
+
+Desain kartu bisa diganti sepenuhnya lewat [Template Kartu Voucher](/panduan/hotspot/template-kartu).
 
 ---
 
@@ -119,8 +175,32 @@ eznom mengisi kertas dengan kartu seukuran yang Anda tentukan, sebanyak yang mua
 
 Tinggi kartu dikunci sesuai field tinggi, sehingga garis potong tiap baris sejajar — rapi untuk dipotong massal dengan pemotong kertas.
 
+### Pratinjau Susunan per Lembar
+
+Begitu lebar dan tinggi diisi, modal generate langsung menampilkan hasil hitungannya:
+
+- Berapa **kolom × baris** dan **voucher per lembar**
+- Ukuran kertas dan area cetaknya (margin 8 mm, jarak antar kartu 2 mm)
+- **Sisa ruang** di kanan dan bawah
+- **Lebar maksimal untuk menambah satu kolom** — paling berguna kalau Anda mengincar jumlah kolom
+  tertentu, misalnya "5 kolom" dan ingin tahu berapa lebar kartu yang muat
+
+Kolom lebar dan tinggi tidak dikoreksi otomatis saat dikosongkan — Anda bebas menghapus isinya dan
+mengetik ulang tanpa angka melompat balik.
+
+::: warning Angka ini berlaku pada skala cetak 100%
+Dialog cetak browser punya opsi skala ("Sesuaikan halaman" / "Fit to printable area") yang
+memperkecil seluruh halaman. Kolom bisa masuk lebih banyak dari perkiraan, **tapi kartunya
+tercetak lebih kecil** dari ukuran mm yang Anda minta. Pratinjau menyebutkan berapa persen skala
+itu dan berapa lebar kartu yang sebenarnya tercetak. Kalau ukuran fisik kartu penting bagi Anda
+(misalnya harus muat di dompet), pastikan skala di dialog cetak diset **100%**.
+:::
+
 ::: tip Padukan dengan Template HTML Kustom
-Mode Ukuran Kustom paling optimal dipadukan dengan template HTML kustom: rancang desain voucher Anda, lalu set ukuran fisiknya agar pas dan hemat kertas. Field ukuran tetap tampil baik di mode tampilan visual maupun mode template HTML.
+Mode Ukuran Kustom paling optimal dipadukan dengan [Template Kartu](/panduan/hotspot/template-kartu):
+rancang desain voucher Anda, lalu set ukuran fisiknya agar pas dan hemat kertas. Setiap preset
+template sudah menyertakan saran ukuran cetaknya. Field ukuran tetap tampil baik di mode Visual
+Builder maupun mode HTML Kustom.
 :::
 
 ---

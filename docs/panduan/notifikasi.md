@@ -6,6 +6,13 @@ eznom mengirim notifikasi ke pelanggan PPPoE secara otomatis via **WhatsApp** da
 Notifikasi via **WhatsApp** hanya tersedia untuk paket yang menyertakan fitur **WhatsApp Gateway**. Jika paket Anda tidak mencakup fitur ini, hanya pilihan **Email** yang tersedia.
 :::
 
+::: tip Notifikasi untuk Anda sendiri
+Halaman ini hanya membahas notifikasi **ke pelanggan**. Untuk peringatan yang dikirim **ke Anda**
+(router mati, gateway WA terputus, pembayaran masuk, batch voucher macet), lihat
+[Notifikasi untuk Operator](/panduan/notifikasi-operator). Keduanya diatur di halaman
+**Pengaturan → Notifikasi** yang sama, di kolom yang berbeda.
+:::
+
 ---
 
 ## Konfigurasi Awal
@@ -110,6 +117,56 @@ yang nomornya terhubung, baca pesan masuk seperti biasa — jangan biarkan nomor
 
 ---
 
+## Pengiriman Email
+
+Card **Penggunaan Email** muncul di **Pengaturan → Notifikasi** ketika channel notifikasi
+mencakup email.
+
+### Batas Harian Email Platform
+
+Secara default email dikirim lewat server email platform yang dipakai bersama semua tenant. Untuk
+menjaga reputasi pengiriman (supaya email eznom tidak masuk folder spam bagi semua orang), ada
+batas **200 email per hari per akun**.
+
+Progress bar menunjukkan pemakaian hari ini terhadap batas tersebut dan reset setiap hari.
+
+::: warning Yang melebihi batas tidak terkirim
+Pesan yang melewati batas **tidak dikirim** dan **tidak dicoba ulang otomatis** keesokan harinya.
+Kegagalannya tercatat di **Log Notifikasi** dengan keterangan batas harian tercapai. Kalau Anda
+rutin menyentuh batas ini, gunakan server email sendiri (di bawah).
+:::
+
+### Server Email Sendiri (BYO SMTP)
+
+Anda bisa mengirim email notifikasi lewat server email milik Anda sendiri — dengan begitu email
+keluar atas nama domain Anda dan **tidak ada batas harian dari eznom** (yang berlaku hanya kuota
+provider email Anda).
+
+1. Buka **Pengaturan → Notifikasi**, cari card **Server Email Sendiri (SMTP)**
+2. Pilih **Preset** untuk mengisi host & port otomatis: Gmail / Google Workspace, Zoho Mail,
+   Outlook / Microsoft 365, atau **Custom** untuk mengisi manual
+3. Lengkapi kredensial:
+
+| Field | Keterangan |
+|---|---|
+| **Host SMTP** | Alamat server, misal `smtp.gmail.com` |
+| **Port** | `587` untuk TLS, `465` untuk SSL |
+| **Enkripsi** | TLS (port 587), SSL (port 465), atau tanpa enkripsi |
+| **Username** | Biasanya alamat email lengkap |
+| **Password** | Untuk Gmail/Microsoft gunakan **App Password**, bukan password akun |
+| **Email Pengirim** | Alamat yang tampil sebagai pengirim |
+| **Nama Pengirim** | Nama bisnis yang tampil di inbox pelanggan |
+
+4. Simpan, lalu jalankan **Tes Koneksi** — SMTP baru dipakai setelah berhasil diverifikasi
+
+::: info Hanya pemilik akun utama
+Card SMTP hanya tampil untuk pemilik akun. Sub-pengguna tidak bisa melihat atau mengubah
+kredensial server email. Password disimpan write-only — setelah tersimpan, isinya tidak pernah
+dikirim balik ke browser, hanya ditandai "sudah tersimpan".
+:::
+
+---
+
 ## Persetujuan Pelanggan (Opt-in WhatsApp)
 
 Notifikasi hanya boleh dikirim ke nomor pelanggan yang telah memberikan **persetujuan eksplisit**
@@ -163,10 +220,18 @@ Berlaku untuk pelanggan baru yang ditambah lewat form **maupun** yang diimpor da
 Centang hari-hari yang Anda inginkan:
 
 ```
-□ H-1  □ H-2  □ H-3  □ H-5  ☑ H-7  □ H-14  □ H-30
+□ H-1  □ H-2  □ H-3  □ H-5  ☑ H-7
 ```
 
 Contoh: centang H-7 dan H-3 → notifikasi dikirim 7 hari sebelum JT, lalu pengingat kedua 3 hari sebelum JT. Setiap kombinasi hanya dikirim **satu kali** per tagihan.
+
+::: warning Minimal 1, maksimal 2 hari pengingat
+Pilihan yang tersedia hanya **H-1, H-2, H-3, H-5, dan H-7**, dan Anda hanya bisa mencentang
+**maksimal 2** di antaranya. Batas ini mengikuti kebijakan WhatsApp Business — mengirim terlalu
+banyak pengingat untuk satu tagihan yang sama mudah dianggap spam dan berujung nomor Anda
+diblokir. Minimal 1 hari harus dicentang; pengaturan tidak bisa disimpan dengan semua kotak
+kosong.
+:::
 
 Isi pesan H-N: nama ISP, nama pelanggan, nama paket, tanggal jatuh tempo, nominal tagihan.
 
@@ -247,8 +312,19 @@ Sesuai kebijakan WhatsApp Business, interval pengingat tunggakan ditetapkan **mi
 | Proses | Waktu |
 |---|---|
 | Kirim notifikasi pengingat H-N + H-0 | Setiap hari **07:00** |
-| Proses isolir otomatis | Setiap hari **08:00** |
+| Proses isolir otomatis | **Setiap jam** |
 | Generate tagihan bulanan | Setiap hari **01:00** |
+| Sinkronisasi status pelanggan dari MikroTik | Setiap **30 detik** |
+
+::: info Isolir kini berjalan tiap jam, notifikasinya tidak
+Sebelumnya isolir otomatis hanya dievaluasi sekali sehari pukul 08:00 — pelanggan yang lewat
+jatuh tempo di siang hari baru terputus keesokan paginya. Sekarang evaluasi berjalan **setiap
+jam**, jadi tindakannya jauh lebih dekat ke waktu jatuh temponya.
+
+Notifikasi isolir ke pelanggan **tidak** ikut jadi tiap jam. Pesan hanya dikirim di jendela
+**08:00–21:00**; kalau isolir terjadi di luar jam itu, notifikasinya ditunda ke pukul 08:00
+berikutnya. Pelanggan tidak akan dibangunkan pukul 3 pagi oleh pesan penagihan.
+:::
 
 Setiap kali sistem mengirim notifikasi WA ke **banyak** pelanggan sekaligus (pengingat harian,
 isolir otomatis, tunggakan berulang, atau aksi borongan seperti catat-bayar prabayar massal),
@@ -265,10 +341,12 @@ prosesnya dimulai, tergantung jumlah pelanggan dalam batch tersebut.
 |---|---|---|
 | Pengingat H-N sebelum jatuh tempo | WA + Email | Scheduler 07:00 (bertahap) |
 | Jatuh tempo hari ini (H-0) | WA + Email | Scheduler 07:00 (bertahap) |
-| Pelanggan diisolir otomatis | WA | Scheduler 08:00 (bertahap) |
+| Pelanggan diisolir otomatis | WA | Scan tiap jam, pesan dikirim dalam jendela 08:00–21:00 (bertahap) |
 | Tunggakan berulang | WA + Email | Scheduler 07:00, sesuai interval yang diset (bertahap) |
 | Konfirmasi tagihan lunas | WA + Email | Midtrans webhook / admin catat bayar / admin catat-bayar prabayar (borongan → bertahap) |
 | Kirim link bayar (admin) | WA + Email | Admin klik "Buat & Kirim Tagihan" |
+| Kirim link kuitansi (admin) | WA + Email | Admin klik "Kirim Link Kuitansi" di baris tagihan lunas |
+| Pesan WA manual per pelanggan | WA | Admin pilih template di baris tagihan — lihat [Tagihan & Pembayaran](/panduan/pppoe/tagihan#kirim-pesan-whatsapp-manual) |
 
 ::: tip
 Semua notifikasi WA hanya dikirim ke pelanggan yang telah mengaktifkan **Notifikasi WhatsApp** di data pelanggan. Notifikasi Email mengikuti channel yang dipilih di **Pengaturan → Notifikasi** dan hanya dikirim jika alamat email pelanggan tersimpan.

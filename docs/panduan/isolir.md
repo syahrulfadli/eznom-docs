@@ -34,6 +34,11 @@ Semua rule dihapus otomatis ketika tidak ada lagi pelanggan yang diisolir.
 
 eznom membuat script DNS (`eznom-wa-dns`) yang berjalan setiap jam dan saat router startup. Script ini me-resolve domain WhatsApp (`whatsapp.com`, `whatsapp.net`, `wa.me`, dll.) dan menyimpan hasilnya ke address-list `WA_eznom` dengan TTL 2 jam. IP-IP inilah yang dikecualikan dari redirect agar pelanggan tetap bisa mengakses WhatsApp.
 
+Selain hasil resolve script tersebut, eznom juga **memanen IP WhatsApp dari DNS cache router** dan
+menambahkannya ke `WA_eznom`. WhatsApp memakai banyak IP yang berputar; mengambilnya dari cache
+berarti IP yang benar-benar dipakai perangkat di jaringan Anda ikut ter-whitelist, bukan hanya yang
+kebetulan muncul saat script dijalankan.
+
 ### 5. Halaman Isolir di Web Proxy
 
 Saat konfigurasi halaman isolir disimpan, eznom secara otomatis mengirim HTML halaman ke MikroTik (via `/tool/fetch`) dan menyimpannya di `webproxy/error.html`. Web proxy MikroTik berjalan di port `:8383` dan menampilkan halaman ini ke pelanggan yang mencoba browsing.
@@ -53,6 +58,30 @@ Saat pelanggan di-unrestore (diaktifkan kembali):
 
 Buka **Router → Pengaturan → Halaman Isolir**.
 
+### Tema
+
+Pilih salah satu dari enam tema siap pakai. Semua tema memakai **CSS murni** — tanpa gambar, font
+eksternal, atau JavaScript — sehingga halaman tetap tampil sempurna meski pelanggan yang diisolir
+tidak punya akses internet sama sekali, dan tetap muat di storage MikroTik yang terbatas.
+
+| Tema | Tampilan |
+|---|---|
+| **Klasik** | Kartu putih dengan header merah lembut — tampilan bawaan eznom |
+| **Midnight** | Gelap elegan dengan kartu kaca dan aksen biru langit |
+| **Sunset** | Gradasi hangat jingga–magenta, kartu putih membulat |
+| **Terminal** | Gaya konsol retro: monospace hijau fosfor di layar hitam |
+| **Minimal** | Tipografi bersih, sudut tegas, rata kiri tanpa bayangan |
+| **Ocean** | Gradasi biru laut dengan header bergradasi dan kartu terang |
+
+Chip warna di sebelah nama tema menunjukkan palet yang dipakai.
+
+::: info Sebagian tema membawa background sendiri
+Tema **Midnight**, **Sunset**, **Terminal**, dan **Ocean** sudah punya latar sendiri. Memilih salah
+satunya otomatis mengubah pengaturan Background ke mode **Tema**, sehingga pilihan warna solid atau
+gambar tidak lagi berlaku. Tema **Klasik** dan **Minimal** tetap menghormati Background yang Anda
+pilih.
+:::
+
 ### Konten Halaman
 
 | Field | Keterangan |
@@ -64,6 +93,7 @@ Buka **Router → Pengaturan → Halaman Isolir**.
 
 | Pilihan | Keterangan |
 |---|---|
+| **Tema** | Latar dibawa oleh tema yang dipilih (otomatis untuk tema tertentu) |
 | **Warna Solid** | Pilih warna via color picker atau masukkan kode hex |
 | **Gambar (URL)** | URL gambar publik sebagai background halaman |
 
@@ -94,7 +124,14 @@ Teks di bagian bawah halaman. Default: `Powered by eznom`. Kosongkan untuk mengg
 
 ### Custom CSS
 
-CSS tambahan yang diinjeksi ke halaman isolir. Gunakan ini untuk mengubah warna, font, atau tata letak sesuai identitas bisnis Anda.
+CSS tambahan yang diinjeksi ke halaman isolir, di atas CSS tema yang dipilih. Gunakan ini untuk
+menyesuaikan warna, font, atau tata letak sesuai identitas bisnis Anda.
+
+::: warning Isinya disaring
+Custom CSS dan URL background dibersihkan sebelum dikirim ke router. Konstruksi yang bisa
+menyisipkan skrip atau memuat sumber daya eksternal ditolak — halaman isolir tampil di perangkat
+pelanggan, jadi tidak boleh jadi jalan masuk kode asing.
+:::
 
 ---
 

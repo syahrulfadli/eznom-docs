@@ -43,7 +43,20 @@ API MikroTik biasanya hanya bisa diakses dari jaringan lokal. VPN memungkinkan s
 
 ### Apakah sinkronisasi PPPoE berjalan otomatis?
 
-Ya. eznom melakukan sinkronisasi status pelanggan (online/offline, IP, uptime) setiap **1 menit** secara otomatis selama VPN router terhubung.
+Ya. eznom melakukan sinkronisasi status pelanggan (online/offline, IP, uptime) setiap **30 detik** secara otomatis selama VPN router terhubung.
+
+### Bisakah saya tahu router mati tanpa membuka dasbor?
+
+Bisa. Pasang eznom sebagai aplikasi di HP Anda, lalu aktifkan notifikasi push di **Pengaturan →
+Notifikasi**. Anda akan menerima peringatan saat router terputus, saat pulih kembali, saat ada
+gangguan massal PPPoE, saat pembayaran masuk, dan beberapa kejadian lain. Lihat
+[Notifikasi untuk Operator](/panduan/notifikasi-operator).
+
+### Bisakah pelanggan dipindahkan ke router lain?
+
+Bisa, beserta kredensial, riwayat tagihan, dan lampirannya. Buka router asal →
+**PPPoE → Backup & Pindah Pelanggan**. Tersedia juga mode backup ke file dan restore dari file.
+Lihat [Backup & Pindah Pelanggan](/panduan/pppoe/backup-migrasi).
 
 ---
 
@@ -51,7 +64,17 @@ Ya. eznom melakukan sinkronisasi status pelanggan (online/offline, IP, uptime) s
 
 ### Mengapa pelanggan baru saya belum punya tagihan?
 
-Tagihan di-generate setiap hari pukul 01:00. Jika pelanggan baru ditambahkan hari ini, tagihannya akan muncul keesokan harinya.
+Pelanggan baru yang ditambahkan lewat form seharusnya **langsung punya tagihan pertama** — form
+mewajibkan pengisian periode dan nominal prorata sebelum disimpan. Kalau tagihannya belum ada,
+kemungkinan pelanggan tersebut diimpor dari MikroTik (jalur yang tidak melalui form tagihan
+pertama); tagihan bulanannya akan dibuat scheduler pukul 01:00 pada siklus berikutnya.
+
+### Kenapa nominal tagihan pertama berbeda dari harga paket?
+
+Tagihan pertama dihitung **prorata** — `harga paket × hari terpakai ÷ jumlah hari dalam bulan` —
+karena pelanggan biasanya dipasang di tengah bulan. Nominalnya juga bisa ditambah **biaya
+pemasangan** dan **PPN** bila profil layanannya punya PPN. Rincian per komponen bisa dilihat di
+kuitansi.
 
 ### Apakah tagihan bisa di-generate ulang jika ada kesalahan?
 
@@ -83,11 +106,25 @@ Ya. Anda bisa mengatur **tanggal jatuh tempo khusus** per-pelanggan yang akan ov
 
 ### Bisa ganti isi pesan notifikasi?
 
-Untuk saat ini, template pesan sudah ditentukan oleh sistem dan tidak bisa dikustomisasi bebas. Informasi bisnis Anda (nama, alamat, telepon) akan otomatis disertakan di footer pesan.
+Template pesan otomatis ditentukan oleh sistem dan tidak bisa dikustomisasi bebas. Informasi bisnis Anda (nama, alamat, telepon) otomatis disertakan di footer pesan.
+
+Untuk pesan yang perlu disesuaikan, gunakan **Kirim WhatsApp** manual dari baris tagihan — tersedia beberapa template siap pakai plus opsi **Tulis Sendiri**. Lihat [Kirim Pesan WhatsApp Manual](/panduan/pppoe/tagihan#kirim-pesan-whatsapp-manual).
 
 ### Notifikasi H-7 sudah dikirim tapi tidak ada H-3. Kenapa?
 
 Pastikan **H-3 dicentang** di pengaturan notifikasi. Jika baru saja dicentang setelah H-7 sudah terkirim, notifikasi H-3 akan dikirim saat tiba 3 hari sebelum JT.
+
+### Kenapa saya hanya bisa memilih 2 hari pengingat?
+
+Batas itu mengikuti kebijakan WhatsApp Business. Mengirim terlalu banyak pengingat untuk satu tagihan yang sama mudah dianggap spam dan berujung nomor WhatsApp Anda diblokir. Pilihan yang tersedia adalah H-1, H-2, H-3, H-5, dan H-7 — maksimal 2 di antaranya.
+
+### Notifikasi email pelanggan berhenti terkirim di tengah hari. Kenapa?
+
+Kemungkinan Anda menyentuh **batas 200 email per hari** untuk pengiriman lewat server email platform. Pesan yang melewati batas tidak terkirim dan tidak dicoba ulang otomatis — kegagalannya tercatat di Log Notifikasi. Cek progress bar di **Pengaturan → Notifikasi**, dan pertimbangkan memakai [server email sendiri](/panduan/notifikasi#server-email-sendiri-byo-smtp) yang bebas dari batas ini.
+
+### Jam berapa pelanggan diisolir otomatis?
+
+Evaluasi isolir berjalan **setiap jam**, bukan sekali sehari seperti sebelumnya. Namun notifikasi isolir ke pelanggan hanya dikirim dalam jendela **08:00–21:00** — isolir yang terjadi di luar jam itu tetap dieksekusi, pemberitahuannya saja yang ditunda ke pukul 08:00 berikutnya.
 
 ---
 
@@ -128,3 +165,32 @@ Pastikan koneksi VPN router aktif (status 🟢 Terhubung) saat generate voucher.
 ### Berapa maksimum voucher yang bisa di-generate sekaligus?
 
 500 voucher per sesi generate.
+
+### Bisakah desain kartu voucher diubah sepenuhnya?
+
+Bisa. Selain Visual Builder (warna & font lewat panel), tersedia editor **HTML Kustom** dengan
+empat preset siap pakai dan variabel seperti `{username}`, `{price}`, `{qrcode}`, dan
+`{biz_tagline}`. Lihat [Template Kartu Voucher](/panduan/hotspot/template-kartu).
+
+### Bisakah reseller membeli voucher sendiri tanpa saya generate manual?
+
+Bisa. Aktifkan **Portal Reseller** di Pengaturan Router, lalu bagikan URL portalnya. Reseller top up
+saldo (transfer manual yang Anda setujui, atau pembayaran online), lalu membeli voucher sendiri —
+voucher langsung dibuat dan tersinkron ke MikroTik. Lihat
+[Portal Reseller](/panduan/hotspot/reseller#portal-reseller-self-service).
+
+---
+
+## Calon Pelanggan
+
+### Bagaimana calon pelanggan bisa mendaftar sendiri?
+
+Aktifkan **Terima Pendaftaran Calon Pelanggan** di **Pengaturan → Halaman Publik**. Formulir muncul
+di beranda publik bisnis Anda, dan setiap pendaftaran masuk ke menu **Calon Pelanggan** disertai
+notifikasi WhatsApp ke nomor Anda. Lihat [Calon Pelanggan](/panduan/leads).
+
+### Kenapa tombol "Jadikan Pelanggan" tidak muncul untuk staf saya?
+
+Konversi calon pelanggan menjadi pelanggan PPPoE hanya bisa dilakukan **pemilik akun**.
+Sub-pengguna dengan izin modul Calon Pelanggan tetap bisa membaca, mengubah status, dan menghubungi
+calon pelanggan.

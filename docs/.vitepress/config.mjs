@@ -40,6 +40,7 @@ export default defineConfig({
           { text: 'Portal Bayar Pelanggan', link: '/panduan/pppoe/portal-pembayaran' },
           { text: 'Kontrak Digital', link: '/panduan/pppoe/kontrak' },
           { text: 'Peta Pelanggan', link: '/panduan/pppoe/peta' },
+          { text: 'Backup & Pindah Pelanggan', link: '/panduan/pppoe/backup-migrasi' },
         ],
       },
       {
@@ -47,8 +48,16 @@ export default defineConfig({
         items: [
           { text: 'Profil Hotspot', link: '/panduan/hotspot/profil' },
           { text: 'Voucher', link: '/panduan/hotspot/voucher' },
+          { text: 'Template Kartu Voucher', link: '/panduan/hotspot/template-kartu' },
           { text: 'Reseller', link: '/panduan/hotspot/reseller' },
           { text: 'Laporan Voucher', link: '/panduan/hotspot/laporan' },
+        ],
+      },
+      {
+        text: 'Penjualan',
+        items: [
+          { text: 'Calon Pelanggan', link: '/panduan/leads' },
+          { text: 'Halaman Publik Bisnis', link: '/panduan/halaman-publik' },
         ],
       },
       {
@@ -60,9 +69,9 @@ export default defineConfig({
       {
         text: 'Pengaturan',
         items: [
-          { text: 'Notifikasi Otomatis', link: '/panduan/notifikasi' },
+          { text: 'Notifikasi ke Pelanggan', link: '/panduan/notifikasi' },
+          { text: 'Notifikasi Operator (Push)', link: '/panduan/notifikasi-operator' },
           { text: 'Pengaturan Pembayaran', link: '/panduan/pembayaran' },
-          { text: 'Halaman Publik Bisnis', link: '/panduan/halaman-publik' },
           { text: 'Halaman Isolir', link: '/panduan/isolir' },
           { text: 'Profil Bisnis & Akun', link: '/panduan/pengaturan' },
         ],

@@ -31,10 +31,17 @@ Jika port belum diatur, halaman akan menampilkan peringatan dan tombol Remote ti
 |---|---|
 | **Nama Perangkat** | Label identifikasi, misal: `OLT ZTE`, `Switch Gedung B` |
 | **IP Address** | IP perangkat yang bisa dijangkau dari MikroTik, misal `192.168.1.1` |
+| **Protokol** | `http` atau `https` — menentukan skema URL yang dibuka di browser |
 | **Port** | Port web interface perangkat (default: `80`) |
 | **Deskripsi** | Opsional — lokasi atau catatan tambahan |
 
 4. Klik **Tambah Perangkat** untuk menyimpan.
+
+::: info Protokol kini field tersendiri
+Sebelumnya eznom menebak http/https dari nomor port — perangkat yang menyajikan HTTPS di port
+non-standar (atau HTTP di port 443) berakhir dengan URL yang salah. Sekarang protokol dipilih
+eksplisit, jadi kombinasi apa pun bisa dilayani dengan benar.
+:::
 
 ---
 
@@ -48,6 +55,26 @@ Jika port belum diatur, halaman akan menampilkan peringatan dan tombol Remote ti
 Hanya satu perangkat yang bisa diremote secara bersamaan per router. Tombol Remote pada perangkat lain akan dinonaktifkan selama ada remote yang aktif.
 
 Jika sebelumnya sedang remote modem pelanggan PPPoE, remote tersebut akan dihentikan otomatis saat memulai remote perangkat, dan sebaliknya.
+:::
+
+---
+
+## Remote Modem Pelanggan PPPoE
+
+Selain perangkat yang terdaftar di halaman ini, Anda juga bisa meremote modem pelanggan PPPoE
+langsung dari daftar pelanggan.
+
+Klik aksi **Remote Modem** pada baris pelanggan. Sebuah dialog muncul untuk mengkonfirmasi **port**
+dan **protokol** (http/https) sebelum tunnel dibuka:
+
+- Nilainya diisi dari data pelanggan (default port `80`, protokol `http`)
+- Anda bisa mengubahnya di dialog, dan perubahan itu **disimpan ke data pelanggan** untuk remote
+  berikutnya
+
+::: tip Kenapa ditanyakan dulu
+Modem pelanggan tidak seragam — sebagian menyajikan webfig di port 80, sebagian di 443 dengan
+HTTPS, sebagian lagi di port lain. Menanyakan sebelum tunnel dibuka mencegah tab baru terbuka ke
+alamat yang salah lalu harus diulang dari awal.
 :::
 
 ### Banner status aktif

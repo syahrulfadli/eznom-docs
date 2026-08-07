@@ -39,6 +39,55 @@ Reseller yang dinonaktifkan tidak akan muncul di dropdown saat generate batch vo
 
 ---
 
+## Halaman Detail Reseller
+
+Klik nama reseller di tabel untuk membuka halaman detailnya — satu tempat untuk melihat seluruh
+riwayat hubungan Anda dengan reseller tersebut.
+
+Bagian atas menampilkan ringkasan: **saldo aktif**, **total top up**, dan jumlah voucher/batch.
+Tersedia tiga tab:
+
+| Tab | Isi |
+|---|---|
+| **Mutasi Saldo** | Seluruh pergerakan saldo: top up, pembelian voucher, dan penyesuaian manual. Bisa difilter per jenis |
+| **Riwayat Top Up** | Semua pengajuan top up beserta statusnya (menunggu, disetujui, ditolak) |
+| **Batch Voucher** | Semua batch yang pernah dibuat untuk reseller ini, baik oleh Anda maupun lewat portal |
+
+### Penyesuaian Saldo Manual
+
+Tombol **Sesuaikan Saldo** memungkinkan Anda **menambah** atau **mengurangi** saldo reseller secara
+manual, dengan catatan alasan. Berguna untuk koreksi kesalahan input, bonus, atau potongan
+kesepakatan di luar sistem.
+
+Setiap penyesuaian tercatat di tab **Mutasi Saldo** lengkap dengan catatannya — tidak ada perubahan
+saldo yang terjadi tanpa jejak.
+
+---
+
+## Menyetujui Top Up Reseller
+
+Top up yang diajukan reseller lewat portal dengan **transfer manual** perlu Anda setujui sebelum
+saldonya bertambah.
+
+Buka router → **Hotspot → Top Up Reseller**
+
+1. Periksa pengajuan yang berstatus **Menunggu**
+2. Klik **Lihat Bukti** untuk mengunduh bukti transfer yang diunggah reseller
+3. Cocokkan dengan mutasi rekening Anda
+4. Klik **Setujui** — saldo reseller langsung bertambah, atau
+   **Tolak** — isi alasan penolakan yang akan tercatat di riwayat
+
+::: tip Jangan biarkan menggantung
+Reseller **tidak bisa membeli voucher** sampai top up-nya disetujui. Aktifkan notifikasi
+[**Topup reseller menunggu approval**](/panduan/notifikasi-operator#jenis-notifikasi) supaya Anda
+tahu begitu ada pengajuan masuk, bukan setelah reseller menelepon.
+:::
+
+Top up lewat **payment gateway** tidak perlu persetujuan — saldo bertambah otomatis begitu gateway
+mengkonfirmasi pembayaran.
+
+---
+
 ## Harga Khusus Reseller
 
 Setiap profil hotspot bisa memiliki harga reseller yang berbeda dengan harga eceran. Harga ini diset di **Hotspot → Profil** pada field **Harga Reseller**.
@@ -85,7 +134,10 @@ Portal default **nonaktif** — selama belum diaktifkan, alur lama (Anda generat
 - **Top up saldo** — transfer manual (upload bukti, Anda konfirmasi) atau pembayaran online (jika gateway aktif)
 - **Beli voucher** — saldo otomatis terpotong, voucher langsung dibuat & tersinkron ke MikroTik; tombol **Beli Lagi** muncul di kartu profil yang pernah dibeli untuk reorder cepat
 - **Kelola & bagikan kode voucher** — cari kode, salin satu per satu, atau bagikan via WhatsApp langsung dari portal
-- **Cetak voucher** — mengikuti style preset cetak default Anda; voucher "kode tunggal" otomatis hanya menampilkan username
+- **Tandai voucher terjual** — centang beberapa voucher sekaligus lalu tandai terjual dalam satu aksi, sehingga reseller bisa melacak sisa stok fisiknya sendiri
+- **Atur harga eceran sendiri** — reseller bisa menyimpan harga jual versinya, dan portal menghitung marginnya dari harga beli
+- **Cetak voucher** — reseller memilih sendiri layout cetak: **A4 3 / 4 / 5 kolom**, **F4 5×10**, atau **F4 5×11**. Style kartu mengikuti preset cetak default Anda; voucher "kode tunggal" otomatis hanya menampilkan username
+- **Beli Lagi** — tombol reorder cepat di kartu profil yang pernah dibeli
 
 ### Mengatur profil yang muncul ke reseller
 
@@ -108,9 +160,13 @@ Pendapatan diakui **saat reseller membeli voucher**, bukan saat top up. Top up d
 
 ### Harga eceran & margin reseller
 
-Setiap profil yang ditampilkan di portal memiliki kolom **Harga Eceran** — harga jual yang Anda sarankan ke pelanggan akhir. Eznom menghitung dan menampilkan margin keuntungan reseller secara otomatis (`Harga Eceran − Harga Reseller`), sehingga reseller tahu berapa keuntungan per voucher tanpa perlu hitung manual.
+Portal menampilkan **Harga Eceran** — yaitu field **Harga (Rp)** pada profil hotspot, harga jual
+yang Anda sarankan ke pelanggan akhir. Eznom menghitung dan menampilkan margin keuntungan reseller
+secara otomatis (`Harga Eceran − Harga Reseller`), sehingga reseller tahu berapa keuntungan per
+voucher tanpa perlu hitung manual.
 
-Isi **Harga Eceran** di **Hotspot → Profil** pada masing-masing profil yang ingin ditampilkan margin-nya.
+Keduanya diisi di **Hotspot → Profil**: **Harga (Rp)** untuk harga eceran, **Harga Reseller (Rp)**
+untuk harga beli reseller.
 
 ---
 

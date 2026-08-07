@@ -15,7 +15,7 @@ Profil hotspot mendefinisikan batasan yang berlaku untuk voucher yang dibuat —
 | **Nama Profil** | Nama profil di MikroTik, misal `1jam` atau `sehari` |
 | **Nama Layanan** | Nama yang tampil kepada pengguna, misal `Paket 1 Jam` |
 | **Validitas** | Durasi akses voucher |
-| **Satuan Validitas** | `menit`, `jam`, atau `hari` |
+| **Satuan Validitas** | `jam`, `hari`, `minggu`, atau **`unlimited`** |
 | **Batas Kuota** | Batas data (MB/GB). Kosongkan untuk tidak terbatas |
 | **Rate Limit Upload** | Batas kecepatan upload, misal `2M` |
 | **Rate Limit Download** | Batas kecepatan download, misal `5M` |
@@ -25,16 +25,35 @@ Profil hotspot mendefinisikan batasan yang berlaku untuk voucher yang dibuat —
 
 4. Klik **Simpan** — profil akan di-sync ke Hotspot User Profile di MikroTik
 
+::: warning Nama profil harus unik
+Nama profil yang sudah dipakai akan ditolak dengan pesan validasi yang jelas, bukan menghasilkan
+error server.
+:::
+
+---
+
+## Validitas Unlimited
+
+Pilih satuan validitas **Unlimited** untuk profil yang tidak punya batas masa aktif — voucher
+berlaku sampai dihapus atau kuotanya habis. Kolom angka validitas dinonaktifkan saat opsi ini
+dipilih.
+
+Secara teknis, eznom menyetel `session-timeout=0` di MikroTik dan **mengosongkan on-login script**
+profil tersebut. Sebaliknya, mengubah profil unlimited menjadi punya masa aktif akan
+**memasang ulang on-login script** yang menghitung mundur validitas — Anda tidak perlu mengedit
+script di router secara manual.
+
 ---
 
 ## Contoh Profil Umum
 
 | Nama | Validitas | Rate Limit | Harga |
 |---|---|---|---|
-| Paket 1 Jam | 60 menit | 2M/5M | Rp 2.000 |
+| Paket 1 Jam | 1 jam | 2M/5M | Rp 2.000 |
 | Paket Harian | 1 hari | 5M/10M | Rp 5.000 |
-| Paket Mingguan | 7 hari | 5M/10M | Rp 25.000 |
+| Paket Mingguan | 1 minggu | 5M/10M | Rp 25.000 |
 | Paket Bulanan | 30 hari | 10M/20M | Rp 75.000 |
+| Paket Warung | Unlimited | 5M/10M | Rp 150.000 |
 
 ---
 

@@ -129,6 +129,41 @@ Skema pembayaran dipilih saat menambah atau mengedit pelanggan.
 
 Skema bisa diubah kapan saja. Perubahan berlaku mulai siklus tagihan berikutnya.
 
+::: warning Tipe pembayaran wajib dipilih
+Tidak ada nilai default. Form menolak disimpan sampai Anda memilih salah satu — supaya tidak ada
+pelanggan yang diam-diam masuk sebagai pascabayar padahal seharusnya prabayar.
+:::
+
+---
+
+## Periode Billing Pertama (Prabayar)
+
+Saat membuat pelanggan **prabayar** baru, Anda menentukan **periode pertama**-nya lewat month
+picker (pilih bulan & tahun, bukan tanggal lengkap) — dengan preview periode billing yang
+dihasilkan tampil langsung di bawah pilihannya.
+
+::: info Label periode mengikuti bulan jatuh tempo
+Periode billing awal prabayar diberi label mengikuti **bulan jatuh temponya**, bukan bulan mulai
+layanan. Ini membuat label periode di tabel billing konsisten dengan tagihan bulan-bulan
+berikutnya.
+:::
+
+::: warning Prabayar baru selalu punya tagihan pertama
+Field **Mulai Periode Pertama** wajib diisi dan terisi otomatis. eznom juga menolak pembuatan
+tagihan pertama yang duplikat — kalau pelanggan tersebut sudah punya tagihan periode itu,
+prosesnya diblokir dengan pesan yang jelas, bukan menghasilkan dua tagihan untuk periode yang
+sama.
+:::
+
+### Perpanjangan Prabayar
+
+Tagihan perpanjangan prabayar dibuat mengikuti **hari billing router**, dan dibuat ke **siklus yang
+sedang berjalan** — bukan melompat ke periode di depan. Pelanggan prabayar yang telat memperpanjang
+tetap ditagihkan untuk periode yang terlewat, bukan langsung dianggap mulai dari periode baru.
+
+Pelanggan prabayar juga bisa **memperpanjang sendiri** lewat
+[Portal Bayar Pelanggan](/panduan/pppoe/portal-pembayaran) tanpa perlu menghubungi Anda.
+
 ---
 
 ## Mencatat Pembayaran Prabayar
@@ -143,14 +178,36 @@ Berbeda dari pascabayar, pembayaran prabayar dicatat dari tab khusus di halaman 
 
 Sistem otomatis membuat tagihan + mencatat pembayaran sekaligus, dan menyambung kembali layanan jika pelanggan sedang terisolir.
 
+### Memilih Pelanggan di Modal
+
+Modal catat-bayar prabayar menampilkan daftar pelanggan dengan filter status, sehingga Anda bisa
+langsung memisahkan yang **sudah ditagih periode ini** dari yang belum. Pelanggan bisa dicentang
+banyak sekaligus untuk pencatatan borongan.
+
+::: tip Notifikasi borongan dijeda bertahap
+Mencatat pembayaran untuk banyak pelanggan sekaligus tidak mengirim puluhan pesan WhatsApp dalam
+hitungan detik — pengirimannya dijeda bertahap. Lihat
+[Mitigasi pengiriman](/panduan/notifikasi#whatsapp-gateway).
+:::
+
 ---
 
 ## Ringkasan Jadwal Otomatis
 
 | Waktu | Proses |
 |---|---|
-| Setiap menit | Sinkronisasi status online/offline dari MikroTik |
+| Setiap 30 detik | Sinkronisasi status online/offline dari MikroTik |
+| Setiap menit | Sinkronisasi voucher hotspot dari MikroTik |
 | 01.00 setiap hari | Generate tagihan bulanan pascabayar |
 | 07.00 setiap hari | Kirim notifikasi pengingat & tunggakan |
-| 08.00 setiap hari | Evaluasi isolasi — putus layanan yang overdue/expired |
+| **Setiap jam** | Evaluasi isolasi — putus layanan yang overdue/expired |
 | Setiap 5 menit | Retry sinkronisasi MikroTik yang gagal |
+| Setiap 2 jam | Deteksi pelanggan yang offline berkepanjangan |
+
+::: info Isolasi kini dievaluasi tiap jam
+Sebelumnya evaluasi isolasi hanya berjalan sekali sehari pukul 08.00. Sekarang berjalan **setiap
+jam**, sehingga pelanggan yang lewat jatuh tempo di siang hari tidak menunggu sampai besok pagi.
+
+Notifikasi isolir ke pelanggan tetap dibatasi jendela **08.00–21.00**; isolir yang terjadi di luar
+jam itu tetap dieksekusi, hanya pemberitahuannya yang ditunda ke pukul 08.00 berikutnya.
+:::
