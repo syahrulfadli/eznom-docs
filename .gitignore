@@ -1,1 +1,3 @@
-node_modules\ndocs/.vitepress/dist\ndocs/.vitepress/cache
+node_modules
+docs/.vitepress/dist
+docs/.vitepress/cache
