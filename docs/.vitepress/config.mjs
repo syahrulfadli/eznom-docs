@@ -32,6 +32,7 @@ export default defineConfig({
         items: [
           { text: 'Tambah & Konfigurasi', link: '/panduan/router' },
           { text: 'Remote Perangkat', link: '/panduan/remote-perangkat' },
+          { text: 'Peta Jaringan', link: '/panduan/peta-jaringan' },
         ],
       },
       {
@@ -65,9 +66,10 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Keuangan',
+        text: 'Keuangan & Aset',
         items: [
           { text: 'Halaman Keuangan', link: '/panduan/keuangan' },
+          { text: 'Inventaris Barang', link: '/panduan/inventaris' },
         ],
       },
       {

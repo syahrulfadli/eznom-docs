@@ -86,6 +86,7 @@ bersifat **per pengguna**, bukan per bisnis — sub-pengguna mengatur miliknya s
 | **Banyak pelanggan tumbang bersamaan** | Aktif | Lima pelanggan atau lebih di satu router putus dalam satu siklus sync (30 detik) |
 | **Gangguan massal pulih** | Aktif | Router yang tadinya kena gangguan massal sudah kembali normal |
 | **Pelanggan offline berkepanjangan** | Aktif | Rangkuman tiap 2 jam untuk pelanggan yang offline lebih dari 6 jam — biasanya modem rusak atau kabel putus |
+| **Stok barang menipis** | Aktif | Stok sebuah barang menyentuh batas minimum yang ditetapkan di [Inventaris](/panduan/inventaris). Dikirim sekali per penembusan batas, bukan tiap pemakaian |
 | **Ringkasan isolir otomatis** | **Nonaktif** | Satu rangkuman tiap kali isolir otomatis berjalan dan ada pelanggan terisolir. Default mati karena isolir berjalan tiap jam |
 
 ::: info Kenapa pelanggan tumbang satu-satu tidak dikabarkan

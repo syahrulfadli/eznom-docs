@@ -2,6 +2,13 @@
 
 Halaman peta menampilkan sebaran geografis semua pelanggan PPPoE yang memiliki data koordinat.
 
+::: tip Beda dengan Peta Jaringan
+Halaman ini fokus pada **pelanggan**: siapa di mana, dan bagaimana statusnya sekarang. Untuk
+menggambar **infrastruktur** — tiang, ODP, dan tarikan kabel yang menghubungkannya — gunakan
+[Peta Jaringan](/panduan/peta-jaringan). Titik pelanggan di sini ikut tampil di sana sebagai layer
+tersendiri, jadi koordinat cukup diisi sekali di halaman Pelanggan.
+:::
+
 ---
 
 ## Membuka Peta

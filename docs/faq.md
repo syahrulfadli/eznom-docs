@@ -194,3 +194,36 @@ notifikasi WhatsApp ke nomor Anda. Lihat [Calon Pelanggan](/panduan/leads).
 Konversi calon pelanggan menjadi pelanggan PPPoE hanya bisa dilakukan **pemilik akun**.
 Sub-pengguna dengan izin modul Calon Pelanggan tetap bisa membaca, mengubah status, dan menghubungi
 calon pelanggan.
+
+---
+
+## Peta Jaringan & Inventaris
+
+### Kenapa objek di Peta Jaringan tidak bisa saya geser?
+
+Objek hanya bisa digeser di mode **Ubah Objek**. Di mode Lihat pin sengaja dikunci supaya tarikan
+tangan saat menggulir peta tidak diam-diam memindahkan tiang. Di mode Ubah, peta digulir dengan
+**klik kanan lalu geser**.
+
+### Saya sudah pasang tiang di peta, kenapa stok tidak berkurang?
+
+Ada dua kemungkinan. Objeknya belum ditautkan ke barang lewat pilihan **Ambil dari stok**, atau
+statusnya masih **Rencana** — stok baru terpotong ketika statusnya menjadi **Aktif**. Lihat
+[tabel lengkapnya](/panduan/inventaris#potong-stok-otomatis-dari-peta).
+
+### Kenapa stok barang saya minus?
+
+Barangnya sudah dipakai di lapangan tetapi pembeliannya belum dicatat. eznom sengaja tidak
+memblokir pemasangan gara-gara nota belum diinput — angka minus itu penandanya, tinggal catat
+pembeliannya dan stok kembali benar.
+
+### Tombol pindai kamera tidak berfungsi.
+
+Browser hanya mengizinkan kamera di halaman **HTTPS**. Kalau eznom diakses lewat alamat IP lokal,
+kamera memang akan ditolak. Nomor seri selalu bisa diketik manual, satu per baris.
+
+### Modem sudah saya pasang di peta, tapi posisinya salah.
+
+Objek yang ditautkan ke pelanggan mengikuti koordinat pelanggan itu. Perbaiki koordinatnya di
+halaman **Kelola Pelanggan**, dan modemnya ikut berpindah. Kalau titik modem memang berbeda dari
+titik rumah, geser saja pinnya di mode Ubah Objek.

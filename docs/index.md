@@ -32,6 +32,12 @@ features:
   - icon: 🧾
     title: Portal Bayar & Calon Pelanggan
     details: Pelanggan cek tagihan dan bayar sendiri lewat halaman publik bisnis Anda, sekaligus jadi tempat calon pelanggan baru mendaftar.
+  - icon: 🗺️
+    title: Peta Jaringan
+    details: Gambar topologi fisik jaringan Anda — tiang, ODP, dan tarikan kabel sampai ke rumah pelanggan — lengkap dengan panjang kabel yang dihitung otomatis.
+  - icon: 📦
+    title: Inventaris Barang
+    details: Catat stok kabel, tiang, dan modem beserta nomor serinya. Pembelian otomatis masuk ke laporan keuangan, dan stok berkurang sendiri saat barangnya dipasang di peta.
   - icon: 📄
     title: Kontrak Digital
     details: Buat dan kirim kontrak berlangganan ke pelanggan. Pelanggan dapat membaca dan menandatangani kontrak langsung dari ponsel.
