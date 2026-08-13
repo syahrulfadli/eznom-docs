@@ -39,6 +39,10 @@ Satuan dan cara pelacakan terisi otomatis mengikuti kategori, dan tetap bisa diu
 Pilih untuk barang yang punya nomor seri dan perlu dilacak satuan — modem/ONT, router, OLT. Untuk kabel dan tiang, `Jumlah saja` sudah cukup.
 :::
 
+::: tip Fiber feeder dan dropcore dicatat sebagai dua barang
+Keduanya kategori **Kabel**, tetapi harga per meternya jauh berbeda. Buat `Fiber feeder 12 core` dan `Fiber dropcore` sebagai barang terpisah supaya nilai stok dan pengeluarannya tidak bercampur; saat menarik kabel di [Peta Jaringan](/panduan/peta-jaringan#feeder-dan-dropcore), pilih yang sesuai di **Ambil dari stok**.
+:::
+
 ---
 
 ## Mencatat Pembelian

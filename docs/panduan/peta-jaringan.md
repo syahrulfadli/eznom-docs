@@ -68,6 +68,32 @@ Ujung kabel boleh berupa titik pelanggan langsung dari layer pelanggan — objek
 
 ---
 
+## Cara Membaca Garis Kabel
+
+Satu garis kabel membawa tiga keterangan sekaligus, tanpa perlu diklik lebih dulu.
+
+| Yang dilihat | Artinya |
+|---|---|
+| **Warna garis** | Jenis kabel — oranye untuk fiber optik, biru untuk UTP |
+| **Pola garis** | Cara pemasangan — utuh berarti **udara**, putus-putus berarti **tanam**, titik-titik rapat berarti **menempel dinding** |
+| **Warna outline** | Peran kabel fiber — ungu untuk **feeder**, merah muda untuk **dropcore** |
+
+Outline sengaja dipakai untuk peran kabel supaya warna kabelnya sendiri tidak berubah: fiber tetap oranye entah ia feeder atau dropcore, jadi jenis dan perannya terbaca bersamaan.
+
+Keterangannya juga tersedia di panel **Layer**, di bagian **Cara baca garis**.
+
+::: tip Kabel berstatus Rencana
+Kabel yang belum terpasang digambar lebih tipis dan pudar, bukan putus-putus — pola putus-putus sudah menjadi milik kabel tanam. Kalau ingin melihat rencana saja, matikan status **Aktif** di panel Layer.
+:::
+
+### Feeder dan dropcore
+
+Isi **Peran kabel** di form kabel — pilihannya muncul hanya untuk fiber, karena UTP tidak mengenal pembagian ini. Boleh dibiarkan **Tidak dirinci**; kabel yang sudah tergambar sebelum ada pilihan ini tetap tampil seperti biasa, tanpa outline.
+
+Peran kabel **tidak berpengaruh ke inventaris**. Yang memotong stok tetap barang yang Anda pilih di **Ambil dari stok** — kalau harga feeder dan dropcore berbeda, catat keduanya sebagai barang terpisah di Inventaris, lalu pilih yang sesuai saat menarik kabelnya.
+
+---
+
 ## Menu Klik Kanan
 
 Klik kanan di peta memunculkan menu sendiri, bukan menu bawaan browser. Isinya menyesuaikan apa yang diklik:
