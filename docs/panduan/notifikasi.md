@@ -69,6 +69,58 @@ pengiriman ke 50 pelanggan tersebar ±4 menit, bukan dalam sekejap. Ini berjalan
 perlu diatur.
 :::
 
+### Cara Menjaga Nomor Tidak Diblokir
+
+Selain hal-hal yang sudah dikerjakan sistem, sebagian besar risiko sebenarnya ditentukan oleh
+**bagaimana nomor itu dipakai sehari-hari**. Ini dirangkum dari pemakaian nyata operator yang
+nomornya bertahan, dan tersedia juga di halaman **Pengaturan Notifikasi** dalam bentuk panduan
+yang bisa dibuka-tutup.
+
+#### 1. Bangun percakapan dua arah sebelum sistem mengirim apa pun
+
+Ini yang paling menentukan. Pesan otomatis ke nomor yang belum pernah berkomunikasi dengan Anda
+jauh lebih mudah terbaca sebagai spam — apalagi kalau penerimanya sampai menekan **Block** atau
+**Report**, karena laporan dari penerima adalah sinyal terkuat yang dipakai WhatsApp.
+
+Praktik yang terbukti bertahan:
+
+1. Biarkan calon pelanggan **menghubungi Anda lebih dulu**, bukan sebaliknya.
+2. Balas percakapannya seperti biasa.
+3. **Simpan nomornya di kontak HP** sebelum nomor itu masuk ke data pelanggan.
+
+Dengan begitu, saat tagihan pertama dikirim sistem, kedua nomor sudah saling kenal dan sudah
+punya riwayat percakapan.
+
+#### 2. Pakai pesan pembuka registrasi
+
+Arahkan calon pelanggan menghubungi WhatsApp Anda untuk mendaftar, lalu balas dengan format
+seperti ini. Selain merapikan data yang masuk, cara ini memastikan percakapan dimulai dari sisi
+mereka:
+
+```text
+Terima kasih telah menghubungi kami dan mempercayakan akses layanan internet Anda
+kepada kami. Mohon informasikan data berikut untuk Registrasi Pemasangan Baru:
+
+Nama Lengkap:
+Nomor WhatsApp:
+Alamat Rumah:
+Alamat Email:
+
+Mohon juga bagikan share location posisi rumahnya.
+```
+
+::: tip Sekalian jadi sumber data pelanggan
+Data yang masuk lewat format ini persis yang dibutuhkan saat menambah pelanggan PPPoE, termasuk
+share location yang bisa langsung dipakai sebagai koordinat di [Peta Pelanggan](/panduan/pppoe/peta).
+:::
+
+#### 3. Jaga nomor tetap "hidup" secara wajar
+
+Nomor yang hanya dipakai mengirim otomatis tanpa pernah dibuka manusia lebih mudah dicurigai
+sistem deteksi WhatsApp dibanding nomor yang juga dipakai normal. Sesekali buka WhatsApp di HP
+yang nomornya terhubung dan baca pesan masuk seperti biasa — jangan biarkan linked device ini
+pasif total.
+
 ### Batas Kirim Harian (Warm-up)
 
 Selain dijeda bertahap, ada juga **batas jumlah kirim per hari** yang naik otomatis seiring umur
