@@ -38,6 +38,12 @@ Klik marker untuk melihat:
 - **Lihat Detail** — link ke halaman detail pelanggan
 - **📍 Google Maps** — buka koordinat di Google Maps
 
+### Citra Satelit
+
+Tombol bergambar bola dunia di kanan atas menukar latar peta menjadi **citra satelit**, lengkap
+dengan nama jalan di atasnya. Berguna untuk memastikan titik pelanggan benar-benar jatuh di rumah
+yang dimaksud, bukan di tengah jalan. Pilihannya diingat browser Anda per router.
+
 ### Auto-Refresh
 
 Peta memperbarui status marker secara otomatis setiap **30 detik** tanpa perlu reload halaman.

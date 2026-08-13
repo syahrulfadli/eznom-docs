@@ -74,6 +74,15 @@ Panel **Layer** di kanan atas menyalakan dan mematikan tampilan per jenis objek,
 
 Pilihan layer tersimpan di browser Anda per router, jadi tidak perlu diatur ulang tiap membuka halaman.
 
+### Peta Dasar: Peta atau Satelit
+
+Bagian **Peta dasar** menukar latar antara peta jalan dan **citra satelit**. Citra sangat membantu
+saat menaruh tiang atau menarik kabel: atap rumah, gang, dan barisan pohon terlihat langsung,
+sesuatu yang tidak tergambar di peta jalan.
+
+Karena citra satelit tidak memuat nama jalan, ada sakelar **Nama jalan** yang menumpangkan label
+jalan dan tempat di atasnya. Matikan kalau labelnya menutupi objek yang sedang Anda kerjakan.
+
 ### Layer Pelanggan PPPoE
 
 Titik pelanggan dibaca **langsung dari data PPPoE**, bukan disalin. Artinya:
