@@ -44,6 +44,16 @@ Tombol bergambar bola dunia di kanan atas menukar latar peta menjadi **citra sat
 dengan nama jalan di atasnya. Berguna untuk memastikan titik pelanggan benar-benar jatuh di rumah
 yang dimaksud, bukan di tengah jalan. Pilihannya diingat browser Anda per router.
 
+### Menu Klik Kanan
+
+Klik kanan memunculkan menu sendiri, bukan menu bawaan browser:
+
+- **Di marker pelanggan** — lihat detail pelanggan, buka koordinatnya di Google Maps
+- **Di mana saja** — tukar peta/satelit, muat semua marker, layar penuh
+
+Susunannya sama dengan [Peta Jaringan](/panduan/peta-jaringan#menu-klik-kanan), jadi kebiasaan dari
+satu halaman langsung terpakai di halaman lainnya.
+
 ### Auto-Refresh
 
 Peta memperbarui status marker secara otomatis setiap **30 detik** tanpa perlu reload halaman.

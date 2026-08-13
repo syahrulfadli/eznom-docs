@@ -201,9 +201,14 @@ calon pelanggan.
 
 ### Kenapa objek di Peta Jaringan tidak bisa saya geser?
 
-Objek hanya bisa digeser di mode **Ubah Objek**. Di mode Lihat pin sengaja dikunci supaya tarikan
-tangan saat menggulir peta tidak diam-diam memindahkan tiang. Di mode Ubah, peta digulir dengan
-**klik kanan lalu geser**.
+Objek hanya bisa digeser di mode **Tambah Objek**. Di mode Lihat pin sengaja dikunci supaya tarikan
+tangan saat menggulir peta tidak diam-diam memindahkan tiang.
+
+### Kenapa citra satelit terlihat kabur saat zoom paling dalam?
+
+Citra beresolusi asli tersedia sampai tingkat tertentu saja, dan di pedesaan lebih dangkal daripada
+di kota. Dua tingkat zoom terakhir dihasilkan dengan memperbesar citra yang ada supaya posisinya
+tetap presisi — alternatifnya tile kosong bertuliskan "Map data not yet available".
 
 ### Saya sudah pasang tiang di peta, kenapa stok tidak berkurang?
 

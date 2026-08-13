@@ -44,16 +44,16 @@ Tombol mode ada di kiri atas peta.
 
 Mode baca. Klik objek untuk melihat detail, klik kabel untuk melihat panjang dan jenisnya. Objek **tidak bisa digeser** di mode ini, supaya tarikan tangan saat menggulir peta tidak diam-diam memindahkan tiang.
 
-### Ubah Objek
+### Tambah Objek
 
 1. Pilih jenis objek di panel yang muncul.
 2. **Klik di peta** untuk menaruh objek baru.
 3. **Geser pin** yang sudah ada untuk memindahkannya — posisi tersimpan otomatis.
 
-Mode ini bertahan setelah satu objek dibuat, jadi memetakan belasan tiang berturut-turut tidak perlu menekan tombol mode berulang kali.
+Mode ini bertahan setelah satu objek dibuat, jadi memetakan belasan tiang berturut-turut tidak perlu menekan tombol mode berulang kali. Menggulir peta tetap seperti biasa: geser dengan tombol kiri. Leaflet membedakan klik dari geseran, jadi menggulir tidak akan menaruh objek.
 
-::: tip Menggulir peta di mode ini
-Tombol kiri mouse sepenuhnya dipakai untuk objek, jadi peta digulir dengan **klik kanan lalu geser**. Ada pengingat di bawah peta selama mode ini aktif.
+::: tip Menaruh objek tanpa berpindah mode
+**Klik kanan di peta** langsung menawarkan daftar jenis objek untuk ditaruh di titik itu — tanpa perlu masuk mode Tambah Objek lebih dulu.
 :::
 
 ### Tarik Kabel
@@ -65,6 +65,22 @@ Tombol kiri mouse sepenuhnya dipakai untuk objek, jadi peta digulir dengan **kli
 Panjang kabel dihitung otomatis dari jalur yang digambar dan ditampilkan sambil menggambar. Tekan **Esc** untuk membatalkan.
 
 Ujung kabel boleh berupa titik pelanggan langsung dari layer pelanggan — objek titiknya dibuat otomatis.
+
+---
+
+## Menu Klik Kanan
+
+Klik kanan di peta memunculkan menu sendiri, bukan menu bawaan browser. Isinya menyesuaikan apa yang diklik:
+
+| Yang diklik | Isi menu |
+|---|---|
+| **Objek** | Edit objek, tambah objek di dalamnya, hapus objek |
+| **Titik pelanggan** | Lihat detail pelanggan, tambah modem/ONT di titik itu |
+| **Peta kosong** | Daftar jenis objek untuk ditaruh tepat di titik itu |
+
+Tiga perintah terakhir selalu ada di bagian bawah, apa pun yang diklik: **tukar peta/satelit**, **muat semua objek**, dan **layar penuh**. Posisinya sengaja tetap supaya bisa dihafal.
+
+Menu tertutup sendiri saat peta digeser, saat Anda klik di tempat lain, atau dengan menekan **Esc**.
 
 ---
 
@@ -80,10 +96,33 @@ Bagian **Peta dasar** menukar latar antara peta jalan dan **citra satelit**. Cit
 saat menaruh tiang atau menarik kabel: atap rumah, gang, dan barisan pohon terlihat langsung,
 sesuatu yang tidak tergambar di peta jalan.
 
-Karena citra satelit tidak memuat nama jalan, ada sakelar **Nama jalan** yang menumpangkan label
+Karena citra satelit tidak memuat nama jalan, ada sakelar **Nama jalan** yang menumpangkan nama
 jalan dan tempat di atasnya. Matikan kalau labelnya menutupi objek yang sedang Anda kerjakan.
 
-### Layer Pelanggan PPPoE
+::: tip Citra terlihat kabur saat zoom paling dalam
+Itu memang disengaja. Citra satelit beresolusi asli tersedia sampai tingkat tertentu saja — di
+pedesaan lebih dangkal daripada di kota. Dua tingkat zoom terakhir dihasilkan dengan memperbesar
+citra yang ada, supaya posisinya tetap presisi. Alternatifnya adalah tile kosong bertuliskan
+"Map data not yet available", yang jauh lebih tidak berguna.
+:::
+
+### Menu Klik Kanan
+
+Klik kanan di peta memunculkan menu sendiri, bukan menu bawaan browser. Isinya menyesuaikan apa yang diklik:
+
+| Yang diklik | Isi menu |
+|---|---|
+| **Objek** | Edit objek, tambah objek di dalamnya, hapus objek |
+| **Titik pelanggan** | Lihat detail pelanggan, tambah modem/ONT di titik itu |
+| **Peta kosong** | Daftar jenis objek untuk ditaruh tepat di titik itu |
+
+Tiga perintah terakhir selalu ada di bagian bawah, apa pun yang diklik: **tukar peta/satelit**, **muat semua objek**, dan **layar penuh**. Posisinya sengaja tetap supaya bisa dihafal.
+
+Menu tertutup sendiri saat peta digeser, saat Anda klik di tempat lain, atau dengan menekan **Esc**.
+
+---
+
+## Layer Pelanggan PPPoE
 
 Titik pelanggan dibaca **langsung dari data PPPoE**, bukan disalin. Artinya:
 
