@@ -61,6 +61,13 @@ Klik **Test Koneksi** untuk memverifikasi sebelum menyimpan.
 
 Fitur ini memungkinkan admin mengakses web interface modem pelanggan (webfig) dari dasbor eznom melalui tunnel VPN.
 
+::: info Hanya untuk mode VPN Tunnel
+Ketiga field di bawah dipakai oleh mode **VPN Tunnel**. Mode **IP Lokal** — yang membuka IP
+perangkat atau IP PPPoE pelanggan secara langsung dari jaringan lokal — tidak membutuhkannya sama
+sekali, jadi remote tetap bisa dipakai walau bagian ini dikosongkan. Lihat
+[Remote Perangkat](/panduan/remote-perangkat#dua-mode-akses).
+:::
+
 | Field | Keterangan |
 |---|---|
 | **Port VPN Remote Tunnel** | Port yang dibuka di browser admin, misal `1639` |
