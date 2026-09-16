@@ -67,7 +67,7 @@ Lihat [Backup & Pindah Pelanggan](/panduan/pppoe/backup-migrasi).
 Pelanggan baru yang ditambahkan lewat form seharusnya **langsung punya tagihan pertama** — form
 mewajibkan pengisian periode dan nominal prorata sebelum disimpan. Kalau tagihannya belum ada,
 kemungkinan pelanggan tersebut diimpor dari MikroTik (jalur yang tidak melalui form tagihan
-pertama); tagihan bulanannya akan dibuat scheduler pukul 01:00 pada siklus berikutnya.
+pertama); tekan **Terbitkan Tagihan** di halaman Billing, atau tunggu scheduler pukul 01:00.
 
 ### Kenapa nominal tagihan pertama berbeda dari harga paket?
 
@@ -78,11 +78,31 @@ kuitansi.
 
 ### Apakah tagihan bisa di-generate ulang jika ada kesalahan?
 
-Tidak ada tombol generate ulang karena tagihan menggunakan `insertOrIgnore` — jika tagihan bulan tersebut sudah ada, tidak akan dibuat duplikat. Untuk mengubah jumlah tagihan, edit langsung di halaman billing pelanggan.
+Tagihan terbit otomatis dan tidak pernah dibuat dobel. Untuk tagihan yang **belum lunas** dan
+salah: hapus, lalu tekan **Terbitkan Tagihan** (atau tunggu malam) — tagihan terbit ulang dengan
+harga profil saat itu. Tagihan **lunas** tidak bisa dihapus; koreksi lewat halaman Keuangan.
 
 ### Pelanggan saya mengeluh sudah bayar tapi status masih Belum Bayar. Apa yang harus dilakukan?
 
-Jika pembayaran dilakukan di luar sistem (tunai/transfer), gunakan fitur **Catat Pembayaran Manual** di halaman detail tagihan atau detail pelanggan.
+Jika pembayaran dilakukan di luar sistem (tunai/transfer), gunakan **Catat Bayar** pada baris
+tagihan di halaman Billing.
+
+### Pelanggan bayar tidak penuh — bagaimana mencatatnya?
+
+Isi nominal yang diterima di **Catat Bayar**. Modal akan meminta Anda memilih **bayar sebagian**
+(sisa tetap ditagih) atau **potongan harga** (tagihan diturunkan & lunas, alasan wajib). Lihat
+[Sistem Billing PPPoE](/panduan/pppoe/billing#nominal-lebih-kecil-dari-sisa).
+
+### Pelanggan sudah bayar tapi masih terisolir. Kenapa?
+
+Sambung ulang hanya terjadi bila **tidak ada lagi** tagihan yang lewat jatuh tempo di luar masa
+tenggang. Cek kartu **Terlambat** di halaman Billing — kemungkinan masih ada tunggakan bulan lain.
+
+### Kenapa "jatuh tempo" tagihan prabayar ada di awal masa layanan?
+
+Karena prabayar berarti bayar dulu, layanan menyusul: batas bayar = tanggal masa aktif sebelumnya
+habis. Untuk pascabayar batas bayar ada di akhir masa layanan. Penjelasan lengkap di
+[Sistem Billing PPPoE](/panduan/pppoe/billing#satu-tagihan-tiga-tanggal).
 
 ### Apakah tagihan bisa dikonfigurasi per-pelanggan?
 

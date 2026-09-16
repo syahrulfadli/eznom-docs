@@ -40,7 +40,11 @@ Gunakan filter di atas tabel untuk menyaring data:
 
 ### PPPoE — Pembayaran Tagihan
 
-Catatan masuk otomatis saat operator mengkonfirmasi pembayaran tagihan di halaman **Billing**. Nominal yang dicatat adalah nilai tagihan yang dikonfirmasi.
+Catatan masuk otomatis saat pembayaran tagihan dicatat di halaman **Billing** atau dikonfirmasi
+gateway. Nominal yang dicatat adalah **uang yang benar-benar diterima** — pembayaran sebagian
+tercatat sebesar yang diterima (sisanya tetap piutang di Billing), potongan harga tercatat sebesar
+nominal setelah potongan. Tanggal transaksi mengikuti **Tanggal Bayar** yang diisi operator, bukan
+tanggal ia mengetiknya.
 
 ### Hotspot — Penjualan Voucher
 

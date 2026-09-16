@@ -2,17 +2,24 @@
 
 ---
 
-## Cara Kerja Tagihan Bulanan
+## Cara Kerja Tagihan
 
-Tagihan untuk setiap pelanggan aktif dibuat **otomatis oleh sistem setiap hari pukul 01.00**
-berdasarkan profil layanan yang terpasang. Anda tidak perlu membuat tagihan bulanan secara manual.
+Tagihan **terbit otomatis** — Anda tidak membuatnya secara manual:
 
-::: info Pelanggan baru langsung punya tagihan pertama
-Sejak form pelanggan mewajibkan **Tagihan Pertama (prorata)**, pelanggan baru **tidak lagi**
-menunggu sampai besok untuk punya tagihan — tagihan pertamanya dibuat bersamaan dengan data
-pelanggannya. Lihat [Tagihan Pertama (Prorata)](/panduan/pppoe/pelanggan#tagihan-pertama-prorata).
+- **Pascabayar**: siklus bulanan terbit begitu masa layanannya mulai (pukul 01.00), mengikuti
+  hari billing router, jatuh tempo di akhir masa layanan.
+- **Prabayar**: tagihan masa layanan berikutnya terbit begitu tagihan sebelumnya lunas, jatuh
+  tempo di awal masa layanan — jadi pelanggan selalu bisa bayar di muka.
+- **Pelanggan baru**: tagihan pertama (prorata) dibuat bersamaan dengan data pelanggannya. Lihat
+  [Tagihan Pertama (Prorata)](/panduan/pppoe/pelanggan#tagihan-pertama-prorata).
 
-Tagihan bulanan berikutnya barulah dibuat oleh scheduler harian.
+Tombol **Terbitkan Tagihan** di kanan atas hanya mempercepat proses malam itu — aman ditekan
+kapan saja, yang sudah ada dilewati.
+
+::: tip Aturan lengkapnya
+Arti tiap status, cara angka piutang dihitung, isolir & tenggang, sambung ulang, dan skenario
+umum dijelaskan tuntas di [Sistem Billing PPPoE](/panduan/pppoe/billing). Halaman ini fokus ke
+langkah-langkah di halaman Billing.
 :::
 
 ---
@@ -22,13 +29,12 @@ Tagihan bulanan berikutnya barulah dibuat oleh scheduler harian.
 1. Buka router yang diinginkan
 2. Di sidebar, pilih **PPPoE → Billing**
 
-Tabel menampilkan semua tagihan dengan informasi:
-- Nama & username pelanggan
-- Periode tagihan
-- Jumlah tagihan (dengan rincian PPN dan biaya pemasangan bila ada)
-- Tanggal jatuh tempo
+Bulan yang dipilih di navigasi = **bulan jatuh tempo**. Tabel menampilkan:
+- Nama & username pelanggan (badge **Prabayar** / **Baru** / **Suspended** bila relevan)
+- Jumlah tagihan (dengan rincian PPN dan biaya pemasangan bila ada; sisa bila dibayar sebagian)
+- **Masa layanan** — rentang tanggal yang dibayar tagihan itu
+- Tanggal jatuh tempo (batas bayar)
 - Status pembayaran
-- Badge **Suspended** bila akun pelanggannya sedang disuspend
 
 Klik tombol **Filter** untuk membuka modal berisi filter **Status**, **Tipe Pembayaran**,
 **Grup Pelanggan**, **Urutan**, dan jumlah baris per halaman. Kolom **Pencarian** tetap di atas
@@ -46,27 +52,29 @@ Empat kartu di atas tabel (Total, Sudah Bayar, Belum Bayar, Terlambat) berfungsi
 cepat — klik satu kartu untuk menyaring tabel ke status tersebut, klik lagi untuk melepas filter.
 Arahkan kursor ke kartu untuk melihat tooltip yang menjelaskan persis apa yang dihitung angkanya.
 
+Tiga kartu pertama menghitung bulan yang sedang dilihat; kartu **Terlambat** menghitung tunggakan
+dari **semua bulan** (jumlah, sisa nominal, dan jumlah pelanggan) — klik kartunya untuk melihat
+seluruh tunggakan tanpa berpindah-pindah bulan.
+
 ---
 
 ## Status Tagihan
 
 | Status | Arti |
 |---|---|
-| 🟡 **Belum Bayar** | Tagihan aktif, belum melewati tanggal jatuh tempo |
-| 🔴 **Terlambat** | Tagihan belum dibayar dan sudah melewati jatuh tempo |
-| 🟢 **Lunas** | Tagihan sudah dikonfirmasi pembayarannya |
+| 🟡 **Belum Bayar** | Belum lunas, jatuh tempo belum lewat |
+| 🟠 **Sebagian** | Sudah ada pembayaran, tapi belum menutup total — sisa tampil di baris |
+| 🔴 **Terlambat** | Belum lunas dan jatuh tempo sudah lewat (dihitung dari tanggal, tidak menunggu proses isolir) |
+| 🟢 **Lunas** | Total sudah diterima, atau dipotong dengan alasan tercatat |
 
 ### Cara Angka Piutang Dihitung
 
-Beberapa perilaku yang sering ditanyakan:
-
-- **Tagihan pelanggan suspended tetap dihitung** sebagai belum bayar dan tetap bisa dicatat
-  pembayarannya — tapi **tidak dihitung sebagai piutang**, karena layanannya memang sedang tidak
-  berjalan.
-- **Piutang prabayar yang telat bayar dari bulan lalu tetap tampil** di bulan berjalan, tidak
-  hilang begitu ganti bulan.
-- **Order prabayar yang masih menunggu pembayaran gateway** tidak dihitung sebagai piutang —
-  itu penawaran, bukan tagihan yang sudah jatuh tempo.
+- **Tagihan pelanggan suspended** selalu masuk **Belum Bayar** dan bisa dicatat bayar, tetapi tidak
+  pernah dihitung **Terlambat** dan tidak memicu tawaran isolir — layanannya memang tidak berjalan.
+- **Tunggakan bulan-bulan lalu** tetap terhitung di kartu **Terlambat** saat Anda melihat bulan
+  berjalan; tidak hilang begitu ganti bulan.
+- **Tagihan prabayar berikutnya** (yang terbit otomatis setelah tagihan sebelumnya lunas) baru
+  dihitung piutang pada hari batas bayarnya — sebelum itu pelanggan masih aktif normal.
 
 ---
 
@@ -118,36 +126,47 @@ ditebalkan agar mudah ditemukan di antara teks pesan.
 
 ## Mencatat Pembayaran
 
-### Pembayaran Manual (Tunai / Transfer)
+### Catat Bayar (satu tagihan)
 
-Untuk pembayaran yang diterima langsung (tunai, transfer bank, atau metode lain di luar sistem):
+1. Di halaman **Billing**, klik **Catat Bayar** pada baris tagihan
+2. Periksa **Jumlah Diterima** (default = sisa tagihan) dan **Tanggal Bayar** (boleh dimundurkan,
+   tidak boleh maju — tanggal ini yang masuk buku kas)
+3. Pilih metode: **Tunai**, **Transfer Bank**, atau **Online (QRIS, dll.)** — ketiganya berarti uang
+   sudah Anda terima
+4. Isi nomor referensi / catatan bila perlu, lalu **Simpan**
 
-1. Di halaman **Billing**, klik menu tiga titik (⋮) pada baris tagihan
-2. Pilih **Catat Bayar**
-3. Pilih metode pembayaran manual (Tunai, Transfer Bank, dll.)
-4. Isi nomor referensi jika ada (opsional)
-5. Klik **Simpan**
+Status berubah **Lunas**, kuitansi dikirim ke email pelanggan (bila ada), dan konfirmasi lunas
+dikirim sesuai pengaturan notifikasi. Bila pelanggan sedang diisolir, sistem menyambungkannya
+kembali **hanya kalau tidak ada tunggakan lain yang lewat jatuh tempo** — toast memberi tahu
+hasilnya.
 
-Status tagihan langsung berubah menjadi **Lunas**. Jika pelanggan sebelumnya terisolir, layanan otomatis disambung kembali. Kuitansi dikirim ke email pelanggan jika notifikasi email aktif.
+::: warning Nominal lebih kecil dari sisa?
+Modal meminta Anda memilih **Bayar sebagian** (tagihan tetap belum lunas, sisa terus ditagih) atau
+**Potongan harga** (tagihan diturunkan, lunas, alasan wajib). Penjelasannya di
+[Sistem Billing PPPoE](/panduan/pppoe/billing#nominal-lebih-kecil-dari-sisa).
+:::
 
-### Pembayaran Online (Payment Gateway)
+::: tip Bayar di muka (prabayar)
+Pada tagihan prabayar, field **Sekalian bayar di muka** melunasi tagihan ini plus 2/3/6/12
+periode berikutnya sekaligus, dengan metode & tanggal yang sama.
+:::
 
-Untuk tagihan yang akan dibayar pelanggan via transfer VA, QRIS, atau e-wallet:
+### Catat Lunas borongan
 
-1. Di halaman **Billing**, klik menu tiga titik (⋮) pada baris tagihan
-2. Pilih **Catat Bayar**
-3. Pilih metode **Online (Payment Gateway)**
-4. Klik **Simpan**
+Centang beberapa baris → **Catat Bayar** di bilah aksi → isi metode, tanggal, referensi → **Catat
+Lunas**. Tiap tagihan dilunasi sebesar sisanya; konfirmasi ke pelanggan dikirim bertahap.
 
-Sistem akan mengirim **link pembayaran** ke pelanggan via WhatsApp dan/atau Email. Pelanggan membuka link dan menyelesaikan pembayaran. Setelah gateway mengkonfirmasi (webhook), tagihan otomatis menjadi **Lunas** dan kuitansi dikirim ke email pelanggan.
+### Pembayaran online oleh pelanggan
+
+Untuk membuat pelanggan membayar sendiri via VA / QRIS / e-wallet, jangan pakai Catat Bayar —
+gunakan **Buat & Kirim Tagihan** (menu ⋮) atau arahkan pelanggan ke
+[portal bayar](/panduan/pppoe/portal-pembayaran). Setelah gateway mengkonfirmasi (webhook),
+tagihan otomatis **Lunas**, kuitansi dikirim, dan sambung ulang mengikuti aturan yang sama.
 
 ::: tip Link pembayaran aman
-Link yang dikirim adalah link dari eznom — bukan link gateway langsung. Sesi pembayaran di gateway baru dibuat saat pelanggan membuka link, sehingga link tidak kadaluarsa sebelum dibuka.
-
-Saat pelanggan membuka link, eznom menampilkan **halaman status** terlebih dahulu (berisi ringkasan
-tagihan dan tombol bayar), bukan langsung melempar ke gateway. Kalau pelanggan membuka link yang
-sama berulang kali, **sesi gateway yang sudah ada dipakai ulang** selama masih berlaku — tidak
-membuat transaksi baru setiap klik.
+Link yang dikirim adalah link dari eznom — bukan link gateway langsung. Sesi pembayaran di gateway
+baru dibuat saat pelanggan membuka link, sehingga link tidak kadaluarsa sebelum dibuka. Link yang
+sama dibuka berulang memakai ulang sesi gateway yang masih berlaku. Nominal link = **sisa** tagihan.
 :::
 
 ::: info Tagihan Rp 0 tidak ditawari link bayar
@@ -232,7 +251,15 @@ Jumlah tagihan diambil dari harga yang tercantum di profil layanan. Periksa dan 
 **Pelanggan baru tidak punya tagihan.**
 Pelanggan baru seharusnya sudah punya tagihan pertama yang dibuat bersamaan dengan datanya. Kalau
 belum ada, kemungkinan pelanggan tersebut dibuat lewat impor dari MikroTik (yang tidak melalui form
-tagihan pertama) — tagihan bulanannya akan muncul pada siklus scheduler berikutnya pukul 01.00.
+tagihan pertama) — tekan **Terbitkan Tagihan**, atau tunggu proses malam pukul 01.00.
+
+**Pelanggan sudah bayar tapi masih terisolir.**
+Periksa kartu **Terlambat** — kemungkinan masih ada tunggakan lain yang lewat jatuh tempo.
+Pelanggan baru disambungkan setelah semua tunggakan di luar masa tenggang beres.
+
+**Tagihan lunas tidak bisa dihapus.**
+Memang disengaja: pembayaran dan catatan keuangannya menempel di tagihan itu. Koreksi lewat
+halaman **Keuangan**.
 
 **Jumlah tagihan tidak cocok dengan harga profil.**
 Periksa apakah profil layanan punya **PPN** — nominal tagihan sudah termasuk PPN. Untuk tagihan

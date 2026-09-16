@@ -40,6 +40,7 @@ export default defineConfig({
         items: [
           { text: 'Profil Layanan', link: '/panduan/pppoe/profil' },
           { text: 'Kelola Pelanggan', link: '/panduan/pppoe/pelanggan' },
+          { text: 'Sistem Billing', link: '/panduan/pppoe/billing' },
           { text: 'Skema Pembayaran', link: '/panduan/pppoe/skema-pembayaran' },
           { text: 'Tagihan & Pembayaran', link: '/panduan/pppoe/tagihan' },
           { text: 'Portal Bayar Pelanggan', link: '/panduan/pppoe/portal-pembayaran' },

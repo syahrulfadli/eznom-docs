@@ -49,30 +49,37 @@ Setelah ID ditemukan, portal menampilkan:
 
 ---
 
-## Prabayar vs Pascabayar
+## Tagihan yang Ditampilkan
 
-Portal menampilkan informasi yang berbeda tergantung skema pembayaran pelanggan.
+Portal menampilkan semua tagihan yang **belum lunas**, urut dari yang tertua. Tiap kartu berisi:
 
-### Pascabayar
+- **Masa layanan** (contoh: 1 Sep – 1 Okt 2026)
+- Jumlah tagihan — atau **sisa** tagihan bila sebelumnya dibayar sebagian
+- Batas bayar: "Jatuh tempo" (pascabayar) atau "Bayar sebelum" (prabayar)
+- Badge status: **Belum Dibayar**, **Jatuh Tempo Hari Ini**, **Dibayar Sebagian**, atau
+  **Lewat Jatuh Tempo**
 
-Menampilkan semua tagihan bulanan yang **belum dibayar** beserta:
-- Periode tagihan (contoh: Juni 2026)
-- Jumlah tagihan
-- Tanggal jatuh tempo
-- Badge status: **Belum Dibayar** atau **Jatuh Tempo**
+::: warning Bayar yang tertua dulu (FIFO)
+Tombol **Bayar Sekarang** dan tombol WhatsApp hanya muncul pada **tagihan tertua**. Tagihan
+berikutnya menampilkan keterangan "Lunasi tagihan sebelumnya dulu". Ini disengaja: pelanggan yang
+melunasi tagihan baru sambil menyisakan tunggakan lama **tetap terisolir**, jadi portal tidak
+menawarkan jalan ke sana.
+:::
 
-Setiap tagihan memiliki tombol pembayaran sendiri — pelanggan dapat membayar tagihan bulan tertentu secara terpisah jika ada beberapa tunggakan.
+### Pelanggan prabayar
 
-### Prabayar
-
-Konteksnya adalah **perpanjangan masa aktif**, bukan tagihan bulanan reguler.
+Di atas daftar tagihan, portal menampilkan status masa aktif yang dihitung dari periode yang
+**sudah lunas**:
 
 | Kondisi | Yang Ditampilkan |
 |---|---|
-| Ada tagihan perpanjangan pending | ⚠️ Warning "Layanan berakhir [tgl]" + kartu perpanjangan dengan tombol bayar |
-| Tidak ada tagihan pending | ✅ "Layanan aktif s.d. [tgl]" + tombol WhatsApp untuk hubungi ISP jika ingin perpanjang lebih awal |
+| Masa aktif masih berjalan | ✅ "Layanan aktif s.d. [tgl]" |
+| Masa aktif habis, layanan diputus | ⚠️ "Masa aktif berakhir [tgl]. Layanan sedang diputus. Bayar tagihan di bawah untuk mengaktifkan kembali — masa layanan dihitung dari tanggal pembayaran." |
+| Masa aktif habis, belum diputus (masih tenggang) | ⚠️ "Masa aktif berakhir [tgl]. Bayar tagihan di bawah agar layanan tidak diputus." |
 
-Badge pada kartu prabayar menggunakan label **"Perlu Diperpanjang"** — tidak ada istilah "jatuh tempo" yang tidak relevan untuk skema prabayar.
+Tagihan masa layanan berikutnya **selalu sudah ada** begitu tagihan sebelumnya lunas, jadi
+pelanggan prabayar bisa **membayar di muka kapan saja** — tidak perlu menunggu jendela H-N atau
+menekan tombol "perpanjang".
 
 ---
 
@@ -99,7 +106,7 @@ Beberapa cara yang direkomendasikan:
 
 - **ID Pelanggan** adalah pengenal unik 12 karakter acak (contoh: `A3KP2X8MNQRT`) — tidak mudah ditebak
 - **Nomor telepon** selalu disamarkan di portal — hanya pemilik akun yang mengenali nomornya
-- **Link bayar gateway** berlaku selama 7 hari sejak dibuka — setelah itu pelanggan perlu membuka portal lagi untuk mendapatkan link baru
+- **Link bayar gateway** berlaku selama 7 hari sejak dibuka — setelah itu pelanggan perlu membuka portal lagi untuk mendapatkan link baru. Nominal link selalu **sisa** tagihan
 - Portal tidak menampilkan password PPPoE pelanggan
 
 ---
@@ -116,4 +123,12 @@ Pastikan pelanggan memasukkan ID persis seperti yang tertera — huruf besar, ta
 Periksa apakah metode pembayaran sudah dikonfigurasi di **Pengaturan → Pembayaran**. Jika belum ada satu pun yang aktif, portal hanya menampilkan tagihan tanpa opsi pembayaran.
 
 **Tagihan sudah lunas tapi masih muncul di portal.**
-Tagihan yang sudah lunas tidak ditampilkan — portal hanya menampilkan tagihan dengan status *belum dibayar* atau *jatuh tempo*. Jika muncul sesudah pembayaran dikonfirmasi, minta pelanggan refresh halaman.
+Tagihan yang sudah lunas tidak ditampilkan — portal hanya menampilkan tagihan yang belum lunas. Jika muncul sesudah pembayaran dikonfirmasi, minta pelanggan refresh halaman.
+
+**Pelanggan prabayar baru saja bayar, kok langsung ada tagihan lagi?**
+Itu tagihan masa layanan **berikutnya**, batas bayarnya di akhir masa aktif yang baru dibayar. Tidak
+perlu dibayar sekarang — tapi boleh, kalau pelanggan ingin bayar di muka.
+
+**Pelanggan sudah bayar tapi tombol bayar di tagihan lain tetap tidak muncul.**
+Portal membuka tombol bayar satu per satu dari yang tertua. Setelah pembayaran dikonfirmasi
+gateway, refresh halaman — tagihan berikutnya akan bisa dibayar.

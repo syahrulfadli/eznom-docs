@@ -109,12 +109,13 @@ menampilkan bagian ini otomatis begitu Anda memilih Tipe Pembayaran.
 
 | Field | Keterangan |
 |---|---|
-| **Mulai Periode** | Tanggal awal layanan. Default: tanggal pemasangan, atau hari ini |
-| **Jatuh Tempo Pertama** | Default mengikuti hari billing router (atau jatuh tempo override pelanggan). Kalau tanggalnya sudah lewat, otomatis maju ke bulan berikutnya |
+| **Mulai Layanan** | Tanggal awal layanan. Default: tanggal pemasangan, atau hari ini |
+| **Masa Layanan s.d.** | Akhir masa layanan pertama. Default: hari billing router berikutnya (atau jatuh tempo override pelanggan) |
 | **Nominal Layanan** | Dihitung prorata otomatis: `harga profil × hari terpakai ÷ jumlah hari dalam bulan` |
 
-Nominal prorata dihitung ulang setiap kali Anda mengubah tanggal mulai, jatuh tempo, atau profil
-layanan. Harga dasar yang dipakai adalah **harga profil sudah termasuk PPN** bila profil punya PPN.
+Batas bayar tagihan pertama mengikuti skema: **pascabayar** jatuh tempo di akhir masa layanan,
+**prabayar** jatuh tempo di tanggal mulai (dibayar saat pemasangan). Nominal prorata dihitung
+ulang setiap kali Anda mengubah tanggal mulai, akhir masa layanan, atau profil layanan. Harga dasar yang dipakai adalah **harga profil sudah termasuk PPN** bila profil punya PPN.
 
 ::: warning Pilih profil layanan dulu
 Kalau profil layanan belum dipilih, eznom menampilkan peringatan dan tidak bisa menghitung prorata
@@ -130,7 +131,8 @@ dari rumus dicatat di jejak audit.
 
 Setelah pelanggan prabayar tersimpan, eznom menampilkan prompt yang mengarahkan Anda melunasi
 tagihan pertama tersebut — supaya tidak ada pelanggan prabayar yang aktif tanpa pembayaran
-tercatat.
+tercatat. Begitu lunas, tagihan masa layanan berikutnya terbit otomatis (lihat
+[Sistem Billing PPPoE](/panduan/pppoe/billing#siklus-prabayar)).
 
 ---
 
@@ -201,7 +203,9 @@ belakang, jadi tidak lagi menyebabkan halaman timeout pada batch besar.
 Klik nama pelanggan atau tombol **Detail** untuk membuka halaman detail yang berisi:
 
 ### Tab Tagihan
-Riwayat semua tagihan bulanan beserta status (Lunas / Belum Bayar / Terlambat).
+Riwayat semua tagihan beserta masa layanan, batas bayar, dan status (Lunas / Belum Bayar /
+Sebagian / Terlambat). Kartu **Belum Dibayar** di atasnya menghitung sisa piutang yang sudah jatuh
+tempo — tagihan prabayar berikutnya yang belum jatuh tempo tidak dihitung.
 
 ### Tab Pembayaran
 Riwayat semua transaksi pembayaran yang sudah dikonfirmasi.

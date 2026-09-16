@@ -63,7 +63,7 @@ ini, supaya jika terjadi pemblokiran, operasional utama bisnis Anda tidak tergan
 
 ::: tip Mitigasi: Pengiriman Otomatis Dijeda Bertahap
 Untuk mengecilkan risiko di atas, sistem **tidak** mengirim notifikasi massal (pengingat tagihan
-harian ke banyak pelanggan, aksi isolir borongan, atau catat-bayar prabayar borongan) sekaligus
+harian ke banyak pelanggan, aksi isolir borongan, atau catat lunas borongan) sekaligus
 dalam hitungan detik. Setiap pesan diberi jeda sekitar **5 detik** dari pesan sebelumnya — jadi
 pengiriman ke 50 pelanggan tersebar ±4 menit, bukan dalam sekejap. Ini berjalan otomatis, tidak
 perlu diatur.
@@ -285,7 +285,13 @@ diblokir. Minimal 1 hari harus dicentang; pengaturan tidak bisa disimpan dengan 
 kosong.
 :::
 
-Isi pesan H-N: nama ISP, nama pelanggan, nama paket, tanggal jatuh tempo, nominal tagihan.
+Isi pesan H-N: nama ISP, nama pelanggan, nama paket, masa layanan, tanggal jatuh tempo, nominal
+tagihan. Untuk pelanggan **prabayar**, pesannya memakai template *masa aktif akan berakhir* —
+tanggalnya sama (batas bayar = akhir masa aktif), hanya kata-katanya yang disesuaikan.
+
+Pengingat merujuk tagihan yang sudah terbit. Karena tagihan pascabayar terbit sejak masa layanan
+mulai dan tagihan prabayar berikutnya terbit begitu yang sebelumnya lunas, pengingat H-7 selalu
+punya tagihan untuk dirujuk — pelanggan yang sudah bayar di muka tidak akan dikirimi pengingat.
 
 ### Notifikasi Hari Jatuh Tempo (H-0)
 
@@ -313,15 +319,14 @@ Dikirim otomatis setelah tagihan dikonfirmasi lunas. Tidak perlu konfigurasi tam
 | Pemicu | Keterangan |
 |---|---|
 | **Midtrans webhook** | Pelanggan bayar online — sistem Midtrans mengirim konfirmasi ke eznom |
-| **Admin catat bayar manual** | Admin klik "Catat Bayar" di halaman Billing |
-| **Admin catat bayar prabayar** | Admin klik "Catat Tagihan Prabayar" untuk pelanggan prabayar |
+| **Admin catat bayar** | Admin klik "Catat Bayar" di halaman Billing (satuan maupun borongan — borongan dikirim bertahap) |
 
 ### Isi Pesan
 
 - Nama ISP
 - Nama & ID pelanggan
 - Nama paket
-- Periode tagihan (misal: Mei 2026)
+- Masa layanan (misal: 1 Mei – 1 Jun 2026)
 - Nominal yang dibayar
 - Tanggal konfirmasi
 
@@ -333,12 +338,20 @@ Tentukan berapa hari setelah jatuh tempo sebelum pelanggan otomatis diisolir:
 
 | Nilai | Efek |
 |---|---|
-| **0** | Isolir langsung pada hari H jatuh tempo (perilaku default) |
+| **0** | Isolir sehari setelah jatuh tempo (hari jatuh tempo itu sendiri belum terlambat) |
 | **3** | Pelanggan diberi waktu 3 hari setelah JT sebelum diisolir |
 | **7** | Grace period 7 hari |
 
+Nilai di sini adalah **fallback untuk semua router**; **Pengaturan Router** bisa menimpanya per
+router. Tenggang berlaku untuk pelanggan **prabayar maupun pascabayar** — untuk prabayar artinya
+layanan masih berjalan beberapa hari setelah masa aktif habis. Set 0 kalau prabayar harus diputus
+tepat waktu.
+
+Status tagihan tidak menunggu tenggang: tagihan sudah **Terlambat** begitu jatuh tempo lewat;
+tenggang hanya menunda pemutusannya.
+
 ::: info
-Isolir otomatis hanya berlaku untuk pelanggan yang memiliki opsi **Auto Isolir** diaktifkan di data pelanggan.
+Isolir otomatis hanya berlaku untuk pelanggan yang memiliki opsi **Auto Isolir** diaktifkan di data pelanggan dan router yang Auto-Isolir-nya aktif.
 :::
 
 ---
@@ -379,7 +392,7 @@ berikutnya. Pelanggan tidak akan dibangunkan pukul 3 pagi oleh pesan penagihan.
 :::
 
 Setiap kali sistem mengirim notifikasi WA ke **banyak** pelanggan sekaligus (pengingat harian,
-isolir otomatis, tunggakan berulang, atau aksi borongan seperti catat-bayar prabayar massal),
+isolir otomatis, tunggakan berulang, atau aksi borongan seperti catat lunas massal),
 pesan dijeda **bertahap** (selang 5 detik per pelanggan) supaya tidak terkirim sekaligus dalam
 hitungan detik dari satu nomor — lihat kotak "Mitigasi" di bagian WhatsApp Gateway di atas.
 Notifikasi tetap akan terkirim, hanya dengan jeda beberapa detik hingga beberapa menit dari waktu
@@ -395,7 +408,8 @@ prosesnya dimulai, tergantung jumlah pelanggan dalam batch tersebut.
 | Jatuh tempo hari ini (H-0) | WA + Email | Scheduler 07:00 (bertahap) |
 | Pelanggan diisolir otomatis | WA | Scan tiap jam, pesan dikirim dalam jendela 08:00–21:00 (bertahap) |
 | Tunggakan berulang | WA + Email | Scheduler 07:00, sesuai interval yang diset (bertahap) |
-| Konfirmasi tagihan lunas | WA + Email | Midtrans webhook / admin catat bayar / admin catat-bayar prabayar (borongan → bertahap) |
+| Konfirmasi tagihan lunas | WA + Email | Webhook gateway / admin catat bayar / catat lunas borongan (bertahap) |
+| Invoice tagihan pascabayar baru | Email | Scheduler 08:30, untuk tagihan yang baru terbit dan belum jatuh tempo |
 | Kirim link bayar (admin) | WA + Email | Admin klik "Buat & Kirim Tagihan" |
 | Kirim link kuitansi (admin) | WA + Email | Admin klik "Kirim Link Kuitansi" di baris tagihan lunas |
 | Pesan WA manual per pelanggan | WA | Admin pilih template di baris tagihan — lihat [Tagihan & Pembayaran](/panduan/pppoe/tagihan#kirim-pesan-whatsapp-manual) |

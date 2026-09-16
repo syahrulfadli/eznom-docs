@@ -1,6 +1,9 @@
 # Skema Pembayaran: Prabayar & Pascabayar
 
-Setiap pelanggan PPPoE di eznom menggunakan salah satu dari dua skema pembayaran. Skema ini menentukan kapan tagihan dibuat, kapan pelanggan diharapkan membayar, dan bagaimana sistem menangani keterlambatan.
+Setiap pelanggan PPPoE di eznom menggunakan salah satu dari dua skema pembayaran. Keduanya memakai
+**aturan tagihan yang sama** — masa layanan, jatuh tempo (batas bayar), status, isolir, dan
+sambung ulang — dan hanya berbeda di **kapan** pelanggan diharapkan membayar. Aturan lengkapnya
+ada di [Sistem Billing PPPoE](/panduan/pppoe/billing); halaman ini merangkum perbedaannya.
 
 ---
 
@@ -8,187 +11,101 @@ Setiap pelanggan PPPoE di eznom menggunakan salah satu dari dua skema pembayaran
 
 | Aspek | Pascabayar | Prabayar |
 |---|---|---|
-| **Konsep** | Pakai dulu, bayar belakangan | Bayar dulu, baru bisa pakai |
-| **Tagihan dibuat** | Otomatis setiap hari oleh sistem | Manual oleh admin saat pelanggan membayar |
-| **Status awal tagihan** | Belum Bayar | Langsung Lunas |
-| **Jatuh tempo** | Tetap per bulan (tanggal billing) | Fleksibel — ditentukan saat catat pembayaran |
-| **Cocok untuk** | Pelanggan rumahan, langganan tetap | Warung, kantor kecil, pelanggan ad-hoc |
+| **Konsep** | Pakai dulu, bayar belakangan | Bayar dulu, baru pakai |
+| **Jatuh tempo** | **Akhir** masa layanan | **Awal** masa layanan (= saat masa aktif sebelumnya habis) |
+| **Tagihan terbit** | Otomatis saat masa layanan mulai (pukul 01.00) | Otomatis begitu tagihan sebelumnya lunas |
+| **Status awal tagihan** | Belum Bayar | Belum Bayar — belum dihitung piutang sampai hari batas bayar |
+| **Bayar di muka** | Tidak umum | Kapan saja — lewat Catat Bayar (2/3/6/12 periode) atau portal |
+| **Cocok untuk** | Pelanggan rumahan, langganan tetap | Warung, kantor kecil, pelanggan yang ingin kendali penuh |
 
 ---
 
 ## Pascabayar
 
-### Alur
-
 ```
-Setiap hari (otomatis)
-  → Sistem membuat tagihan bulan berjalan (status: Belum Bayar)
-  → Pengingat dikirim H-N hari sebelum jatuh tempo
-  
-Jatuh tempo terlewat
-  → Status berubah: Terlambat
-  → Jika auto-isolir aktif: layanan diputus
+Masa layanan mulai (hari billing)
+  → Tagihan terbit (status: Belum Bayar), invoice email dikirim pagi harinya
+  → Pengingat H-N sebelum jatuh tempo, lalu H-0
 
-Admin catat pembayaran
+Jatuh tempo lewat
+  → Status: Terlambat
+  → Lewat masa tenggang & Auto-Isolir aktif: layanan diputus
+
+Pembayaran tercatat / dikonfirmasi gateway
   → Status: Lunas
-  → Layanan otomatis disambung kembali (jika sebelumnya terisolir)
+  → Disambung kembali bila tidak ada tunggakan lain di luar tenggang
 ```
 
-### Detail
-
-Tagihan bulanan dibuat **otomatis setiap hari pukul 01.00**. Sistem memeriksa seluruh pelanggan aktif dan membuat tagihan untuk bulan berjalan jika belum ada. Proses ini idempoten — tagihan tidak akan dibuat dobel jika sudah ada.
-
-Tanggal jatuh tempo mengacu pada **tanggal billing** yang dikonfigurasi di pengaturan router, atau bisa di-override per pelanggan melalui **Jatuh Tempo Kustom** di detail pelanggan.
-
-### Notifikasi Otomatis
-
-Sistem mengirim pengingat berdasarkan pengaturan **Hari Pengingat** di Pengaturan → Notifikasi. Contoh: jika diisi `[7, 3, 1]`, pengingat dikirim 7 hari, 3 hari, dan 1 hari sebelum jatuh tempo.
-
-Setelah jatuh tempo terlewat, sistem mengirim notifikasi tunggakan sesuai interval yang dikonfigurasi.
+Jatuh tempo mengikuti **hari billing** router, atau **Jatuh Tempo Override** per pelanggan.
+Tagihan terbit sejak masa layanan mulai — jadi untuk hari billing 1, tagihan yang jatuh tempo
+1 Oktober sudah ada sejak 1 September, dan pengingat H-7 benar-benar terkirim pada 24 September.
 
 ---
 
 ## Prabayar
 
-### Alur
-
 ```
-Admin catat pembayaran
-  → Tagihan dibuat + langsung berstatus Lunas
-  → Masa layanan aktif hingga tanggal yang ditentukan
-  → Jika sebelumnya terisolir: otomatis disambung
+Tagihan sebelumnya lunas
+  → Tagihan masa layanan berikutnya langsung terbit
+    (mulai = akhir masa lunas, bayar sebelum tanggal itu)
+  → Pengingat H-N "masa aktif akan berakhir", lalu H-0
 
-Mendekati akhir masa layanan
-  → Pengingat dikirim H-N hari sebelum habis
+Masa aktif habis & belum dibayar
+  → Status: Terlambat
+  → Lewat masa tenggang & Auto-Isolir aktif: layanan diputus
 
-Masa layanan habis
-  → Sistem membuat tagihan renewal (status: Belum Bayar)
-  → Jika auto-isolir aktif dan belum ada pembayaran: layanan diputus
-
-Admin catat pembayaran perpanjangan
-  → Masa layanan diperpanjang
-  → Layanan otomatis disambung kembali
+Pembayaran tercatat / dikonfirmasi gateway
+  → Lunas, disambung kembali
+  → Bila sempat diputus: masa layanan digeser mulai tanggal bayar (durasi tetap)
+  → Tagihan berikutnya langsung terbit lagi
 ```
 
-### Detail
-
-Pada prabayar, admin yang memulai siklus pembayaran — bukan sistem. Saat admin mencatat pembayaran, sistem membuat tagihan sekaligus mencatatnya sebagai lunas dalam satu transaksi. Tidak ada tagihan "Belum Bayar" yang menunggu di tabel.
-
-**Masa berlaku** ditentukan admin saat mencatat pembayaran (misalnya: berlaku hingga 30 Juni 2026). Sistem memantau tanggal ini dan mengirim pengingat perpanjangan secara otomatis.
-
-Saat masa berlaku habis, sistem otomatis membuat tagihan renewal dengan status **Belum Bayar**. Jika dalam waktu tertentu tidak ada pembayaran dan auto-isolir aktif, layanan diputus.
-
-### Metode Pembayaran saat Catat Pembayaran Prabayar
-
-Saat admin mencatat pembayaran prabayar, terdapat dua jalur berdasarkan metode yang dipilih:
-
-| Metode | Alur |
-|---|---|
-| **Tunai / Transfer / Manual** | Tagihan langsung dibuat & berstatus **Lunas**; kuitansi dikirim ke pelanggan; layanan disambung jika sebelumnya terisolir |
-| **Online (Payment Gateway)** | Tagihan dibuat dengan status **Belum Bayar**; **link pembayaran** dikirim ke pelanggan via WhatsApp/Email; tagihan baru menjadi **Lunas** setelah pelanggan menyelesaikan pembayaran di gateway (webhook) |
-
-::: tip Link pembayaran prabayar
-Link yang dikirim adalah link aman dari eznom (`/billing/pay/...`), bukan link gateway langsung. Sesi gateway baru dibuat saat pelanggan membuka link — bukan saat admin mencatat. Setelah gateway mengkonfirmasi pembayaran, eznom otomatis mengirim **kuitansi/invoice** ke email pelanggan.
+::: tip Tidak ada lagi "Tambah & Bayar"
+Dulu Anda membuat tagihan prabayar sendiri lewat modal khusus, memilih tanggal berlaku, dan
+memastikan tidak dobel. Sekarang tagihan berikutnya **selalu sudah ada**; Anda tinggal mencatat
+pembayarannya seperti tagihan lain. Bayar beberapa periode sekaligus lewat field **Sekalian bayar
+di muka** di modal Catat Bayar.
 :::
 
-::: warning Masa berlaku & metode online
-Saat memilih metode online, field **"Berlaku Sampai Periode Berikutnya"** tidak tersedia — masa berlaku baru ditentukan setelah pembayaran dikonfirmasi oleh gateway, bukan saat admin membuat tagihan.
+::: info Bayar terlambat setelah diputus
+Kalau layanan sudah diputus dan pelanggan baru membayar beberapa hari kemudian, masa layanannya
+**digeser ke tanggal bayar** dengan durasi tetap — ia tidak membayar hari-hari tanpa layanan dan
+tidak mendapat hari gratis. Tagihan berikutnya dihitung **prorata** sampai hari billing agar
+siklusnya kembali rapi. Pelanggan yang tidak diputus (Auto-Isolir mati) tetap membayar siklus yang
+ia nikmati.
 :::
 
 ---
 
-## Isolasi & Reconnect
+## Isolir & Sambung Ulang
 
-Keduanya menggunakan mekanisme isolasi yang sama.
+Keduanya memakai mekanisme yang sama, dievaluasi **setiap jam**:
 
-### Kondisi Isolasi
+- **Diputus** bila ada tagihan belum lunas yang jatuh temponya lewat lebih dari **masa tenggang**
+  (Pengaturan Router, atau Pengaturan → Notifikasi sebagai fallback). Tenggang berlaku untuk
+  prabayar maupun pascabayar; set 0 kalau prabayar harus diputus tepat waktu.
+- Hanya bila **Auto-Isolir** aktif di pelanggan dan di router. Kalau tidak, status tetap Terlambat
+  tanpa pemutusan.
+- **Disambung kembali** setelah pembayaran hanya bila **tidak ada lagi** tagihan yang memenuhi
+  syarat isolir — melunasi satu dari dua tunggakan belum menyambungkan, dan Anda diberi tahu.
 
-Layanan diputus jika:
-- **Pascabayar**: tagihan melewati jatuh tempo + grace period
-- **Prabayar**: masa berlaku habis + tidak ada pembayaran perpanjangan
-
-Isolasi hanya terjadi jika **Auto-Isolir** diaktifkan pada pelanggan. Jika nonaktif, sistem menandai status terlambat/expired tapi tidak memutus layanan.
-
-### Grace Period
-
-Di **Pengaturan → Notifikasi**, ada pengaturan **Grace Period Isolasi** (hari). Contoh: jika diisi `2`, sistem menunggu 2 hari setelah jatuh tempo sebelum benar-benar mengisolasi.
-
-### Reconnect Otomatis
-
-Setiap kali pembayaran dikonfirmasi (baik manual oleh admin maupun otomatis via Midtrans), jika pelanggan sedang dalam status **Terisolir**, sistem langsung menyambung kembali layanannya ke MikroTik tanpa perlu tindakan tambahan.
+Detail: [Isolir & Masa Tenggang](/panduan/pppoe/billing#isolir-masa-tenggang) dan
+[Sambung Ulang](/panduan/pppoe/billing#sambung-ulang-setelah-bayar).
 
 ---
 
 ## Mengatur Skema Pelanggan
 
-Skema pembayaran dipilih saat menambah atau mengedit pelanggan.
+Skema dipilih saat menambah atau mengedit pelanggan: **PPPoE → Pelanggan → Tambah/Edit → Tipe
+Pembayaran**. Tidak ada nilai default — form menolak disimpan sampai Anda memilih, supaya tidak
+ada pelanggan yang diam-diam masuk ke skema yang salah.
 
-1. Buka **PPPoE → Pelanggan**
-2. Klik **+ Tambah Pelanggan** atau edit pelanggan yang ada
-3. Di field **Tipe Pembayaran**, pilih **Pascabayar** atau **Prabayar**
+Untuk pelanggan baru, form juga meminta **tagihan pertama** (mulai layanan, masa layanan s.d.,
+nominal prorata). Pada prabayar, jatuh tempo tagihan pertama = tanggal mulai, dan eznom langsung
+mengarahkan Anda mencatat pembayarannya setelah pelanggan tersimpan. Lihat
+[Tagihan Pertama (Prorata)](/panduan/pppoe/pelanggan#tagihan-pertama-prorata).
 
-Skema bisa diubah kapan saja. Perubahan berlaku mulai siklus tagihan berikutnya.
-
-::: warning Tipe pembayaran wajib dipilih
-Tidak ada nilai default. Form menolak disimpan sampai Anda memilih salah satu — supaya tidak ada
-pelanggan yang diam-diam masuk sebagai pascabayar padahal seharusnya prabayar.
-:::
-
----
-
-## Periode Billing Pertama (Prabayar)
-
-Saat membuat pelanggan **prabayar** baru, Anda menentukan **periode pertama**-nya lewat month
-picker (pilih bulan & tahun, bukan tanggal lengkap) — dengan preview periode billing yang
-dihasilkan tampil langsung di bawah pilihannya.
-
-::: info Label periode mengikuti bulan jatuh tempo
-Periode billing awal prabayar diberi label mengikuti **bulan jatuh temponya**, bukan bulan mulai
-layanan. Ini membuat label periode di tabel billing konsisten dengan tagihan bulan-bulan
-berikutnya.
-:::
-
-::: warning Prabayar baru selalu punya tagihan pertama
-Field **Mulai Periode Pertama** wajib diisi dan terisi otomatis. eznom juga menolak pembuatan
-tagihan pertama yang duplikat — kalau pelanggan tersebut sudah punya tagihan periode itu,
-prosesnya diblokir dengan pesan yang jelas, bukan menghasilkan dua tagihan untuk periode yang
-sama.
-:::
-
-### Perpanjangan Prabayar
-
-Tagihan perpanjangan prabayar dibuat mengikuti **hari billing router**, dan dibuat ke **siklus yang
-sedang berjalan** — bukan melompat ke periode di depan. Pelanggan prabayar yang telat memperpanjang
-tetap ditagihkan untuk periode yang terlewat, bukan langsung dianggap mulai dari periode baru.
-
-Pelanggan prabayar juga bisa **memperpanjang sendiri** lewat
-[Portal Bayar Pelanggan](/panduan/pppoe/portal-pembayaran) tanpa perlu menghubungi Anda.
-
----
-
-## Mencatat Pembayaran Prabayar
-
-Berbeda dari pascabayar, pembayaran prabayar dicatat dari tab khusus di halaman Billing.
-
-1. Buka **PPPoE → Billing**
-2. Pilih tab **Prabayar**
-3. Klik **+ Catat Pembayaran**
-4. Pilih pelanggan, isi nominal, tanggal berlaku hingga, dan metode pembayaran
-5. Klik **Simpan**
-
-Sistem otomatis membuat tagihan + mencatat pembayaran sekaligus, dan menyambung kembali layanan jika pelanggan sedang terisolir.
-
-### Memilih Pelanggan di Modal
-
-Modal catat-bayar prabayar menampilkan daftar pelanggan dengan filter status, sehingga Anda bisa
-langsung memisahkan yang **sudah ditagih periode ini** dari yang belum. Pelanggan bisa dicentang
-banyak sekaligus untuk pencatatan borongan.
-
-::: tip Notifikasi borongan dijeda bertahap
-Mencatat pembayaran untuk banyak pelanggan sekaligus tidak mengirim puluhan pesan WhatsApp dalam
-hitungan detik — pengirimannya dijeda bertahap. Lihat
-[Mitigasi pengiriman](/panduan/notifikasi#whatsapp-gateway).
-:::
+Skema bisa diubah kapan saja; berlaku mulai tagihan berikutnya.
 
 ---
 
@@ -198,16 +115,14 @@ hitungan detik — pengirimannya dijeda bertahap. Lihat
 |---|---|
 | Setiap 30 detik | Sinkronisasi status online/offline dari MikroTik |
 | Setiap menit | Sinkronisasi voucher hotspot dari MikroTik |
-| 01.00 setiap hari | Generate tagihan bulanan pascabayar |
-| 07.00 setiap hari | Kirim notifikasi pengingat & tunggakan |
-| **Setiap jam** | Evaluasi isolasi — putus layanan yang overdue/expired |
+| 01.00 setiap hari | Terbitkan tagihan: siklus pascabayar yang sudah mulai + tagihan prabayar berikutnya yang belum ada |
+| 07.00 setiap hari | Kirim pengingat H-N, H-0, dan tunggakan berkala |
+| 08.30 setiap hari | Email invoice untuk tagihan pascabayar yang baru terbit |
+| **Setiap jam** | Evaluasi isolir — putus yang lewat jatuh tempo + tenggang |
 | Setiap 5 menit | Retry sinkronisasi MikroTik yang gagal |
 | Setiap 2 jam | Deteksi pelanggan yang offline berkepanjangan |
 
-::: info Isolasi kini dievaluasi tiap jam
-Sebelumnya evaluasi isolasi hanya berjalan sekali sehari pukul 08.00. Sekarang berjalan **setiap
-jam**, sehingga pelanggan yang lewat jatuh tempo di siang hari tidak menunggu sampai besok pagi.
-
-Notifikasi isolir ke pelanggan tetap dibatasi jendela **08.00–21.00**; isolir yang terjadi di luar
-jam itu tetap dieksekusi, hanya pemberitahuannya yang ditunda ke pukul 08.00 berikutnya.
+::: info Notifikasi isolir hanya pada jam manusiawi
+Isolir dieksekusi tiap jam, tetapi pesan ke pelanggan hanya dikirim pada **08.00–21.00**; isolir
+di luar jam itu tetap berjalan, pemberitahuannya ditunda ke pukul 08.00 berikutnya.
 :::

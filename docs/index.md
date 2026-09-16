@@ -22,7 +22,7 @@ features:
     details: Buat profil hotspot dengan batas waktu dan kuota, lalu generate voucher secara massal untuk dijual ke pelanggan.
   - icon: 💰
     title: Tagihan & Pembayaran
-    details: Generate tagihan bulanan otomatis dengan prorata dan PPN, terima pembayaran via Midtrans, Duitku, DOKU, atau iPaymu, dan pantau laporan keuangan per router.
+    details: Tagihan terbit otomatis dengan prorata dan PPN, terima pembayaran via Midtrans, Duitku, DOKU, atau iPaymu, dan pantau laporan keuangan per router.
   - icon: 🔔
     title: Notifikasi Otomatis
     details: Kirim pengingat jatuh tempo via WhatsApp dan Email secara otomatis di hari yang Anda pilih, dari nomor WhatsApp Anda sendiri.
