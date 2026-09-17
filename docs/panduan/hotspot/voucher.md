@@ -2,17 +2,61 @@
 
 ---
 
-## Melihat Daftar Voucher
+## Halaman Voucher
 
 Buka router → **Hotspot → Voucher**
 
-Tabel menampilkan semua voucher dengan status:
+Halaman ini adalah pintu masuk semua batch voucher di router. Dari atas ke bawah:
+
+| Bagian | Isi |
+|---|---|
+| **Ringkasan** | Total, Tersedia, Terpakai, dan Expired untuk seluruh router |
+| **Cari voucher** | Mencari username/password di **semua batch** sekaligus — berguna saat pelanggan menyebut kode vouchernya tanpa tahu batch-nya. Klik hasilnya untuk lompat ke batch-nya dengan voucher itu sudah terfilter |
+| **Batch Voucher** | Daftar batch, 15 per halaman, bisa dicari berdasarkan nama batch dan difilter per profil |
+| **Hapus Massal** | Menghapus semua voucher **Terpakai** atau **Expired** di seluruh router — lihat [Hapus Voucher](#hapus-voucher) |
+
+### Membaca daftar batch
+
+Setiap baris batch menampilkan nama, profil, waktu generate, template cetak, reseller (bila ada),
+serta angka **tersedia / total** dengan bar kemajuan di bawahnya. Bar itu menunjukkan berapa banyak
+voucher yang sudah keluar dari stok (terpakai maupun expired) — batch yang habis terjual berarti bar
+penuh.
+
+Tombol di kanan baris: **Lihat** (buka detail batch), **cetak** (pilih template, plus Export CSV),
+**duplikat** (buka form generate dengan pengaturan yang sama), dan **hapus batch**.
+
+Status pengiriman ke MikroTik juga tampil di baris ini selama batch belum selesai disinkronkan —
+lihat [Sinkronisasi Voucher ke MikroTik](#sinkronisasi-voucher-ke-mikrotik).
+
+---
+
+## Detail Batch
+
+Klik nama batch atau tombol **Lihat** untuk membuka halaman detail. Halaman ini punya alamat
+sendiri, jadi bisa di-bookmark atau dibagikan ke operator lain.
+
+**Bagian atas** merangkum batch: profil, harga per voucher, template, tanggal, mode pencatatan
+keuangan, bar kemajuan, dan status sinkronisasi (dengan tombol **Retry** bila macet). Tombol
+**Cetak**, **Duplikat**, dan **hapus** ada di sini juga.
+
+**Kartu statistik** (Total, Tersedia, Terpakai, Expired) menghitung voucher di batch ini saja.
+Klik salah satu kartu untuk memfilter tabel di bawahnya; klik lagi untuk melepas filter.
+
+**Tabel voucher** menampilkan username, password, status, dan waktu pakai — 50 baris per halaman,
+dengan kolom pencarian dan filter status. Arahkan kursor ke baris untuk menyalin kode atau mencetak
+satu voucher saja.
 
 | Status | Arti |
 |---|---|
-| 🟡 **Belum dipakai** | Voucher siap digunakan |
-| 🟢 **Aktif** | Voucher sedang digunakan |
-| ⚫ **Kedaluwarsa** | Masa berlaku habis |
+| 🔵 **Tersedia** | Belum pernah dipakai |
+| 🟢 **Terpakai** | Sedang atau pernah dipakai pelanggan |
+| ⚫ **Expired** | Masa berlaku habis, sudah dihapus dari MikroTik |
+
+::: tip Tandai terjual
+Pada batch dengan mode pencatatan **Saat voucher terpakai**, voucher yang masih Tersedia bisa
+dicentang lalu **Tandai Terjual** — pemasukannya langsung dicatat ke Keuangan tanpa menunggu
+pelanggan login. Tanda ini bisa dibatalkan selama vouchernya belum dipakai.
+:::
 
 ---
 
@@ -27,6 +71,7 @@ Tabel menampilkan semua voucher dengan status:
 | **Profil** | Pilih profil hotspot yang sudah dibuat |
 | **Jumlah** | Berapa voucher yang ingin dibuat (1–500) |
 | **Reseller** | Opsional — pilih reseller yang membeli batch ini |
+| **Pencatatan Keuangan** | **Satu batch langsung** (seluruh batch dicatat sebagai pemasukan saat generate) atau **Saat voucher terpakai** (dicatat bertahap mengikuti voucher yang dipakai, expired, atau ditandai terjual) |
 | **Template Cetak** | Layout kartu saat dicetak (lihat tabel di bawah) |
 | **Jenis Voucher** | **User + Password** (berbeda) atau **Kode Tunggal** (password sama dengan username) |
 | **Desain Kartu** | **Visual Builder** (atur warna & font via panel) atau **HTML Kustom** (pakai [Template Kartu](/panduan/hotspot/template-kartu)) |
@@ -40,7 +85,8 @@ Tabel menampilkan semua voucher dengan status:
 | **Kolom (A4)** | Jumlah kolom kartu per baris saat cetak A4 (muncul jika template A4) |
 | **Lebar / Tinggi / Kertas** | Ukuran fisik kartu (mm) dan kertas (A4/F4/Letter) — muncul jika template **Ukuran Kustom** |
 
-3. Klik **Generate** — voucher langsung dibuat dan disync ke MikroTik
+3. Klik **Generate** — voucher langsung dibuat, disync ke MikroTik, dan Anda diarahkan ke
+   halaman [Detail Batch](#detail-batch) yang baru dibuat
 
 ### Pilihan Template Cetak
 
@@ -76,7 +122,15 @@ Lihat: [Reseller Hotspot](/panduan/hotspot/reseller)
 
 ### Pencatatan Keuangan
 
-Setiap batch yang di-generate otomatis dicatat ke halaman [Keuangan](/panduan/keuangan) sebagai transaksi penjualan voucher. Tidak perlu input manual.
+Setiap batch otomatis dicatat ke halaman [Keuangan](/panduan/keuangan) sebagai transaksi penjualan
+voucher, tanpa input manual. Kapan dicatatnya mengikuti mode yang dipilih saat generate:
+
+| Mode | Pemasukan dicatat |
+|---|---|
+| **Satu batch langsung** | Sekaligus, saat batch di-generate |
+| **Saat voucher terpakai** | Bertahap per hari — hanya voucher yang dipakai, expired, atau ditandai terjual. Harga per voucher dikunci saat generate |
+
+Mode ini ikut tersimpan di preset. Batch mode "saat terpakai" ditandai **Catat saat terpakai** di daftar batch.
 
 ---
 
@@ -120,7 +174,8 @@ Bisnis lain boleh memakai nama yang sama tanpa saling mengganggu.
 Voucher dikirim ke MikroTik lewat antrean latar belakang yang **terpisah dari antrean tugas lain**,
 sehingga batch besar tidak menghambat sinkronisasi PPPoE atau notifikasi.
 
-Status pengiriman batch ditampilkan di daftar batch. Kalau ada batch yang berhenti di tengah jalan,
+Status pengiriman ditampilkan di baris batch dan di bagian atas halaman detail batch, lengkap dengan
+tombol **Retry** untuk mengirim ulang. Kalau ada batch yang berhenti di tengah jalan,
 Anda akan menerima [notifikasi operator](/panduan/notifikasi-operator) **Batch voucher berhenti** —
 batch yang berhenti tidak melanjutkan sendiri dan perlu dikirim ulang setelah masalahnya beres.
 Notifikasi **Batch voucher selesai dikirim** menandakan semua voucher sudah masuk ke MikroTik.
@@ -135,8 +190,16 @@ router terlebih dahulu.
 
 ## Cetak Voucher
 
-1. Centang voucher yang ingin dicetak, atau centang semua
-2. Klik **Cetak** — halaman cetak terbuka dengan tampilan kartu voucher yang siap dicetak
+Cetak dilakukan **per batch**, dari ikon printer di daftar batch atau tombol **Cetak** di halaman
+detail batch. Pilih template yang diinginkan — template saat generate hanyalah bawaan, batch yang
+sama bisa dicetak ulang dengan template lain. Halaman cetak terbuka di jendela baru dan langsung
+memanggil dialog cetak.
+
+Untuk mencetak **satu voucher saja** (misalnya kartu pengganti), buka detail batch, arahkan kursor
+ke baris voucher, lalu klik ikon printer di ujung baris.
+
+Menu cetak juga menyediakan **Export CSV** — daftar username, password, profil, status, masa
+berlaku, harga, waktu pakai, dan MAC perangkat untuk satu batch.
 
 Setiap kartu voucher menampilkan (tergantung pengaturan saat generate):
 - Logo dan nama bisnis Anda
@@ -207,7 +270,17 @@ Builder maupun mode HTML Kustom.
 
 ## Hapus Voucher
 
-Voucher yang sudah **Aktif** atau **Kedaluwarsa** bisa dihapus dari sistem dan MikroTik dengan mengklik ikon hapus di baris voucher.
+Voucher **Terpakai** dan **Expired** sudah tidak punya nilai jual dan bisa dibersihkan dari eznom
+maupun MikroTik. Ada tiga cakupan:
+
+| Cakupan | Di mana |
+|---|---|
+| Seluruh router, per status | Halaman Voucher → **Hapus Massal** → pilih *semua expired* atau *semua terpakai* |
+| Satu batch, per status | Detail batch → ikon hapus → pilih *voucher expired* atau *voucher terpakai* |
+| Seluruh batch | Ikon hapus di baris batch, atau detail batch → **Hapus seluruh batch** — termasuk voucher yang masih Tersedia |
+
+Dialog konfirmasi selalu menyebutkan jumlah voucher yang akan dihapus. Penghapusan tidak bisa
+dibatalkan.
 
 ::: tip
 Generate voucher dalam jumlah besar sekaligus dan simpan fisiknya. Voucher yang belum dipakai tidak memakan resource di MikroTik.
