@@ -70,9 +70,11 @@ menyisakan satu pekerjaan untuk Anda: mencatat pembayaran.
 
 ### Tagihan pertama (pelanggan baru)
 
-Saat pelanggan baru disimpan, form mewajibkan **tagihan pertama** dengan tanggal mulai layanan,
-tanggal akhir masa layanan, dan nominal prorata (bisa diedit). Biaya pemasangan, bila ada, ikut di
-tagihan ini. Lihat [Tagihan Pertama (Prorata)](/panduan/pppoe/pelanggan#tagihan-pertama-prorata).
+Saat pelanggan baru disimpan, form mewajibkan **tagihan pertama**. Defaultnya **bayar penuh**:
+masa layanan sebulan dari tanggal mulai dengan harga paket, dan tagihan berikutnya jatuh di tanggal
+yang sama setiap bulan. Sakelar **Hitung prorata** mengubahnya menjadi tagihan prorata sampai hari
+billing router. Biaya pemasangan, bila ada, ikut di tagihan ini. Lihat
+[Tagihan Pertama](/panduan/pppoe/pelanggan#tagihan-pertama).
 
 - Pascabayar: jatuh tempo = akhir masa layanan yang Anda isi.
 - Prabayar: jatuh tempo = tanggal mulai (dibayar saat pemasangan). Setelah tersimpan, eznom
@@ -96,7 +98,7 @@ tagihan untuk dirujuk — jauh sebelum jatuh tempo.
 Sistem otomatis **melewati** siklus yang tidak boleh ditagihkan:
 
 - pelanggan belum berlangganan pada siklus itu (baru dipasang di tengah/akhir siklus — tagihan
-  pertamanya yang prorata sudah menutupi hari-hari tersebut);
+  pertamanya sudah menutupi hari-hari tersebut);
 - siklus sudah tercakup tagihan lain (misalnya tagihan pertama yang sengaja dibuat menjangkau dua
   siklus);
 - profil layanan pelanggan belum punya harga.
@@ -122,10 +124,15 @@ Belum dibayar sampai 1 Okt → mulai 2 Okt "Terlambat"; diisolir setelah masa te
 ```
 
 Masa layanan berikutnya dihitung dari **akhir masa lunas terakhir** sampai **hari billing
-berikutnya**, dengan nominal harga profil saat tagihan terbit. Kalau jendelanya tidak tepat satu
-siklus (misalnya setelah pergeseran karena bayar terlambat), nominalnya **prorata** — jendela
-yang terlalu pendek (kurang dari seminggu) digabung ke siklus berikutnya supaya pelanggan tidak
-ditagih dua kali dalam seminggu.
+berikutnya**, dengan nominal **harga penuh profil** saat tagihan terbit — walaupun jendelanya tidak
+tepat satu bulan (misalnya setelah pergeseran karena bayar terlambat). Prorata hanya ada di tagihan
+pertama pelanggan baru. Jendela yang terlalu pendek (kurang dari seminggu) digabung ke siklus
+berikutnya supaya pelanggan tidak ditagih dua kali dalam seminggu.
+
+::: info Pelanggan hasil import
+Pelanggan yang diimpor dari MikroTik belum punya tagihan apa pun. Tagihan pertamanya diterbitkan
+sistem dengan harga penuh profil, bukan prorata.
+:::
 
 #### Bayar terlambat setelah diputus
 
@@ -135,7 +142,7 @@ mulai, masa layanan **digeser ke tanggal pembayaran** dengan durasi tetap:
 ```
 Tagihan: 1 Okt – 1 Nov, bayar sebelum 1 Okt. Diputus 2 Okt.
 Dibayar 10 Okt → masa aktif menjadi 10 Okt – 10 Nov, langsung tersambung.
-Tagihan berikutnya: 10 Nov – 1 Des (prorata), lalu kembali normal 1 Des – 1 Jan.
+Tagihan berikutnya: 10 Nov – 1 Des (harga penuh), lalu kembali normal 1 Des – 1 Jan.
 ```
 
 Pelanggan tidak membayar hari-hari tanpa layanan, dan tidak mendapat hari gratis. Tanggal jatuh
@@ -144,10 +151,10 @@ tempo yang lama tetap tersimpan, jadi riwayat "terlambat berapa hari" tetap juju
 Pelanggan yang **tidak** diputus (Auto-Isolir dimatikan) tetap membayar siklus yang ia nikmati —
 masa layanannya tidak digeser.
 
-::: warning Prabayar tanpa harga profil
-Pelanggan prabayar yang profilnya belum punya harga tidak bisa dibuatkan tagihan. Kalau masa
-aktifnya sudah habis, ia tetap **diputus** (tanpa notifikasi tagihan) supaya tidak berjalan gratis.
-Isi harga profil, lalu tekan **Terbitkan Tagihan**.
+::: info Prabayar dengan profil Rp 0
+Tagihan prabayar tetap terbit walaupun harga profilnya Rp 0 (atau belum diisi) — nominalnya Rp 0,
+tetapi tagihannya tampil di Billing sehingga bisa Anda ubah nominalnya atau tandai lunas. Pengingat
+WhatsApp/email tidak dikirim untuk tagihan Rp 0, dan tagihan Rp 0 tidak ditawari link bayar.
 :::
 
 ### Tombol "Terbitkan Tagihan"
@@ -172,25 +179,41 @@ sebenarnya, jadi tidak perlu menghafal.
 
 | Kartu | Cakupan | Isi |
 |---|---|---|
-| **Total Tagihan** | Bulan yang dipilih | Jumlah tagihan & nominalnya |
-| **Sudah Bayar** | Bulan yang dipilih | Jumlah lunas & **uang yang benar-benar diterima** (bisa berbeda dari nominal bila ada potongan) |
-| **Belum Bayar** | Bulan yang dipilih | Belum lunas & belum lewat jatuh tempo (+ tagihan pelanggan suspended) |
-| **Terlambat** | **Semua bulan** | Belum lunas & lewat jatuh tempo, sisa nominalnya, dan jumlah pelanggannya |
+| **Total tagihan** | Bulan yang dipilih | Jumlah tagihan & nominalnya |
+| **Sudah bayar** | Bulan yang dipilih | Jumlah lunas & **uang yang benar-benar diterima** (bisa berbeda dari nominal bila ada potongan) |
+| **Belum bayar** | Bulan yang dipilih | Belum lunas & belum lewat jatuh tempo (+ tagihan pelanggan suspended) |
+| **Tunggakan** | **Semua bulan** | Belum lunas & lewat jatuh tempo, sisa nominalnya, dan jumlah pelanggannya |
 
-Kartu **Terlambat** sengaja lintas bulan: tunggakan adalah fakta router, bukan fakta bulan.
+Kartu **Tunggakan** sengaja lintas bulan: tunggakan adalah fakta router, bukan fakta bulan.
 Berpindah bulan tidak akan membuat tunggakan lama "hilang".
 
-Setiap kartu bisa diklik untuk menyaring tabel. Klik **Terlambat** menampilkan semua tunggakan
+Di bawah kartu ada bar **Komposisi bulan ini**: pembagian tagihan bulan yang dilihat menjadi Lunas,
+Belum bayar, dan **Terlambat**. Bedanya dengan kartu Tunggakan: *Terlambat* di bar ini hanya
+menghitung tagihan bulan yang dilihat, sedangkan *Tunggakan* menghitung semua bulan.
+
+Setiap kartu bisa diklik untuk menyaring tabel. Klik **Tunggakan** menampilkan semua tunggakan
 dari bulan mana pun; klik lagi untuk melepas filter.
+
+::: tip Penjelasan angka di HP
+Ikon ⓘ di samping label kartu menjelaskan persis apa yang dihitung. Di komputer, arahkan kursor;
+di HP, ketuk ikonnya untuk membuka penjelasan di bawah layar, lalu ketuk di mana saja untuk
+menutup.
+:::
 
 ### Tabel
 
 Tiap baris menampilkan pelanggan, ID, profil, nominal (dengan rincian PPN & pemasangan bila ada),
 **masa layanan**, jatuh tempo, status, dan aksi. Baris yang dibayar sebagian menampilkan "Dibayar
-Rp X · sisa Rp Y". Pelanggan prabayar ditandai badge **Prabayar**; pelanggan yang dipasang dalam
-30 hari terakhir ditandai **Baru**.
+Rp X · sisa Rp Y", dan tagihan yang mendapat potongan menampilkan nominal serta alasannya.
+Pelanggan prabayar ditandai label **Prabayar**; pelanggan yang dipasang dalam 30 hari terakhir
+ditandai **Baru** (lihat [label warna](/panduan/pppoe/pelanggan#label-status-berwarna)).
 
-Urutan default: Terlambat → Belum Bayar → Lunas, lalu jatuh tempo terdekat. Ubah lewat **Filter**.
+Urutan default: Terlambat → Belum Bayar → Lunas, lalu jatuh tempo terdekat. Klik **judul kolom**
+untuk mengurutkan berdasarkan kolom itu (klik berikutnya membalik arah, klik ketiga kembali ke
+urutan bawaan), atau atur lewat **Filter**.
+
+**Klik kanan** pada baris membuka menu aksi yang sama dengan tombol **⋯** — termasuk **Catat
+Bayar** untuk tagihan yang belum lunas.
 
 ---
 
@@ -204,8 +227,10 @@ pemasangan, total, dan **sisa** bila sebelumnya sudah ada pembayaran sebagian) b
 | **Jumlah Diterima** | Default = sisa tagihan. Tidak boleh melebihi sisa |
 | **Tanggal Bayar** | Default hari ini. Boleh dimundurkan (uang diterima kemarin), tidak boleh maju. Tanggal ini yang masuk ke buku kas |
 | **Sekalian bayar di muka** | Hanya prabayar — lihat di bawah |
-| **Metode** | Tunai · Transfer Bank · Online (QRIS dll.) — semuanya berarti *uang sudah Anda terima*. Untuk **mengirim link bayar** ke pelanggan, gunakan **Buat & Kirim Tagihan** di menu ⋮ |
-| **Nomor Referensi / Catatan** | Opsional; ikut tercetak di kuitansi |
+| **Metode** | Tunai · Transfer Bank · QRIS · Online lainnya (e-wallet, dll.) — semuanya berarti *uang sudah Anda terima*. Untuk **mengirim link bayar** ke pelanggan, gunakan **Kirim Link Bayar** di menu ⋯ |
+| **Nomor Referensi** | Opsional; ikut tercetak di kuitansi |
+| **Bukti** | Opsional — foto atau PDF bukti transfer, maksimal 5 MB. Ikut tersimpan di catatan [Keuangan](/panduan/keuangan#bukti-transaksi) |
+| **Catatan** | Opsional |
 
 ### Nominal lebih kecil dari sisa
 
@@ -215,7 +240,24 @@ karena secara administrasi keduanya berbeda:
 | Pilihan | Yang terjadi |
 |---|---|
 | **Bayar sebagian** | Uang dicatat. Tagihan **tetap belum lunas** (badge Sebagian), sisanya terus ditagih dan tetap dihitung piutang. Pelanggan yang sedang diisolir **belum** disambungkan. |
-| **Potongan harga** | Nominal tagihan diturunkan menjadi total yang diterima, tagihan **lunas**. Alasan potongan **wajib** diisi dan tercatat di jejak audit. |
+| **Potongan harga** | Nominal tagihan diturunkan menjadi total yang diterima, tagihan **lunas**. Alasan potongan **wajib** diisi. |
+
+Potongan tersimpan di tagihan itu sendiri: harga normal, nominal potongan, dan alasannya tampil di
+tabel Billing dan dirinci di kuitansi sebagai baris **Potongan Harga** — pelanggan bisa melihat
+dari mana angka totalnya berasal.
+
+#### Potongan pada profil ber-PPN
+
+PPN selalu dihitung dari harga **setelah** potongan. Karena itu, untuk profil yang punya PPN,
+modal menanyakan arti nominal yang Anda ketik:
+
+| Pilihan | Contoh: ketik Rp 200.000, PPN 11% |
+|---|---|
+| **Nominal sudah termasuk PPN** | Total diterima Rp 200.000 = harga Rp 180.180 + PPN Rp 19.820 |
+| **Nominal = harga setelah potongan, PPN ditambahkan** | Total diterima Rp 222.000 = harga Rp 200.000 + PPN Rp 22.000 |
+
+Rincian angka masing-masing pilihan tampil langsung di modal sebelum disimpan. Total yang melebihi
+sisa tagihan ditolak.
 
 ::: tip Kenapa harus memilih?
 Dulu nominal berapa pun langsung membuat tagihan "Lunas", dan selisihnya lenyap tanpa jejak — tidak
@@ -296,11 +338,36 @@ mengarahkan pembayaran ke tunggakan tertua lebih dulu.
 
 - **Ubah jatuh tempo** (per baris atau borongan) — memindahkan batas bayar. Untuk prabayar, masa
   layanan tidak ikut bergeser.
+- **Batalkan Pembayaran** — untuk pembayaran yang salah catat (salah pelanggan, salah nominal).
+  Lihat [di bawah](#membatalkan-pembayaran).
 - **Hapus tagihan** — hanya untuk tagihan yang **belum lunas**. Tagihan lunas tidak bisa dihapus
   karena pembayaran dan catatan keuangannya menempel padanya; untuk prabayar, periode lunas juga
-  bukti masa aktif. Kalau ada kesalahan pada tagihan lunas, catat koreksinya di **Keuangan**.
+  bukti masa aktif. Batalkan pembayarannya dulu bila memang perlu.
 - **Tagihan prabayar berikutnya yang dihapus** akan diterbitkan ulang oleh sistem (dengan harga
   profil saat itu) — ini cara termudah memperbarui nominal setelah harga profil berubah.
+
+### Membatalkan pembayaran
+
+Menu ⋯ tagihan yang sudah dibayar (lunas maupun sebagian) menyediakan **Batalkan Pembayaran**.
+Tagihan dikembalikan seolah pembayaran itu tidak pernah dicatat:
+
+- **Semua** pembayaran tagihan itu dihapus, beserta pemasukan dan buktinya di Keuangan.
+- Potongan harga dikembalikan; tagihan kembali **Belum Bayar** dengan nominal semula.
+- **Prabayar:** tagihan periode berikutnya yang belum dibayar ikut dihapus — ia terbit lagi saat
+  tagihan ini dilunasi.
+- MikroTik tidak disentuh. Kalau tagihan itu ternyata sudah lewat masa tenggang, pemeriksaan isolir
+  berikutnya yang memutus pelanggan.
+
+Pembatalan **ditolak** bila:
+
+- pembayarannya lewat **payment gateway** — uangnya sudah benar-benar masuk ke akun gateway;
+- tagihan **sesudahnya sudah dibayar** (misalnya bayar di muka beberapa periode) — batalkan dari
+  periode paling akhir dulu supaya masa aktif tidak berlubang.
+
+::: warning Siapa yang bisa membatalkan
+Pemilik router, dan sub-pengguna yang punya hak **hapus** di modul **Billing** dan **Keuangan**
+sekaligus. Kuitansi yang sudah terkirim ke pelanggan tidak bisa ditarik.
+:::
 
 ---
 
@@ -336,9 +403,11 @@ selalu sudah ada, jadi bayar di muka tinggal klik.
 
 ## Skenario yang Sering Terjadi
 
-**Pelanggan pascabayar baru dipasang 10 September, hari billing 1.**
-Tagihan pertama: 10 Sep – 1 Okt (prorata), jatuh tempo 1 Okt. Sistem *tidak* menerbitkan tagihan
-September penuh untuknya. Tagihan berikutnya (1 Okt – 1 Nov) terbit 1 Oktober.
+**Pelanggan pascabayar baru dipasang 10 September, hari billing router 1.**
+Dengan default *bayar penuh*: tagihan pertama 10 Sep – 10 Okt seharga paket, dan siklus pelanggan
+ini dikunci ke tanggal 10 (jatuh tempo override = 10). Tagihan berikutnya 10 Okt – 10 Nov.
+Kalau sakelar *Hitung prorata* dinyalakan: tagihan pertama 10 Sep – 1 Okt (prorata), lalu ikut
+siklus router 1 Okt – 1 Nov. Sistem *tidak* menerbitkan tagihan September penuh untuknya.
 
 **Pelanggan prabayar bayar tanggal 20 untuk masa aktif sampai tanggal 1.**
 Begitu tercatat lunas, tagihan 1 – 1 bulan berikutnya langsung terbit. Ia bisa membayarnya kapan
@@ -352,10 +421,14 @@ memberi tahu Anda alasannya.
 Pilih *bayar sebagian* (sisa Rp 50.000 tetap ditagih) atau *potongan harga* (tagihan menjadi
 Rp 250.000, lunas, alasan tercatat).
 
+**Pembayaran tercatat di pelanggan yang salah.**
+Buka menu ⋯ tagihan itu → **Batalkan Pembayaran**, lalu catat ulang di tagihan pelanggan yang
+benar. Pemasukan di Keuangan ikut terhapus, jadi tidak ada uang yang terhitung dua kali.
+
 **Harga profil naik.**
 Tagihan yang sudah terbit tidak berubah. Tagihan prabayar berikutnya yang belum dibayar bisa
 dihapus agar terbit ulang dengan harga baru; tagihan pascabayar siklus berikutnya otomatis memakai
 harga baru.
 
-**Angka kartu Terlambat lebih besar dari jumlah baris di tabel.**
+**Angka kartu Tunggakan lebih besar dari jumlah baris di tabel.**
 Kartu menghitung semua bulan, tabel hanya bulan yang dipilih. Klik kartunya untuk melihat semuanya.

@@ -70,8 +70,8 @@ di muka** di modal Catat Bayar.
 ::: info Bayar terlambat setelah diputus
 Kalau layanan sudah diputus dan pelanggan baru membayar beberapa hari kemudian, masa layanannya
 **digeser ke tanggal bayar** dengan durasi tetap — ia tidak membayar hari-hari tanpa layanan dan
-tidak mendapat hari gratis. Tagihan berikutnya dihitung **prorata** sampai hari billing agar
-siklusnya kembali rapi. Pelanggan yang tidak diputus (Auto-Isolir mati) tetap membayar siklus yang
+tidak mendapat hari gratis. Tagihan berikutnya berjalan sampai hari billing agar siklusnya kembali
+rapi, dengan harga penuh profil. Pelanggan yang tidak diputus (Auto-Isolir mati) tetap membayar siklus yang
 ia nikmati.
 :::
 
@@ -101,9 +101,10 @@ Pembayaran**. Tidak ada nilai default — form menolak disimpan sampai Anda memi
 ada pelanggan yang diam-diam masuk ke skema yang salah.
 
 Untuk pelanggan baru, form juga meminta **tagihan pertama** (mulai layanan, masa layanan s.d.,
-nominal prorata). Pada prabayar, jatuh tempo tagihan pertama = tanggal mulai, dan eznom langsung
+nominal) — defaultnya bayar penuh sebulan dari tanggal mulai, atau prorata sampai hari billing bila
+sakelar **Hitung prorata** dinyalakan. Pada prabayar, jatuh tempo tagihan pertama = tanggal mulai, dan eznom langsung
 mengarahkan Anda mencatat pembayarannya setelah pelanggan tersimpan. Lihat
-[Tagihan Pertama (Prorata)](/panduan/pppoe/pelanggan#tagihan-pertama-prorata).
+[Tagihan Pertama](/panduan/pppoe/pelanggan#tagihan-pertama).
 
 Skema bisa diubah kapan saja; berlaku mulai tagihan berikutnya.
 

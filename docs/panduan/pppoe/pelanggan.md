@@ -8,21 +8,53 @@ Halaman ini mencakup cara menambah, mengedit, dan mengelola pelanggan PPPoE seca
 
 Buka router → **PPPoE → Pelanggan** untuk melihat semua pelanggan.
 
+Kartu di atas tabel: **Total pelanggan**, **Aktif**, **Isolir**, dan **Sedang online** (dibanding
+total pelanggan).
+
 Tabel menampilkan:
 - Nama & username pelanggan
 - Status koneksi (🟢 Online / 🔴 Offline)
-- Status akun (Aktif / Isolir / Suspended)
+- Status akun (Aktif / Isolir / Suspend / Nonaktif)
 - Profil layanan yang digunakan
 - Grup pelanggan (jika diisi)
 - Badge **WA** hijau bila pelanggan sudah opt-in notifikasi WhatsApp
-- Badge **Baru** bila pelanggan dipasang dalam **30 hari terakhir**
+- Label **Baru** bila pelanggan dipasang dalam **30 hari terakhir**, dan **Prabayar** untuk pelanggan prabayar
 - Tombol aksi cepat
 
 Gunakan kolom **pencarian** di atas tabel untuk menyaring berdasarkan nama atau username.
 
-Filter lanjutan (status, grup, urutan) dibuka lewat tombol **Filter** yang menampilkan modal —
-tampilan ini sama di desktop maupun mobile, sehingga letak filternya tidak berubah-ubah saat Anda
-berpindah perangkat.
+Filter lanjutan (status, koneksi, tipe pembayaran, grup, urutan) dibuka lewat tombol **Filter** yang
+menampilkan modal — tampilan ini sama di desktop maupun mobile, sehingga letak filternya tidak
+berubah-ubah saat Anda berpindah perangkat.
+
+### Mengurutkan dari judul kolom
+
+Klik **judul kolom** untuk mengurutkan tabel berdasarkan kolom itu. Klik kedua membalik arahnya,
+klik ketiga kembali ke urutan bawaan. Kolom yang sedang dipakai mengurutkan ditandai panah. Hal yang
+sama berlaku di tabel Billing.
+
+### Label status berwarna
+
+Status akun, **Prabayar**, dan **Baru** tampil sebagai strip warna kecil supaya tabel tetap ringkas:
+
+| Warna | Arti |
+|---|---|
+| Biru | Aktif |
+| Merah | Isolir |
+| Amber | Suspend |
+| Oranye | Nonaktif |
+| Ungu | Prabayar |
+| Hijau | Baru |
+
+**Klik label mana pun** untuk menampilkan teksnya di semua label; klik lagi untuk kembali ke warna
+saja. Pilihan ini diingat browser dan berlaku juga di tabel Billing. Arahkan kursor ke label untuk
+melihat teksnya tanpa mengubah tampilan.
+
+### Baris per halaman
+
+Pemilih jumlah baris (**25 / 50 / 100 / 200**, default 100) ada di bar halaman di bawah tabel.
+Pilihan Anda tersimpan di akun dan berlaku di semua daftar berhalaman di eznom — tidak perlu
+mengaturnya ulang di tiap halaman atau setelah login ulang.
 
 ---
 
@@ -59,7 +91,7 @@ notifikasi via WhatsApp (bila opt-in aktif) dan tidak menerima kuitansi email.
 
 | Field | Keterangan |
 |---|---|
-| **Username** | Username PPPoE. Klik **Generate Acak** untuk 12 karakter unik, atau klik ikon **=** untuk menggunakan ID Pelanggan sebagai username |
+| **Username** | Username PPPoE. Klik **Generate Acak** untuk 12 karakter unik, atau klik ikon **=** untuk menggunakan ID Pelanggan sebagai username. Boleh mengandung **satu spasi** di antara kata (misal `budi santoso`), tetapi tidak di awal/akhir dan tidak spasi ganda |
 | **Password** | Password PPPoE |
 | **Profil Layanan** | Pilih dari profil yang sudah dibuat |
 
@@ -88,6 +120,33 @@ Klik **Pin di Peta** untuk memilih lokasi secara visual dari peta interaktif.
 
 ---
 
+## Import dari MikroTik
+
+Kalau pelanggan sudah lama ada sebagai PPPoE Secret di MikroTik, Anda tidak perlu mengetik ulang
+satu per satu. Buka menu di kanan atas halaman Pelanggan → **Import dari Mikrotik** (angka di
+belakangnya = jumlah secret yang belum terdaftar di eznom). Menu ini muncul saat VPN router
+terhubung.
+
+1. Centang secret yang ingin diimpor (bisa dicari, atau **Pilih Semua**)
+2. Pilih **Tipe Pembayaran** untuk seluruh pilihan
+3. Atur dua sakelar yang berlaku untuk seluruh batch:
+   - **Isolir Otomatis** (default menyala) — pelanggan diputus sendiri saat tagihan lewat jatuh
+     tempo. Kalau dimatikan, tagihan tetap ditandai menunggak tetapi pelanggan terus online
+     sampai diisolir manual.
+   - **Notifikasi WhatsApp** — menandai pelanggan setuju menerima pengingat tagihan via WA. Hanya
+     terkirim ke yang nomor HP-nya terisi.
+4. Klik **Import N User**
+
+Secret bertanda **EZ NOM** / **MIKHOPMAN** membawa nama, nomor HP, alamat, dan tanggal pasang dari
+komentar MikroTik, dan semuanya terisi otomatis.
+
+::: tip Pelanggan impor lama yang isolir otomatisnya mati
+Pilih pelanggan-pelanggan itu di daftar, lalu gunakan aksi massal **Isolir Otomatis → Nyalakan**
+(lihat [Aksi Massal](#aksi-massal-bulk)).
+:::
+
+---
+
 ## Biaya Pemasangan
 
 Biaya instalasi sekali bayar yang ditagihkan **bersama tagihan pertama** pelanggan, baik prabayar
@@ -102,31 +161,56 @@ instalasi sekali bayar.
 
 ---
 
-## Tagihan Pertama (Prorata)
+## Tagihan Pertama
 
 Setiap pelanggan **baru** — prabayar maupun pascabayar — wajib punya tagihan pertama. Form
-menampilkan bagian ini otomatis begitu Anda memilih Tipe Pembayaran.
+menampilkan kartu **Tagihan Pertama** otomatis begitu Anda memilih Tipe Pembayaran. Ada dua mode,
+dipilih lewat sakelar **Hitung prorata**:
+
+| Mode | Masa layanan pertama | Nominal | Tagihan berikutnya |
+|---|---|---|---|
+| **Bayar penuh** (default) | Sebulan dari tanggal mulai | Harga paket penuh | Setiap bulan di tanggal mulai — **Jatuh Tempo Override** pelanggan diisi otomatis dengan tanggal itu |
+| **Prorata** (sakelar menyala) | Dari tanggal mulai sampai hari billing router berikutnya (atau override pelanggan) | `harga profil × hari terpakai ÷ jumlah hari dalam bulan` | Mengikuti hari billing router |
 
 | Field | Keterangan |
 |---|---|
 | **Mulai Layanan** | Tanggal awal layanan. Default: tanggal pemasangan, atau hari ini |
-| **Masa Layanan s.d.** | Akhir masa layanan pertama. Default: hari billing router berikutnya (atau jatuh tempo override pelanggan) |
-| **Nominal Layanan** | Dihitung prorata otomatis: `harga profil × hari terpakai ÷ jumlah hari dalam bulan` |
+| **Masa Layanan s.d.** | Akhir masa layanan pertama. Terisi otomatis; hanya bisa diubah di mode prorata |
+| **Nominal Layanan** | Terhitung otomatis dari harga profil, tetap bisa diedit. Total bersama biaya pemasangan tampil di bawahnya |
 
 Batas bayar tagihan pertama mengikuti skema: **pascabayar** jatuh tempo di akhir masa layanan,
-**prabayar** jatuh tempo di tanggal mulai (dibayar saat pemasangan). Nominal prorata dihitung
-ulang setiap kali Anda mengubah tanggal mulai, akhir masa layanan, atau profil layanan. Harga dasar yang dipakai adalah **harga profil sudah termasuk PPN** bila profil punya PPN.
+**prabayar** jatuh tempo di tanggal mulai (dibayar saat pemasangan). Nominal dihitung ulang setiap
+kali Anda mengubah tanggal, mode, atau profil layanan. Harga dasar yang dipakai adalah **harga
+profil sudah termasuk PPN** bila profil punya PPN.
 
-::: warning Pilih profil layanan dulu
-Kalau profil layanan belum dipilih, eznom menampilkan peringatan dan tidak bisa menghitung prorata
-— karena harga dasarnya belum diketahui. Pilih profil lebih dulu, baru atur tanggalnya.
+::: tip Kapan memakai prorata?
+Bayar penuh paling sederhana: pelanggan membayar harga paket, dan tanggal tagihannya sama dengan
+tanggal pasang. Pakai prorata kalau Anda ingin semua pelanggan ditagih di **satu tanggal yang sama**
+(hari billing router) — tagihan pertama hanya menagih hari yang terpakai sampai tanggal itu.
 :::
 
-::: info Nominal prorata terkunci untuk sebagian sub-pengguna
+::: info Tanggal mulai 29–31
+Jatuh tempo override dibatasi tanggal 1–28. Pelanggan yang mulai tanggal 29, 30, atau 31 di mode
+bayar penuh mendapat masa layanan pertama sampai tanggal 28 bulan berikutnya, lalu siklusnya
+setiap tanggal 28.
+:::
+
+::: warning Pilih profil layanan dulu
+Kalau profil layanan belum dipilih, eznom menampilkan peringatan dan nominal awal Rp 0 — karena
+harga dasarnya belum diketahui. Pilih profil lebih dulu, baru atur tanggalnya.
+:::
+
+::: info Nominal terkunci untuk sebagian sub-pengguna
 Sub-pengguna **tanpa izin membuat data Keuangan** (misalnya role Teknisi) melihat field nominal
 dalam keadaan terkunci — mereka bisa menambah pelanggan, tapi nominal tagihan pertamanya dipaksa
-mengikuti hasil rumus prorata dan tidak bisa dibulatkan manual. Perubahan nominal yang menyimpang
-dari rumus dicatat di jejak audit.
+mengikuti hasil perhitungan otomatis dan tidak bisa dibulatkan manual. Perubahan nominal yang
+menyimpang dari rumus dicatat di jejak audit.
+:::
+
+::: info Tagihan berikutnya selalu harga penuh
+Prorata hanya berlaku di tagihan pertama pelanggan yang ditambahkan lewat form ini. Tagihan
+lanjutan — dan tagihan pertama pelanggan hasil import dari MikroTik — selalu memakai harga penuh
+profil.
 :::
 
 Setelah pelanggan prabayar tersimpan, eznom menampilkan prompt yang mengarahkan Anda melunasi
@@ -155,15 +239,26 @@ Grup dipakai sebagai filter di halaman **Pelanggan** dan **Billing**, dan ikut t
 
 ## Aksi Cepat per Pelanggan
 
-Dari baris tabel, tersedia aksi:
+Tombol **⋯** di ujung baris membuka menu aksi. Menu yang sama terbuka dengan **klik kanan** di
+mana saja pada baris, tepat di posisi kursor (menu bawaan browser tetap muncul saat Anda klik kanan
+pada link, isian, teks yang sedang diseleksi, atau sambil menahan Shift).
 
 | Aksi | Fungsi |
 |---|---|
-| **Detail** | Buka halaman detail lengkap pelanggan |
+| **Sinkronkan** | Muncul bila data pelanggan belum tersinkron ke MikroTik |
+| **Suspend** / **Aktifkan Kembali** | Menghentikan sementara / mengaktifkan lagi akun pelanggan |
+| **Isolir** / **Reconnect** | Putuskan layanan (walled garden redirect) / aktifkan kembali pelanggan yang diisolir |
+| **Remote Modem** | Untuk pelanggan yang sedang online — lihat [Remote Perangkat](/panduan/remote-perangkat) |
+| **Lihat Detail** | Buka halaman detail lengkap pelanggan |
 | **Edit** | Edit data pelanggan |
-| **Isolir** | Putuskan layanan pelanggan (walled garden redirect) |
-| **Reconnect** | Aktifkan kembali pelanggan yang sedang diisolir |
+| **Tambah Catatan** / **Ubah Catatan** | Catatan internal singkat tanpa membuka form edit, misal *janji bayar tgl 10*. Catatan tampil di halaman detail pelanggan |
+| **Salin Username** | Menyalin username PPPoE (password sengaja tidak ikut disalin) |
+| **Hubungi Pelanggan** | Telepon atau WhatsApp, bila nomor HP terisi |
+| **Lihat di Google Maps** | Bila koordinat terisi |
 | **Hapus** | Hapus pelanggan dari sistem dan MikroTik |
+
+Modal edit pelanggan menyebut siapa yang menambahkan pelanggan dan siapa yang terakhir mengubahnya,
+beserta waktunya.
 
 ---
 
@@ -182,7 +277,13 @@ Aksi yang tersedia:
 | **Isolir** | Isolir semua pelanggan yang dipilih |
 | **Reconnect** | Aktifkan kembali semua pelanggan terisolir yang dipilih |
 | **Suspend** | Suspend akun pelanggan yang dipilih |
+| **Isolir Otomatis → Nyalakan / Matikan** | Mengubah sakelar Auto Isolir banyak pelanggan sekaligus (maksimal 100 per aksi). Hanya mengubah boleh-tidaknya pelanggan diputus otomatis nanti — pelanggan yang sedang terisolir tidak ikut disambungkan |
 | **Hapus** | Hapus permanen semua pelanggan yang dipilih |
+
+Pilihan centang **bertahan** saat Anda mengganti pencarian atau filter, jadi Anda bisa mencari
+"budi", mencentang, mencari "siti", mencentang lagi, lalu menjalankan satu aksi untuk semuanya.
+Bar aksi menyebut berapa pelanggan terpilih yang tidak terlihat di daftar saat ini. Pilihan baru
+dikosongkan setelah aksi selesai atau saat Anda menekan **Batal**.
 
 ::: danger
 Aksi massal **Hapus** tidak dapat dibatalkan. Semua data pelanggan termasuk riwayat tagihan akan terhapus permanen.
@@ -207,14 +308,15 @@ Riwayat semua tagihan beserta masa layanan, batas bayar, dan status (Lunas / Bel
 Sebagian / Terlambat). Kartu **Belum Dibayar** di atasnya menghitung sisa piutang yang sudah jatuh
 tempo — tagihan prabayar berikutnya yang belum jatuh tempo tidak dihitung.
 
-### Tab Pembayaran
-Riwayat semua transaksi pembayaran yang sudah dikonfirmasi.
+Setiap tagihan diikuti sub-baris pembayarannya — tanggal, metode, referensi, jumlah, dan siapa
+yang mencatat — sehingga cicilan langsung terlihat milik tagihan yang mana. Potongan harga tampil
+di bawah nominal tagihan.
 
 ### Tab Kredensial
 Username, password, profil layanan, IP PPPoE, uptime sesi, dan status sinkronisasi ke MikroTik.
 
 ### Tab Live Traffic
-Grafik kecepatan upload/download real-time (diperbarui setiap 5 detik). Memerlukan koneksi VPN router aktif.
+Grafik kecepatan download/upload real-time dari sisi pelanggan (diperbarui setiap 5 detik). Memerlukan koneksi VPN router aktif.
 
 ### Tab Lokasi
 Peta interaktif menampilkan lokasi pelanggan berdasarkan koordinat yang tersimpan. Tersedia tombol **Buka di Google Maps** untuk navigasi langsung.
@@ -235,6 +337,19 @@ eznom. Hubungi administrator instance Anda untuk menaikkannya.
 
 ### Tab Notifikasi
 Riwayat semua notifikasi WA/Email yang pernah dikirim ke pelanggan.
+
+### Tab Riwayat
+Linimasa semua yang terjadi pada pelanggan ini, dikelompokkan per hari: perubahan data (nilai lama
+→ baru), isolir/reconnect/suspend (manual, massal, maupun otomatis), tagihan terbit, dan pembayaran
+— masing-masing dengan pelakunya.
+
+Saringan di kanan atas:
+
+| Pilihan | Isi |
+|---|---|
+| **Oleh Pengguna** (default) | Hanya aksi yang dilakukan orang — Anda, sub-pengguna, atau reseller |
+| **Otomatis** | Hanya aksi sistem, seperti isolir terjadwal dan tagihan yang terbit sendiri |
+| **Semua** | Keduanya |
 
 ---
 
