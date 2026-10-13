@@ -12,7 +12,7 @@ Menu ini masih bertanda **Beta**. Data yang sudah Anda gambar tetap tersimpan, t
 
 ## Membuka Peta
 
-Buka router → **Peta Jaringan** di sidebar.
+Buka router → **Manajemen → Peta Jaringan** di sidebar.
 
 ---
 

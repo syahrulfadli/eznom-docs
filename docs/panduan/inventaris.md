@@ -89,7 +89,7 @@ Total pengeluarannya terlihat sebelum disimpan. Saat disimpan, dua hal terjadi s
    dengan keterangan otomatis seperti *"Pembelian stok: 300 m Fiber 12 core"* serta metode
    pembayaran dan bukti notanya.
 
-Metode pembayaran dan bukti nota masih bisa dikoreksi belakangan dari halaman [Keuangan](/panduan/keuangan#inventaris-pembelian-stok).
+Metode pembayaran dan bukti nota masih bisa dikoreksi belakangan dari halaman [Keuangan](/panduan/keuangan#inventaris-—-pembelian-stok).
 
 ::: info Barang ber-nomor seri dibeli lewat pendataan unit
 Barang dengan pelacakan **per unit** tidak punya tombol Beli. Pembeliannya dicatat sekaligus saat

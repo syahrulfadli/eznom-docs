@@ -50,7 +50,7 @@ Tersedia tiga tab:
 | Tab | Isi |
 |---|---|
 | **Mutasi Saldo** | Seluruh pergerakan saldo: top up, pembelian voucher, dan penyesuaian manual. Bisa difilter per jenis |
-| **Riwayat Top Up** | Semua pengajuan top up beserta statusnya (menunggu, disetujui, ditolak) |
+| **Riwayat Top Up** | Semua pengajuan top up beserta statusnya (menunggu, disetujui, ditolak, kedaluwarsa) |
 | **Batch Voucher** | Semua batch yang pernah dibuat untuk reseller ini, baik oleh Anda maupun lewat portal |
 
 ### Penyesuaian Saldo Manual
@@ -85,6 +85,11 @@ tahu begitu ada pengajuan masuk, bukan setelah reseller menelepon.
 
 Top up lewat **payment gateway** tidak perlu persetujuan — saldo bertambah otomatis begitu gateway
 mengkonfirmasi pembayaran.
+
+Top up gateway yang tidak pernah diselesaikan reseller tidak lagi menggantung selamanya di status
+menunggu: statusnya menjadi **Kedaluwarsa** begitu gateway melaporkan pembayarannya kedaluwarsa
+atau gagal, atau setelah 48 jam tanpa kabar. Kalau ternyata pembayaran itu lunas belakangan,
+saldonya tetap dikreditkan. Top up transfer manual tidak pernah kedaluwarsa otomatis.
 
 ---
 

@@ -65,22 +65,26 @@ Lihat [Backup & Pindah Pelanggan](/panduan/pppoe/backup-migrasi).
 ### Mengapa pelanggan baru saya belum punya tagihan?
 
 Pelanggan baru yang ditambahkan lewat form seharusnya **langsung punya tagihan pertama** — form
-mewajibkan pengisian periode dan nominal prorata sebelum disimpan. Kalau tagihannya belum ada,
+mewajibkan pengisian periode dan nominal sebelum disimpan. Kalau tagihannya belum ada,
 kemungkinan pelanggan tersebut diimpor dari MikroTik (jalur yang tidak melalui form tagihan
 pertama); tekan **Terbitkan Tagihan** di halaman Billing, atau tunggu scheduler pukul 01:00.
+Tagihannya terbit dengan harga penuh profil.
 
 ### Kenapa nominal tagihan pertama berbeda dari harga paket?
 
-Tagihan pertama dihitung **prorata** — `harga paket × hari terpakai ÷ jumlah hari dalam bulan` —
-karena pelanggan biasanya dipasang di tengah bulan. Nominalnya juga bisa ditambah **biaya
-pemasangan** dan **PPN** bila profil layanannya punya PPN. Rincian per komponen bisa dilihat di
-kuitansi.
+Secara default tagihan pertama adalah **bayar penuh** seharga paket. Nominalnya berbeda kalau
+sakelar **Hitung prorata** dinyalakan saat menambah pelanggan — `harga paket × hari terpakai ÷
+jumlah hari dalam bulan` — atau kalau ditambah **biaya pemasangan** dan **PPN** (bila profil
+layanannya punya PPN). Rincian per komponen bisa dilihat di kuitansi. Lihat
+[Tagihan Pertama](/panduan/pppoe/pelanggan#tagihan-pertama).
 
 ### Apakah tagihan bisa di-generate ulang jika ada kesalahan?
 
 Tagihan terbit otomatis dan tidak pernah dibuat dobel. Untuk tagihan yang **belum lunas** dan
 salah: hapus, lalu tekan **Terbitkan Tagihan** (atau tunggu malam) — tagihan terbit ulang dengan
-harga profil saat itu. Tagihan **lunas** tidak bisa dihapus; koreksi lewat halaman Keuangan.
+harga profil saat itu. Tagihan **lunas** tidak bisa dihapus; kalau pembayarannya salah catat,
+gunakan **Batalkan Pembayaran** di menu ⋯ tagihan — lihat
+[Membatalkan pembayaran](/panduan/pppoe/billing#membatalkan-pembayaran).
 
 ### Pelanggan saya mengeluh sudah bayar tapi status masih Belum Bayar. Apa yang harus dilakukan?
 
@@ -93,10 +97,16 @@ Isi nominal yang diterima di **Catat Bayar**. Modal akan meminta Anda memilih **
 (sisa tetap ditagih) atau **potongan harga** (tagihan diturunkan & lunas, alasan wajib). Lihat
 [Sistem Billing PPPoE](/panduan/pppoe/billing#nominal-lebih-kecil-dari-sisa).
 
+### Saya salah mencatat pembayaran. Bagaimana membatalkannya?
+
+Buka menu **⋯** pada tagihan itu di halaman Billing → **Batalkan Pembayaran**. Tagihan kembali
+Belum Bayar dan pemasukannya ikut terhapus dari Keuangan. Pembayaran lewat payment gateway tidak
+bisa dibatalkan. Lihat [Membatalkan pembayaran](/panduan/pppoe/billing#membatalkan-pembayaran).
+
 ### Pelanggan sudah bayar tapi masih terisolir. Kenapa?
 
 Sambung ulang hanya terjadi bila **tidak ada lagi** tagihan yang lewat jatuh tempo di luar masa
-tenggang. Cek kartu **Terlambat** di halaman Billing — kemungkinan masih ada tunggakan bulan lain.
+tenggang. Cek kartu **Tunggakan** di halaman Billing — kemungkinan masih ada tunggakan bulan lain.
 
 ### Kenapa "jatuh tempo" tagihan prabayar ada di awal masa layanan?
 
@@ -107,6 +117,20 @@ habis. Untuk pascabayar batas bayar ada di akhir masa layanan. Penjelasan lengka
 ### Apakah tagihan bisa dikonfigurasi per-pelanggan?
 
 Ya. Anda bisa mengatur **tanggal jatuh tempo khusus** per-pelanggan yang akan override pengaturan tanggal JT di level router.
+
+---
+
+## Keuangan
+
+### Saya menyetor uang pribadi ke usaha. Dicatat sebagai apa?
+
+Sebagai **Modal → Setoran Modal** di halaman Keuangan, bukan Pemasukan. Setoran dan penarikan modal
+tidak mengubah laba (Net), hanya Saldo Kas. Lihat [Modal Usaha](/panduan/keuangan#modal-usaha).
+
+### Kenapa grafik Tren Keuangan bulan ini terlihat turun?
+
+Bulan berjalan belum selesai, jadi angkanya memang masih kecil. Bulan itu ditandai **Berjalan** dan
+tidak ikut dihitung dalam rata-rata.
 
 ---
 

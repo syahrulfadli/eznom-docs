@@ -24,10 +24,14 @@ Profil layanan mendefinisikan **paket internet** yang bisa Anda tawarkan ke pela
 
 Profil akan otomatis di-sync ke PPPoE Profile di router MikroTik.
 
-::: warning Harga tidak boleh 0
+::: warning Harga tidak boleh 0 — kecuali paket gratis
 Profil dengan harga 0 ditolak saat disimpan. Harga inilah yang jadi dasar tagihan bulanan dan
-perhitungan prorata — profil berharga 0 menghasilkan tagihan kosong yang membingungkan di
-laporan keuangan.
+tagihan pertama pelanggan baru — profil berharga 0 menghasilkan tagihan kosong yang membingungkan
+di laporan keuangan.
+
+Kalau paket itu memang tanpa biaya (misalnya untuk masjid atau kerabat), centang **Paket gratis**:
+harga dikunci Rp 0, tagihan bulanannya nihil, dan profil ditandai badge **Gratis** di daftar.
+Ini dibedakan dari profil berharga 0 karena belum diisi, misalnya hasil import.
 :::
 
 ---
@@ -38,7 +42,7 @@ Kalau field **PPN** diisi (misal `11`), nilainya diterapkan ke seluruh perhitung
 harga profil ini:
 
 - **Tagihan bulanan** — nominal yang dibuat sistem sudah termasuk PPN
-- **Perhitungan prorata** tagihan pertama pelanggan baru
+- **Tagihan pertama** pelanggan baru, baik bayar penuh maupun prorata
 - **Kuitansi & invoice** — menampilkan rincian terpisah: harga layanan, PPN, dan total
 - **Modal Catat Bayar** — menampilkan rincian yang sama sebelum Anda mengkonfirmasi
 

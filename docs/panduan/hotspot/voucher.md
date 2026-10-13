@@ -12,12 +12,13 @@ Halaman ini adalah pintu masuk semua batch voucher di router. Dari atas ke bawah
 |---|---|
 | **Ringkasan** | Total, Tersedia, Terpakai, dan Expired untuk seluruh router |
 | **Cari voucher** | Mencari username/password di **semua batch** sekaligus — berguna saat pelanggan menyebut kode vouchernya tanpa tahu batch-nya. Klik hasilnya untuk lompat ke batch-nya dengan voucher itu sudah terfilter |
-| **Batch Voucher** | Daftar batch, 15 per halaman, bisa dicari berdasarkan nama batch dan difilter per profil |
+| **Batch Voucher** | Daftar batch berhalaman (jumlah baris mengikuti pilihan Anda di bar halaman), bisa dicari berdasarkan nama batch dan difilter per profil |
 | **Hapus Massal** | Menghapus semua voucher **Terpakai** atau **Expired** di seluruh router — lihat [Hapus Voucher](#hapus-voucher) |
 
 ### Membaca daftar batch
 
-Setiap baris batch menampilkan nama, profil, waktu generate, template cetak, reseller (bila ada),
+Setiap baris batch menampilkan nama, profil, waktu generate dan siapa yang membuatnya (operator,
+sub-pengguna, atau reseller lewat portal), template cetak, reseller (bila ada),
 serta angka **tersedia / total** dengan bar kemajuan di bawahnya. Bar itu menunjukkan berapa banyak
 voucher yang sudah keluar dari stok (terpakai maupun expired) — batch yang habis terjual berarti bar
 penuh.
@@ -42,7 +43,8 @@ keuangan, bar kemajuan, dan status sinkronisasi (dengan tombol **Retry** bila ma
 **Kartu statistik** (Total, Tersedia, Terpakai, Expired) menghitung voucher di batch ini saja.
 Klik salah satu kartu untuk memfilter tabel di bawahnya; klik lagi untuk melepas filter.
 
-**Tabel voucher** menampilkan username, password, status, dan waktu pakai — 50 baris per halaman,
+**Tabel voucher** menampilkan username, password, status, dan waktu pakai — jumlah baris per halaman
+mengikuti pilihan Anda di bar halaman,
 dengan kolom pencarian dan filter status. Arahkan kursor ke baris untuk menyalin kode atau mencetak
 satu voucher saja.
 
