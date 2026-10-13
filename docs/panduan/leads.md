@@ -31,9 +31,16 @@ ditawarkan di sini karena voucher hotspot dibeli langsung, bukan lewat pendaftar
 |---|---|---|
 | **Nama** | ✅ | Maks 100 karakter |
 | **No. HP / WhatsApp** | ✅ | Hanya angka, `+`, `-`, spasi, dan tanda kurung |
+| **Email** | Bisa diatur | Muncul bila diaktifkan; wajib atau opsional sesuai pengaturan |
 | **Alamat** | — | Alamat calon lokasi pemasangan |
-| **Paket yang diminati** | — | Dipilih dari daftar paket PPPoE Anda |
+| **Lokasi** | — | Titik pemasangan — pakai GPS perangkat, atau ketuk di peta |
+| **Paket yang diminati** | — | Dipilih dari daftar paket PPPoE Anda, lengkap dengan kecepatannya (misal *Silver · ↑ 5M / ↓ 10M*) |
+| **Foto KTP** | ✅ bila aktif | Muncul bila diaktifkan, dan selalu wajib |
 | **Pesan** | — | Catatan bebas dari calon pelanggan, maks 1.000 karakter |
+
+Kolom **Email** dan **Foto KTP** diatur di **Pengaturan → Halaman Publik**, bagian **Form
+Pendaftaran Calon Pelanggan**. Foto KTP disimpan privat — hanya bisa dibuka oleh Anda dan
+sub-pengguna dengan izin modul Calon Pelanggan — dan ikut terhapus bila calon pelanggannya dihapus.
 
 ::: tip Perlindungan dari spam
 Formulir dilindungi dua lapis tanpa CAPTCHA yang merepotkan pengunjung: **honeypot** (kolom
@@ -44,8 +51,8 @@ tersembunyi yang hanya diisi bot) dan **rate limit 5 pengiriman per jam** per al
 
 ## Notifikasi Pendaftaran Baru
 
-Begitu formulir dikirim, eznom mengirim pesan WhatsApp berisi ringkasan calon pelanggan ke
-**nomor Anda** — bukan ke calon pelanggannya.
+Begitu formulir dikirim, eznom mengirim pesan WhatsApp berisi ringkasan calon pelanggan — termasuk
+email dan tautan lokasinya bila diisi — ke **nomor Anda**, bukan ke calon pelanggannya.
 
 Nomor tujuan diambil dari **No. HP akun pemilik**; jika kosong, dipakai **Nomor Telepon Bisnis**
 di Pengaturan → Profil Bisnis.
@@ -72,7 +79,8 @@ Buka menu **Calon Pelanggan** di sidebar akun.
 | **Diarsipkan** | Tidak dilanjutkan (batal, di luar area, duplikat) |
 
 Ubah status lewat tombol di baris masing-masing. Gunakan filter status di atas tabel untuk
-menyaring.
+menyaring. Bila diisi, email tampil di baris, dan tersedia tombol **Lihat Lokasi** serta **Lihat
+KTP**.
 
 ### Menghubungi Calon Pelanggan
 
@@ -92,10 +100,11 @@ inbox — supaya pelanggan lama yang iseng mengisi formulir lagi tidak berujung 
 1. Di baris calon pelanggan, klik **Jadikan Pelanggan**
 2. Jika Anda punya lebih dari satu router, pilih router tujuan (kalau hanya satu, langsung lompat)
 3. Form **Tambah Pelanggan** terbuka dengan data yang sudah terisi:
-   - Nama, No. HP, dan Alamat dari formulir pendaftaran
+   - Nama, No. HP, Email, Alamat, dan **koordinat** dari formulir pendaftaran
+   - **Foto KTP** sudah ada di daftar Lampiran (bisa dihapus sebelum disimpan)
    - **Profil layanan** dicocokkan otomatis dari paket yang diminati — hanya sebagai saran,
      Anda tetap bisa menggantinya
-4. Lengkapi sisanya (username, password, koordinat, tipe pembayaran, biaya pemasangan) lalu simpan
+4. Lengkapi sisanya (username, password, tipe pembayaran, biaya pemasangan) lalu simpan
 
 Setelah pelanggan tersimpan, calon pelanggan tadi otomatis berubah status menjadi
 **Jadi Pelanggan** dan tertaut ke data pelanggan yang baru dibuat — jadi tidak bisa dikonversi dua

@@ -41,7 +41,8 @@ Setelah tersimpan, URL lengkap langsung muncul dengan tombol **Salin** dan **Buk
 |---|---|
 | **Tagline** | Kalimat singkat di bawah nama bisnis, maks 160 karakter. Contoh: *"Internet cepat & stabil untuk rumah dan usaha Anda"* |
 | **Deskripsi Bisnis** | Paragraf perkenalan, maks 1.000 karakter |
-| **Warna Aksen** | Biru, Hijau, Ungu, Merah, Kuning, atau Langit — mewarnai tombol, badge, dan aksen di seluruh halaman |
+
+Warna aksen kini diatur di bagian [Tampilan](#tampilan-tema-layout).
 
 ### 3. Info Operasional & Media Sosial
 
@@ -93,6 +94,43 @@ Aktifkan toggle **Terima Pendaftaran Calon Pelanggan** untuk menampilkan formuli
 Berlangganan" di halaman beranda. Setiap pendaftaran masuk ke inbox
 [Calon Pelanggan](/panduan/leads), dan Anda mendapat notifikasi WhatsApp.
 
+Di bagian yang sama Anda bisa meminta **Email** (wajib atau opsional) dan **Foto KTP** (selalu
+wajib bila diaktifkan). Lihat [Isi Formulir](/panduan/leads#isi-formulir).
+
+---
+
+## Tampilan: Tema & Layout
+
+Bagian **Tampilan** di Pengaturan → Halaman Publik mengatur rupa seluruh halaman publik — beranda,
+Bayar Tagihan, Kebijakan Privasi, dan S&K.
+
+### Tema
+
+Tema mengubah **seluruh halaman**: latar, header dan footer, judul seksi, kartu, sudut, tombol,
+dan tampilan harga.
+
+| Tema | Kesan |
+|---|---|
+| **Klasik** | Bagian atas bergradien warna aksen, kartu putih membulat. Tampilan bawaan |
+| **Midnight** | Selalu gelap bernuansa navy, kartu kaca bercahaya, angka monospace. Kesan teknologi |
+| **Ceria** | Latar pastel, bentuk bulat dan gelombang, tombol pil besar. Hangat untuk pelanggan rumahan |
+| **Profesional** | Putih bersih, judul rata kiri bergaris aksen, sudut tegas, paket berkolom. Kesan perusahaan |
+
+### Pilihan lain
+
+| Pengaturan | Pilihan |
+|---|---|
+| **Warna Aksen** | Biru, Hijau, Ungu, Merah, Kuning, atau Langit — mewarnai tombol dan sorotan |
+| **Mode Warna** | Ikuti perangkat, Selalu terang, atau Selalu gelap. Kalau dikunci, tombol ganti mode di halaman disembunyikan. Tidak tersedia untuk tema Midnight yang selalu gelap |
+| **Layout Bagian Atas** | **Tengah**, atau **Terbagi** — teks di kiri, kartu info (area, jam, paket, WhatsApp) di kanan |
+| **Tampilan Paket** | **Kartu**, atau **Daftar** yang lebih ringkas bila paket Anda banyak |
+
+### Urutan Seksi Beranda
+
+Atur urutan seksi dengan tombol naik/turun: Kenapa Pilih Kami, Paket Hotspot, Paket Berlangganan
+(PPPoE), Form Pendaftaran, Pertanyaan Umum (FAQ), dan Hubungi Kami. Bagian atas (nama bisnis dan
+tombol) selalu paling atas. Seksi yang sedang tidak tampil tetap ada di daftar dengan penanda.
+
 ---
 
 ## Tombol WhatsApp per Paket
@@ -122,7 +160,8 @@ dibagikan tampil polos tanpa gambar.
 ## Mode Gelap
 
 Halaman publik dan portal pembayaran punya tombol mode gelap sendiri, terpisah dari panel operator.
-Pengunjung bisa memilih tampilan yang nyaman tanpa perlu login.
+Pengunjung bisa memilih tampilan yang nyaman tanpa perlu login — kecuali Anda mengunci
+[Mode Warna](#pilihan-lain) ke terang atau gelap.
 
 ---
 

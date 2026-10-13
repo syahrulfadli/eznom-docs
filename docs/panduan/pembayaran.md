@@ -76,7 +76,9 @@ https://eznom.noahresourcetech.com/midtrans/webhook
 
 ## Duitku
 
-Duitku menggunakan **POP Widget** — popup muncul langsung di halaman Eznom tanpa redirect ke situs Duitku.
+Duitku menggunakan **POP Widget** — popup muncul langsung di halaman Eznom tanpa redirect ke situs
+Duitku. Di popup itu **pelanggan memilih sendiri kanal bayarnya** dari semua kanal yang aktif di akun
+Duitku Anda (VA berbagai bank, QRIS, e-wallet, gerai retail).
 
 ### Pendaftaran
 
@@ -100,7 +102,7 @@ https://eznom.noahresourcetech.com/duitku/webhook
 | Mode | Sandbox atau Production |
 | Merchant Code | Kode unik project (contoh: `D1234`) |
 | API Key | Secret key untuk tanda tangan request |
-| Metode Pembayaran | Metode utama yang ditampilkan di POP (OVO, BCA VA, dll.) |
+| Metode Pembayaran | **Semua metode yang aktif (disarankan)** — pelanggan memilih sendiri. Pilih satu kanal hanya bila Anda ingin membatasi, misalnya agar semua pembayaran masuk lewat satu virtual account |
 
 ### Testing Sandbox
 
@@ -110,6 +112,12 @@ https://eznom.noahresourcetech.com/duitku/webhook
 4. Buka link pembayaran dari billing pelanggan → popup POP terbuka
 5. Gunakan metode test yang tersedia di popup sandbox (OVO test, VA test, dll.)
 6. Setelah simulasi berhasil, cek log Laravel (`storage/logs/laravel.log`) untuk konfirmasi webhook diterima
+
+::: info Kalau akun belum diaktifkan untuk POP
+Bila Duitku menolak pembuatan invoice POP (misalnya akun merchant Anda belum diaktifkan untuk POP),
+transaksi tetap dibuat lewat jalur lama dengan **VA BCA**, sehingga pelanggan tetap bisa membayar.
+Hubungi Duitku untuk mengaktifkan POP agar pelanggan bisa memilih kanal lain.
+:::
 
 ::: tip
 Jika popup tidak terbuka, pastikan browser tidak memblokir popup. Jika masih gagal, gunakan tombol **"Coba via Browser"** sebagai fallback ke halaman Duitku.
@@ -222,7 +230,7 @@ DOKU Checkout menampilkan semua metode aktif dalam satu popup — VA bank utama 
 
 ## Pembayaran Manual / Transfer Rekening
 
-Pelanggan melakukan transfer bank dan mengkonfirmasi ke Anda. Informasi rekening dikirimkan otomatis saat admin menekan tombol **Buat & Kirim Tagihan**.
+Pelanggan melakukan transfer bank dan mengkonfirmasi ke Anda. Informasi rekening dikirimkan otomatis saat admin memilih **Kirim Link Bayar** di menu ⋯ tagihan.
 
 ### Cara Mengaktifkan
 
@@ -240,7 +248,7 @@ Pelanggan melakukan transfer bank dan mengkonfirmasi ke Anda. Informasi rekening
 
 ---
 
-## Perilaku Tombol "Buat & Kirim Tagihan"
+## Perilaku Menu "Kirim Link Bayar"
 
 | Konfigurasi | Isi Pesan yang Dikirim |
 |---|---|
@@ -250,5 +258,6 @@ Pelanggan melakukan transfer bank dan mengkonfirmasi ke Anda. Informasi rekening
 | Keduanya nonaktif | ❌ Error — tidak bisa mengirim tagihan |
 
 ::: warning
-Jika kedua metode dinonaktifkan, tombol akan menampilkan error. Aktifkan minimal satu metode.
+Jika kedua metode dinonaktifkan, menu ini akan menampilkan error. Aktifkan minimal satu metode.
+Tagihan bernilai Rp 0 juga tidak bisa dikirimi link bayar — perbaiki nominalnya dulu.
 :::

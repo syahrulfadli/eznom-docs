@@ -10,14 +10,23 @@ Notifikasi via **WhatsApp** hanya tersedia untuk paket yang menyertakan fitur **
 Halaman ini hanya membahas notifikasi **ke pelanggan**. Untuk peringatan yang dikirim **ke Anda**
 (router mati, gateway WA terputus, pembayaran masuk, batch voucher macet), lihat
 [Notifikasi untuk Operator](/panduan/notifikasi-operator). Keduanya diatur di halaman
-**Pengaturan → Notifikasi** yang sama, di kolom yang berbeda.
+**Pengaturan → Notifikasi** yang sama, di kelompok yang berbeda.
 :::
 
 ---
 
 ## Konfigurasi Awal
 
-Buka **Pengaturan → Notifikasi**
+Buka **Pengaturan → Notifikasi**. Halaman ini punya navigasi samping yang dibagi dua kelompok:
+
+| Kelompok | Bagian |
+|---|---|
+| **Ke Pelanggan** | Kanal, Jadwal, WhatsApp Gateway, Email & SMTP |
+| **Ke Perangkat Anda** | Notifikasi Perangkat, Jenis Notifikasi, Router Dipantau — lihat [Notifikasi Operator](/panduan/notifikasi-operator) |
+
+Bagian **Kanal** dan **Jadwal** punya tombol **Simpan** masing-masing. Ringkasan jadwal aktif ada di
+dalam bagian Jadwal. Tautan dari banner, lonceng, atau detail pelanggan langsung membawa Anda ke
+bagian yang relevan.
 
 ### Channel Notifikasi
 
@@ -400,6 +409,11 @@ prosesnya dimulai, tergantung jumlah pelanggan dalam batch tersebut.
 
 ---
 
+::: info Kapan notifikasi tidak dikirim
+- **Tagihan Rp 0** tidak dikirimi pengingat — tidak ada yang perlu dibayar.
+- Kalau **langganan eznom Anda tidak aktif**, email ke pelanggan PPPoE berhenti dikirim.
+:::
+
 ## Ringkasan Semua Notifikasi
 
 | Event | Channel | Pemicu |
@@ -410,7 +424,7 @@ prosesnya dimulai, tergantung jumlah pelanggan dalam batch tersebut.
 | Tunggakan berulang | WA + Email | Scheduler 07:00, sesuai interval yang diset (bertahap) |
 | Konfirmasi tagihan lunas | WA + Email | Webhook gateway / admin catat bayar / catat lunas borongan (bertahap) |
 | Invoice tagihan pascabayar baru | Email | Scheduler 08:30, untuk tagihan yang baru terbit dan belum jatuh tempo |
-| Kirim link bayar (admin) | WA + Email | Admin klik "Buat & Kirim Tagihan" |
+| Kirim link bayar (admin) | WA + Email | Admin klik "Kirim Link Bayar" |
 | Kirim link kuitansi (admin) | WA + Email | Admin klik "Kirim Link Kuitansi" di baris tagihan lunas |
 | Pesan WA manual per pelanggan | WA | Admin pilih template di baris tagihan — lihat [Tagihan & Pembayaran](/panduan/pppoe/tagihan#kirim-pesan-whatsapp-manual) |
 
