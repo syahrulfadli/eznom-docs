@@ -97,7 +97,7 @@ Beberapa hal tidak bisa didelegasikan ke sub-pengguna berapa pun izinnya:
 - **Kredensial WhatsApp Gateway** — card-nya disembunyikan sepenuhnya dari sub-pengguna
 - **Server Email Sendiri (SMTP)** — hanya pemilik akun
 - **Konversi calon pelanggan menjadi pelanggan PPPoE**
-- **Mengedit nominal prorata** tagihan pertama, kecuali sub-pengguna punya izin **Tambah** pada
+- **Mengedit nominal** tagihan pertama pelanggan baru, kecuali sub-pengguna punya izin **Tambah** pada
   modul Keuangan
 :::
 
@@ -111,6 +111,17 @@ ikut terblokir meskipun ia punya langganan aktif sendiri.
 
 Klik ikon **pensil** untuk mengubah izin atau data, atau ikon **hapus** untuk menonaktifkan akses.
 
+### Keluar dari Tenant Lain
+
+Kalau Anda sendiri ditambahkan sebagai sub-pengguna oleh pemilik bisnis lain, halaman
+**Sub-Pengguna** punya bagian **Akses Anda di tenant lain**. Klik **Keluar** pada tenant yang
+ingin Anda tinggalkan; hak akses Anda di sana langsung terhapus dan router-nya hilang dari
+dashboard Anda. Tombol yang sama juga ada di judul grup router tenant itu di dashboard.
+
+Pemilik tenant menerima notifikasi **Sub-user keluar dari tim**, dan Anda menerima notifikasi
+**Ditambahkan sebagai sub-user** saat ada yang menambahkan Anda (lihat
+[Notifikasi Operator](/panduan/notifikasi-operator#jenis-notifikasi)).
+
 ---
 
 ## Log Audit
@@ -122,14 +133,39 @@ Setiap entri menampilkan **selisih field** yang berubah (nilai sebelum → sesud
 "data diubah". Untuk pemeriksaan yang lebih dalam, tersedia blok **JSON sebelum/sesudah** yang bisa
 dibuka di bawah masing-masing entri.
 
-Cakupannya meliputi perubahan pada **pelanggan PPPoE**, **profil layanan**, **periode tagihan**,
-**catatan keuangan**, **batch voucher**, **router**, dan **pengaturan bisnis** — termasuk aksi yang
-dilakukan oleh sub-pengguna Anda.
+Cakupannya meliputi perubahan pada **pelanggan PPPoE** (termasuk aksi massal), **profil layanan**
+PPPoE dan hotspot, **template kartu voucher**, **periode tagihan**, **catatan keuangan**, **batch
+voucher**, **router**, dan **pengaturan bisnis** — termasuk aksi yang dilakukan oleh sub-pengguna
+Anda. Pembelian voucher lewat portal reseller dicatat atas nama reseller-nya.
+
+Untuk satu pelanggan, cara tercepat adalah tab **Riwayat** di halaman detailnya (lihat
+[Kelola Pelanggan](/panduan/pppoe/pelanggan#tab-riwayat)). Modal edit profil, template kartu, dan
+pelanggan juga menyebut siapa yang membuat dan terakhir mengubahnya.
 
 ::: info Berguna saat ada yang tidak beres
 Log audit adalah tempat pertama yang perlu diperiksa ketika nominal tagihan berubah tanpa
 penjelasan, pelanggan berpindah profil, atau pengaturan router tiba-tiba berbeda. Nominal tagihan
-pertama yang diubah menyimpang dari rumus prorata juga tercatat di sini.
+pertama yang diubah menyimpang dari perhitungan otomatis juga tercatat di sini.
+:::
+
+---
+
+## Pengaturan Akun
+
+Menu akun (klik nama Anda di sidebar → **Pengaturan**) berisi tiga bagian dengan navigasi samping:
+
+| Bagian | Isi |
+|---|---|
+| **Profil** | Nama dan email. Ada juga **Zona Berbahaya** untuk menghapus akun |
+| **Keamanan** | Ubah kata sandi dan Verifikasi Dua Langkah (2FA). Meminta kata sandi Anda lebih dulu |
+| **Tampilan** | Tema terang, gelap, atau mengikuti sistem |
+
+Semua pesan validasi, login, dan reset kata sandi kini berbahasa Indonesia.
+
+::: tip Akun yang dibuat lewat Google
+Akun yang didaftarkan lewat Google belum punya kata sandi yang Anda ketahui, padahal bagian
+Keamanan memintanya. Keluar dulu, lalu pilih **Lupa kata sandi?** di halaman masuk untuk
+membuatnya.
 :::
 
 ---

@@ -77,8 +77,11 @@ bersifat **per pengguna**, bukan per bisnis — sub-pengguna mengatur miliknya s
 | Notifikasi | Default | Keterangan |
 |---|---|---|
 | **Gateway WhatsApp terputus** | Aktif | Sesi WA logout atau kena banned. Selama ini terjadi, semua notifikasi tagihan ke pelanggan berhenti terkirim |
-| **Router terputus** | Aktif | Router kehilangan koneksi ke eznom. Dibatasi satu notifikasi per router tiap 10 menit agar router tidak stabil tidak membanjiri |
-| **Router kembali online** | Aktif | Router yang tadinya terputus sudah pulih. Tidak pernah ditahan cooldown |
+| **SMTP tenant gagal terkirim** | Aktif | SMTP milik Anda sendiri menolak pengiriman email. Dibatasi satu notifikasi per jam |
+| **Router terputus** | Aktif | Router kehilangan koneksi ke eznom selama lebih dari 2 menit. Dibatasi satu notifikasi per router tiap 10 menit |
+| **Router kembali online** | Aktif | Router yang tadinya terputus sudah pulih. Hanya dikirim kalau kabar "terputus"-nya memang sempat terkirim |
+| **Router tidak stabil** | Aktif | Router putus-nyambung berulang kali dalam waktu singkat. Satu ringkasan menggantikan kabar satu per satu sampai reda |
+| **Router sudah stabil kembali** | Aktif | Menutup episode "tidak stabil" setelah router tenang |
 | **Pembayaran pelanggan masuk** | Aktif | Setiap tagihan PPPoE yang lunas, baik dicatat manual maupun via payment gateway |
 | **Topup reseller menunggu approval** | Aktif | Reseller tidak bisa membeli voucher sampai topup-nya Anda setujui |
 | **Batch voucher selesai dikirim** | Aktif | Semua voucher dalam satu batch sudah masuk ke MikroTik |
@@ -88,12 +91,29 @@ bersifat **per pengguna**, bukan per bisnis — sub-pengguna mengatur miliknya s
 | **Pelanggan offline berkepanjangan** | Aktif | Rangkuman tiap 2 jam untuk pelanggan yang offline lebih dari 6 jam — biasanya modem rusak atau kabel putus |
 | **Stok barang menipis** | Aktif | Stok sebuah barang menyentuh batas minimum yang ditetapkan di [Inventaris](/panduan/inventaris). Dikirim sekali per penembusan batas, bukan tiap pemakaian |
 | **Ringkasan isolir otomatis** | **Nonaktif** | Satu rangkuman tiap kali isolir otomatis berjalan dan ada pelanggan terisolir. Default mati karena isolir berjalan tiap jam |
+| **Ditambahkan sebagai sub-user** | Aktif | Pemilik tenant lain menambahkan Anda ke timnya. Router mereka langsung tampil di dashboard Anda |
+| **Sub-user keluar dari tim** | Aktif | Seorang sub-pengguna memutus aksesnya sendiri ke router Anda. Hanya pemilik tenant yang menerima |
 
 ::: info Kenapa pelanggan tumbang satu-satu tidak dikabarkan
 Satu pelanggan offline biasanya cuma modem yang dimatikan penghuninya — bukan gangguan. Yang
 dikabarkan adalah pola yang menandakan masalah nyata: banyak pelanggan tumbang bersamaan, atau
 satu pelanggan yang offline berjam-jam.
 :::
+
+### Router putus-nyambung
+
+Koneksi VPN router kadang putus beberapa detik lalu pulih sendiri. Supaya HP Anda tidak berbunyi
+untuk setiap kedipan, kabar router diatur begini:
+
+1. **Jeda konfirmasi 2 menit.** Router yang putus baru dikabarkan kalau masih terputus setelah
+   2 menit. Putus sebentar yang pulih sebelum itu tidak dikabarkan sama sekali.
+2. **"Kembali online" hanya menyusul kabar "terputus".** Anda tidak menerima kabar pulih dari
+   gangguan yang tidak pernah diberitahukan.
+3. **Mode tidak stabil.** Tiga kali putus (yang terkonfirmasi) dalam 30 menit mengubah kabar
+   satu-per-satu menjadi satu kabar **Router tidak stabil**. Setelah router tenang 20 menit,
+   menyusul satu kabar **Router sudah stabil kembali**.
+
+Gangguan yang sungguhan — router mati berjam-jam — tetap dikabarkan seperti biasa.
 
 ### Sub-pengguna hanya menerima yang relevan
 
@@ -135,6 +155,10 @@ Klik lonceng untuk membuka panel riwayat tanpa berpindah halaman. Tersedia filte
 Saat Anda sedang berada di dalam sebuah router, cakupan default-nya adalah **router ini saja** —
 orang yang sedang menangani satu router tidak sedang mencari kabar dari router di kota sebelah.
 
+Riwayat disimpan **30 hari** untuk notifikasi yang belum dibaca dan **14 hari** untuk yang sudah
+dibaca atau dibisukan; yang lebih lama dipangkas setiap hari. Badge angka di lonceng berhenti di
+**99+**.
+
 ::: info Angka di lonceng tetap total semua router
 Badge angka pada lonceng sengaja menghitung **seluruh router**, bukan hanya router yang sedang
 dibuka. Kalau ikut tersaring, orang yang seharian menangani Router A tidak akan pernah tahu
@@ -153,8 +177,14 @@ halaman kosong atau kena "akses ditolak".
 
 ## Layar Tetap Menyala (Wake Lock)
 
-Di **Dasbor Router** tersedia saklar untuk menahan layar agar tidak mati. Berguna saat Anda
-memantau grafik trafik atau proses sync di lapangan sambil mengerjakan hal lain di perangkat.
+Tombol **Jaga layar** (ikon cangkir kopi) di [status bar router](/panduan/router#status-bar-router)
+menahan layar agar tidak mati. Berguna untuk teknisi yang mengonfigurasi router atau memantau
+trafik sambil memegang HP.
 
-Saklar hanya muncul di browser yang mendukungnya, dan otomatis lepas ketika Anda meninggalkan
-halaman.
+- Cangkir kosong = mati; cangkir beruap = **Layar menyala**.
+- Tetap aktif saat Anda berpindah halaman di dalam router, dan diingat bila halaman dimuat ulang.
+- Otomatis lepas begitu Anda keluar dari router (misalnya kembali ke Dashboard Akun).
+- Hanya muncul di browser yang mendukungnya. Di HP, ikonnya ada di bar bawah saat aktif, dan
+  sakelarnya di panel status bar.
+
+Wake lock menguras baterai, jadi sengaja tidak menyala otomatis.

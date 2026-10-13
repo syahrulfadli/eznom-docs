@@ -29,7 +29,7 @@ Akun eznom
 │   │   ├── Profil Hotspot
 │   │   ├── Voucher & Template Kartu
 │   │   └── Reseller
-│   ├── Keuangan & Insight Bisnis
+│   ├── Manajemen: Inventaris, Peta Jaringan, Keuangan & Insight Bisnis
 │   └── Pengaturan Router (VPN, isolir, portal reseller, backup)
 └── Router B (misal: RT-Blok-Selatan)
     └── ...
@@ -44,10 +44,38 @@ untuk router tersebut.
 ## Login
 
 1. Buka URL aplikasi eznom Anda
-2. Masukkan **email** dan **password** akun operator
-3. Klik **Masuk**
+2. Masukkan **email** dan **password** akun operator, lalu klik **Masuk** — atau klik **Masuk
+   dengan Google**
 
-Setelah login, Anda akan diarahkan ke **Dasbor** yang menampilkan daftar router yang terdaftar.
+Setelah login, Anda akan diarahkan ke **Dashboard** yang menampilkan daftar router yang terdaftar
+(lihat [Dashboard Akun](/panduan/router#dashboard-akun-daftar-router)).
+
+::: info Masuk dan daftar dengan Google
+Akun Google dengan email yang sama dengan akun eznom Anda otomatis tertaut saat pertama kali
+dipakai. Email Google yang belum terdaftar dibuatkan akun baru dengan masa uji coba, lalu diarahkan
+ke onboarding (termasuk mengisi nomor telepon). Kalau akun Anda memakai autentikasi dua faktor,
+kodenya tetap diminta.
+:::
+
+---
+
+## Pencarian Fitur (Ctrl + K)
+
+Tidak ingat menu sebuah fitur ada di mana? Klik **Cari fitur…** di sidebar, atau tekan
+**Ctrl + K** (⌘K di Mac) atau **/** dari halaman mana pun, lalu ketik apa yang Anda cari.
+
+Hasil pencarian mencakup:
+
+- semua menu router, termasuk halaman yang tidak ada di sidebar seperti **Group Pelanggan** dan
+  **Pengeluaran Rutin**;
+- tiap bagian **Pengaturan Router** (misal *Isolir Otomatis*, *Backup Konfigurasi*) — langsung
+  menggulir ke bagian itu;
+- menu akun dan pengaturan bisnis;
+- pindah ke router lain.
+
+Kata yang berbeda tetap ketemu: mengetik *tagihan* menemukan **Billing**. Setiap hasil menyebut
+induknya, misal **PPPoE › Profile**. Pilih dengan panah atas/bawah lalu Enter. Daftar hanya berisi
+fitur yang boleh Anda buka — sub-pengguna tidak melihat menu di luar izinnya.
 
 ---
 
