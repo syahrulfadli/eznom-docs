@@ -68,7 +68,7 @@ eznom perlu terhubung ke API MikroTik untuk sinkronisasi data PPPoE.
 | **Host / IP VPN** | IP router di jaringan VPN, misal `10.8.0.2` |
 | **Port** | Default `8728` untuk Classic, `443/80` untuk REST |
 | **Username API** | User MikroTik dengan akses API, misal `eznom-api`. Wajib diisi |
-| **Password API** | Password user API |
+| **Password API** | Password user API. Wajib diisi — di Pengaturan Router, kosongkan untuk mempertahankan password yang tersimpan |
 
 Klik **Test Koneksi** untuk memverifikasi sebelum menyimpan.
 
@@ -77,8 +77,8 @@ Penyerang di internet terus mencoba nama user umum dan password pendek ke router
 **user khusus untuk eznom** (bukan `admin`) dengan **password minimal 12 karakter**, acak, campuran
 huruf besar-kecil, angka, dan simbol — jangan dipakai di router atau layanan lain.
 
-Wizard dan halaman Pengaturan Router langsung memperingatkan saat Anda mengetik user `admin`,
-mengosongkan password, atau memakai password kurang dari 12 karakter.
+Password kosong ditolak. Wizard dan halaman Pengaturan Router juga langsung memperingatkan saat
+Anda mengetik user `admin` atau memakai password kurang dari 12 karakter.
 :::
 
 eznom tidak pernah menampilkan password API yang tersimpan. Perubahan password tercatat di
