@@ -98,6 +98,13 @@ Yang berbeda antar mode:
 
 **Mode VPN Tunnel** — eznom membuat aturan NAT di MikroTik lebih dulu, lalu status perangkat di tabel berubah menjadi **Aktif** (lencana biru) dan banner hijau muncul di atas halaman.
 
+::: info Port remote hanya terbuka untuk IP Anda
+Port remote di server VPN eznom dibuka khusus untuk **IP perangkat yang memulai remote**, selama
+**2 jam**, lalu ditutup lagi saat remote dihentikan. Link remote yang Anda bagikan ke orang lain
+tidak akan bisa dibuka dari jaringannya. Kalau Anda terhubung lewat IPv6, port dibuka untuk semua
+IP selama sesi itu. Lihat [Akses Jarak Jauh](/panduan/akses-jarak-jauh#port-remote-modem).
+:::
+
 **Mode IP Lokal** — tidak ada aturan NAT yang dibuat dan tidak ada status **Aktif** yang tercatat. Di kolom IP Address, alamat lengkap yang akan dibuka (`http://192.168.1.1:8080`) ditampilkan sebagai baris kedua supaya bisa dicek sebelum diklik.
 
 ::: info Satu remote tunnel dalam satu waktu — IP Lokal tidak dibatasi
@@ -165,7 +172,8 @@ Bagian ini hanya berlaku untuk mode **VPN Tunnel**. Ada tiga cara menghentikan r
 - Klik **Stop** di kolom aksi baris perangkat yang aktif
 - Memulai remote perangkat lain (remote sebelumnya dihentikan otomatis)
 
-Saat dihentikan, aturan NAT di MikroTik dihapus otomatis.
+Saat dihentikan, aturan NAT di MikroTik dihapus otomatis dan port remote di server VPN eznom
+ditutup lagi.
 
 ::: tip Mode IP Lokal tidak perlu dihentikan
 Tidak ada aturan NAT yang dibuat, jadi cukup tutup tab-nya. Ini juga berarti tidak ada risiko

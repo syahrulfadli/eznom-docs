@@ -52,6 +52,9 @@ Pesan yang dikirim berisi dua link:
 
 Untuk melindungi privasi, pelanggan perlu memasukkan **ID Pelanggan** mereka sebelum bisa membaca dokumen kontrak. Jika ID tidak cocok, akses ditolak.
 
+Setelah 10 kali salah dalam 10 menit, verifikasi dikunci sementara dengan pesan *Terlalu banyak
+percobaan. Coba lagi dalam N menit.* Hal yang sama berlaku untuk verifikasi kuitansi/invoice.
+
 ---
 
 ## Status Kontrak

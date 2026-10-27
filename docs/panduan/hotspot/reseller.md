@@ -132,6 +132,12 @@ Portal terpisah agar reseller bisa **top up saldo dan membeli voucher sendiri**,
 
 Portal default **nonaktif** — selama belum diaktifkan, alur lama (Anda generate voucher manual untuk reseller) tetap berjalan normal.
 
+::: info Login dikunci sementara setelah salah berulang
+Untuk mencegah PIN ditebak, login dikunci sementara setelah salah berkali-kali — dari satu alamat
+internet, maupun **10 kali dalam satu jam untuk satu nomor** walau dicoba dari alamat berbeda.
+Reseller yang terkunci melihat pesan *Terlalu banyak percobaan* beserta sisa waktunya.
+:::
+
 ### Yang bisa dilakukan reseller
 
 - **Dashboard stok & penjualan** — ringkasan saldo aktif, total voucher terjual, dan pendapatan bulan ini; kartu cepat per profil menampilkan stok tersisa, harga, dan margin keuntungan

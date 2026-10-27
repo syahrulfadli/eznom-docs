@@ -108,6 +108,9 @@ Beberapa cara yang direkomendasikan:
 - **Nomor telepon** selalu disamarkan di portal — hanya pemilik akun yang mengenali nomornya
 - **Link bayar gateway** berlaku selama 7 hari sejak dibuka — setelah itu pelanggan perlu membuka portal lagi untuk mendapatkan link baru. Nominal link selalu **sisa** tagihan
 - Portal tidak menampilkan password PPPoE pelanggan
+- Pencarian dibatasi **20 kali per 10 menit** dari satu alamat internet, supaya ID pelanggan tidak
+  bisa ditebak berurutan. Pelanggan yang melewatinya melihat pesan *Terlalu banyak percobaan* dan
+  bisa mencoba lagi setelah beberapa menit
 
 ---
 

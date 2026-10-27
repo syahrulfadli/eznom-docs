@@ -28,6 +28,21 @@ Pilih protokol VPN yang akan digunakan untuk menghubungkan server eznom ke route
 
 Setelah memilih protokol, eznom akan menampilkan **konfigurasi yang perlu diterapkan di MikroTik** Anda (IP server, secret/konfigurasi).
 
+Langkah terakhirnya mengaktifkan service API dan membatasi API & SSH hanya untuk alamat server VPN
+eznom di sisi tunnel, misalnya:
+
+```
+/ip service set api disabled=no port=8728 address=172.17.123.1/32
+/ip service set ssh address=172.17.123.1/32
+```
+
+Salin perintah dari wizard, jangan dari contoh ini — alamatnya berbeda per router. Dengan begitu
+API & SSH tidak bisa dicoba dari IP publik maupun dari jaringan pelanggan. Winbox sengaja tidak
+dibatasi supaya tetap bisa dipakai dari LAN.
+
+Port Winbox di server VPN **tertutup** sejak router dibuat. Buka saat dibutuhkan dari halaman
+[Akses Jarak Jauh](/panduan/akses-jarak-jauh).
+
 ### Langkah 3 — Pengaturan Tagihan
 
 | Field | Keterangan |
@@ -52,10 +67,22 @@ eznom perlu terhubung ke API MikroTik untuk sinkronisasi data PPPoE.
 | **Tipe API** | `Classic API` (port 8728) atau `REST API` (RouterOS 7.1+) |
 | **Host / IP VPN** | IP router di jaringan VPN, misal `10.8.0.2` |
 | **Port** | Default `8728` untuk Classic, `443/80` untuk REST |
-| **Username API** | User MikroTik dengan akses API, misal `eznom-api` |
+| **Username API** | User MikroTik dengan akses API, misal `eznom-api`. Wajib diisi |
 | **Password API** | Password user API |
 
 Klik **Test Koneksi** untuk memverifikasi sebelum menyimpan.
+
+::: danger User & password ini adalah kunci router pelanggan
+Penyerang di internet terus mencoba nama user umum dan password pendek ke router MikroTik. Buat
+**user khusus untuk eznom** (bukan `admin`) dengan **password minimal 12 karakter**, acak, campuran
+huruf besar-kecil, angka, dan simbol — jangan dipakai di router atau layanan lain.
+
+Wizard dan halaman Pengaturan Router langsung memperingatkan saat Anda mengetik user `admin`,
+mengosongkan password, atau memakai password kurang dari 12 karakter.
+:::
+
+eznom tidak pernah menampilkan password API yang tersimpan. Perubahan password tercatat di
+[Log Audit](/panduan/pengaturan#log-audit) tanpa isinya.
 
 ### Remote Modem Pelanggan
 

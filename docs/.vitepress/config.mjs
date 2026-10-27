@@ -32,6 +32,7 @@ export default defineConfig({
         items: [
           { text: 'Tambah & Konfigurasi', link: '/panduan/router' },
           { text: 'Remote Perangkat', link: '/panduan/remote-perangkat' },
+          { text: 'Akses Jarak Jauh', link: '/panduan/akses-jarak-jauh' },
           { text: 'Peta Jaringan', link: '/panduan/peta-jaringan' },
         ],
       },
