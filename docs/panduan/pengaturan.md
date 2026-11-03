@@ -81,6 +81,8 @@ Buka **Pengaturan → Sub-Pengguna**
 | **Keuangan** | Halaman Keuangan router |
 | **Insight Bisnis** | Halaman analitik & insight per router |
 | **Remote Perangkat** | Remote Perangkat dan remote modem pelanggan |
+| **Peta Jaringan** | Objek dan kabel di [Peta Jaringan](/panduan/peta-jaringan) |
+| **Inventaris Barang** | Stok, pembelian, dan unit di [Inventaris Barang](/panduan/inventaris) |
 | **Akses Jarak Jauh** | Membuka dan menutup port Winbox router di server VPN eznom — lihat [Akses Jarak Jauh](/panduan/akses-jarak-jauh). Role Teknisi hanya bisa melihat |
 | **Monitor Interface** | Grafik trafik interface |
 | **Halaman Isolir** | Konfigurasi halaman isolir |

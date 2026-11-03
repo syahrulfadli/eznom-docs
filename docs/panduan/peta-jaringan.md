@@ -4,10 +4,6 @@ Peta Jaringan menggambarkan **topologi fisik** router: tiang, perangkat, dan tar
 
 Berbeda dari [Peta Pelanggan](/panduan/pppoe/peta) yang hanya menunjukkan sebaran titik pelanggan, peta ini menyimpan hubungan antar objek — kabel mana menyambung ke tiang mana — sehingga bisa dipakai menelusuri jalur saat terjadi gangguan.
 
-::: info Fitur Beta
-Menu ini masih bertanda **Beta**. Data yang sudah Anda gambar tetap tersimpan, tetapi tampilan dan alurnya masih mungkin berubah.
-:::
-
 ---
 
 ## Membuka Peta
@@ -30,7 +26,7 @@ Buka router → **Manajemen → Peta Jaringan** di sidebar.
 
 ### Objek di dalam objek
 
-ODP bisa dipasang **di dalam** tiang, dan modem bisa dipasang di dalam ODP atau di titik pelanggan — persis seperti di lapangan.
+OLT, ODC, dan Router Mikrotik bisa dipasang **di dalam** tiang. ODP bisa di dalam tiang atau ODC, dan modem bisa di dalam tiang, ODP, atau di titik pelanggan — persis seperti di lapangan.
 
 Objek yang menempel tidak digambar sebagai pin tersendiri karena posisinya menumpang induknya; keberadaannya ditandai **angka kecil di pojok pin induk**, dan daftarnya muncul di panel detail saat pin itu diklik.
 
@@ -50,6 +46,22 @@ Mode baca. Klik objek untuk melihat detail, klik kabel untuk melihat panjang dan
 2. **Klik di peta** untuk menaruh objek baru.
 3. **Geser pin** yang sudah ada untuk memindahkannya — posisi tersimpan otomatis.
 
+Form **Tambah Objek** berisi:
+
+| Field | Keterangan |
+|---|---|
+| **Nama** | Misal `Tiang depan Masjid`, `ODP Blok C` |
+| **Kode** | Opsional, misal `T-012` |
+| **Status** | Aktif, Rencana, atau Rusak |
+| **Menempel pada** | Opsional — objek induk, misal ODP yang dipasang di tiang |
+| **Pelanggan PPPoE** | Opsional — untuk modem/ONT di rumah pelanggan |
+| **Router terkait** | Untuk objek Router Mikrotik |
+| **Kapasitas port** / **Tinggi (m)** / **Pemilik** | Opsional, sesuai jenis objek |
+| **Ambil dari stok** | Opsional — barang [Inventaris](/panduan/inventaris) yang dipakai objek ini |
+| **Unit yang dipasang** | Nomor seri perangkat yang terpasang, untuk barang ber-nomor seri |
+| **Latitude** / **Longitude** | Terisi dari titik yang diklik |
+| **Catatan** | Opsional |
+
 Mode ini bertahan setelah satu objek dibuat, jadi memetakan belasan tiang berturut-turut tidak perlu menekan tombol mode berulang kali. Menggulir peta tetap seperti biasa: geser dengan tombol kiri. Leaflet membedakan klik dari geseran, jadi menggulir tidak akan menaruh objek.
 
 ::: tip Menaruh objek tanpa berpindah mode
@@ -61,6 +73,21 @@ Mode ini bertahan setelah satu objek dibuat, jadi memetakan belasan tiang bertur
 1. Klik objek **awal**.
 2. Klik di peta untuk menambah **titik belok** mengikuti jalur kabel sebenarnya.
 3. Klik objek **tujuan** untuk mengakhiri.
+
+Setelah objek tujuan diklik, isi form **Tambah Kabel**:
+
+| Field | Keterangan |
+|---|---|
+| **Jenis kabel** | Fiber Optik atau UTP |
+| **Peran kabel** | Opsional, khusus fiber — Feeder atau Dropcore |
+| **Jumlah core** | Opsional, misal 12 |
+| **Cara pemasangan** | Udara (tiang), Tanam, atau Menempel dinding |
+| **Status** | Aktif, Rencana, atau Rusak |
+| **Label** | Opsional, misal `Feeder utara` |
+| **Ambil dari stok** | Opsional — roll kabel di Inventaris yang dipotong sesuai panjangnya |
+| **Catatan** | Opsional |
+
+Salah klik saat menggambar? Klik **Batalkan titik terakhir**.
 
 Panjang kabel dihitung otomatis dari jalur yang digambar dan ditampilkan sambil menggambar. Tekan **Esc** untuk membatalkan.
 

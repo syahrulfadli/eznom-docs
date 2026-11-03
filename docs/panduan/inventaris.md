@@ -7,10 +7,6 @@ Dua hal yang membuatnya bukan sekadar catatan terpisah:
 - **Pembelian otomatis masuk ke [Keuangan](/panduan/keuangan)** sebagai pengeluaran router.
 - **Pemasangan di [Peta Jaringan](/panduan/peta-jaringan) memotong stok**, termasuk panjang kabel yang dihitung dari jalur yang digambar.
 
-::: info Fitur Beta
-Menu ini masih bertanda **Beta**. Datanya tetap tersimpan, tetapi tampilan dan alurnya masih mungkin berubah.
-:::
-
 ---
 
 ## Membuka Inventaris
@@ -79,6 +75,7 @@ Pada baris barang, klik **Beli** (atau **Catat Pembelian** di menu ⋯).
 | **Cara nota ditulis** | **Per satuan** (jumlah × harga satuan) atau **Per kemasan** — untuk nota seperti *2 roll @ Rp 600.000*, isi jumlah kemasan, nama kemasan, isi per kemasan, dan harga per kemasan; harga per meter dihitung sendiri |
 | **Catatan** | Opsional — nomor nota, nama toko |
 | **Tanggal Beli** | Tanggal di nota, bukan hari Anda mengetiknya |
+| **Tipe Pengadaan** | **Offline** (toko fisik) atau **Online** (marketplace seperti Shopee, Tokopedia) |
 | **Metode Pembayaran** | Opsional — Tunai, Transfer Bank, atau QRIS |
 | **Bukti** | Opsional — foto atau PDF nota, maksimal 5 MB |
 
@@ -104,7 +101,7 @@ Entri pengeluaran itu **tidak bisa dihapus dari halaman Keuangan**. Batalkan dar
 
 ## Riwayat Keluar-Masuk
 
-Menu **Riwayat Keluar-Masuk** pada tiap barang membuka seluruh riwayat perubahan stoknya: pembelian, pemasangan, pembongkaran, kerusakan, dan penyesuaian — lengkap dengan nominal yang dibayar dan siapa yang melakukannya. Pembelian tampil di **tanggal beli** notanya, sama dengan tanggalnya di Keuangan.
+Menu **Riwayat Keluar-Masuk** pada tiap barang membuka seluruh riwayat perubahan stoknya: pembelian, pemasangan, pembongkaran, kerusakan, dan penyesuaian — lengkap dengan nominal yang dibayar dan siapa yang melakukannya. Pembelian tampil di **tanggal beli** notanya, sama dengan tanggalnya di Keuangan. Kalau tanggalnya salah, koreksi lewat ikon **Ubah tanggal beli** pada baris pembelian.
 
 Mutasi yang berasal dari [Peta Jaringan](/panduan/peta-jaringan) menyebut di mana barang itu dipakai, misal:
 
@@ -167,7 +164,8 @@ Di form objek dan form kabel Peta Jaringan ada pilihan **Ambil dari stok**. Sete
 | Objek disimpan dengan status **Rencana** | Tidak ada — barangnya belum menyentuh lapangan |
 | Status berubah **Rencana → Aktif** | Stok terpotong (kabel sebanyak panjangnya, objek titik 1 unit) |
 | Status berubah **Aktif → Rencana** | Stok dikembalikan — batal pasang |
-| Status berubah menjadi **Rusak** | Tidak ada — barangnya masih terpasang di lapangan |
+| Status berubah **Rencana → Rusak** | Stok terpotong, sama seperti Rencana → Aktif |
+| Status berubah **Aktif → Rusak** | Tidak ada — barangnya masih terpasang di lapangan |
 | Ujung kabel digeser sehingga **memanjang** | Hanya selisihnya yang terpotong |
 | Ujung kabel digeser sehingga **memendek** | Stok tidak bertambah; selisihnya dicatat terbuang, karena kabel yang sudah dipotong tidak bisa disambung balik ke roll |
 | Barang yang dipakai **diganti** | Barang lama dikembalikan, barang baru dipotong |
