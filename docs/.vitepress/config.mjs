@@ -9,20 +9,20 @@ export default defineConfig({
   // bukan ditulis manual di frontmatter — supaya tidak pernah basi.
   lastUpdated: true,
 
-  // Sitemap dibaca crawler PostHog Business Knowledge (sumber AI agent chat support).
-  // Basis pengetahuan AI di public/ai/ disajikan mentah dan tidak ditautkan dari halaman
-  // mana pun, jadi didaftarkan manual supaya ikut ter-crawl.
   // File .md di public/ disalin apa adanya; tanpa ini VitePress juga merendernya jadi
-  // halaman HTML kedua (/public/ai/...).
+  // halaman HTML kedua (/public/...).
   srcExclude: ['public/**'],
 
+  // Sitemap dibaca crawler PostHog Business Knowledge (sumber AI agent chat support).
+  // Halaman ai/dukungan-teknis tidak ditautkan dari menu mana pun, jadi crawler hanya
+  // menemukannya lewat sitemap ini.
   sitemap: {
     hostname: 'https://docs-eznom.noahresourcetech.com',
     // Halaman contoh bawaan VitePress tidak ikut, supaya tidak jadi "pengetahuan" AI.
-    transformItems: (items) => [
-      ...items.filter((item) => !/(api|markdown)-examples/.test(item.url)),
-      { url: 'ai/dukungan-teknis.md' },
-    ],
+    // URL tanpa .html: Cloudflare Pages me-redirect *.html ke versi tanpa ekstensi.
+    transformItems: (items) => items
+      .filter((item) => !/(api|markdown)-examples/.test(item.url))
+      .map((item) => ({ ...item, url: item.url.replace(/\.html$/, '') })),
   },
 
   head: [

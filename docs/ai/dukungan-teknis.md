@@ -1,3 +1,9 @@
+---
+search: false
+sidebar: false
+aside: false
+---
+
 # eznom — Basis Pengetahuan Dukungan Teknis (untuk AI agent)
 
 Dokumen ini ditulis untuk **AI agent chat support eznom**, bukan untuk dibaca langsung oleh
