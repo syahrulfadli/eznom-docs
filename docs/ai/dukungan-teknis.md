@@ -441,7 +441,8 @@ untuk memakainya dengan sadar.
 **Cara kerja singkat:** saat diisolir, pelanggan diberi IP dari pool isolir (default
 `172.18.39.0/24`, dengan cadangan pool lain bila penuh), IP itu dimasukkan ke address-list
 `eznom-isolated`, sesinya diputus agar tersambung ulang dengan IP itu, lalu lalu lintas
-HTTP/HTTPS-nya dialihkan ke **web proxy MikroTik port 8383** yang menampilkan halaman isolir.
+HTTP (port 80)-nya dialihkan ke **web proxy MikroTik port 8383** yang menampilkan halaman isolir.
+Lalu lintas lain, termasuk HTTPS, diblokir.
 WhatsApp dikecualikan supaya pelanggan bisa menghubungi operator. Halaman isolir disimpan di
 router sebagai `webproxy/error.html` dan dilayani router sendiri, bukan oleh server eznom.
 
@@ -456,10 +457,14 @@ router sebagai `webproxy/error.html` dan dilayani router sendiri, bukan oleh ser
    pelanggan me-restart modem.
 4. Pool IP isolir bentrok dengan subnet yang sudah dipakai di jaringan operator. Ubah urutan
    atau tambah pool di **Pengaturan Router → Range IP Isolir**.
-5. **Situs HTTPS** kadang menampilkan peringatan sertifikat alih-alih halaman isolir. Ini wajar
-   untuk pengalihan HTTPS. Biasanya ponsel menampilkan halaman isolir sebagai notifikasi
-   "login ke jaringan" (captive portal), atau pelanggan bisa membuka situs `http://` biasa.
+5. **Pelanggan membuka situs HTTPS** (sebagian besar situs dan aplikasi). HTTPS tidak dialihkan,
+   melainkan diblokir, sehingga situsnya sekadar gagal dimuat. Ini memang cara kerjanya, bukan
+   kerusakan. Halaman isolir muncul lewat notifikasi "login ke jaringan" di ponsel/laptop, atau
+   saat pelanggan membuka alamat `http://` biasa (misalnya `http://neverssl.com`).
 6. Halaman isolir belum dikirim ke router karena router offline saat konfigurasinya disimpan.
+   Pengiriman **tidak diulang otomatis**: operator harus klik **Simpan Konfigurasi** lagi setelah
+   router Terhubung. Pesan "tidak memiliki policy test" berarti group user API MikroTik perlu
+   ditambah policy **test** (dipakai `/tool/fetch` untuk mengunduh halaman).
 
 **Langkah:** buka **Halaman Isolir** di sidebar router dan klik **Simpan Konfigurasi** untuk
 mengirim ulang halaman ke router (router harus Terhubung). Aturan firewall isolir juga diperiksa
@@ -679,7 +684,9 @@ Panduan: https://docs-eznom.noahresourcetech.com/panduan/hotspot/voucher
 - **Reseller login dengan nomor telepon + PIN.** Nomor telepon dan PIN diisi operator di data
   reseller (**Hotspot → Reseller**, tambah/edit). Pesan "Nomor telepon atau PIN tidak sesuai"
   berarti nomornya beda dengan yang tersimpan, PIN salah atau belum diatur, atau reseller
-  **Nonaktif**. Operator bisa mengatur PIN baru di form edit reseller.
+  **Nonaktif**. Nomornya harus diketik **persis** seperti tersimpan (`0812…` dan `62812…` dianggap
+  berbeda). PIN lama tidak bisa dilihat; operator mengatur PIN baru lewat **Edit / Set PIN**.
+  "Ingat saya di perangkat ini" membuat reseller tetap masuk selama 90 hari di perangkat itu.
 - **Terkunci sementara** setelah terlalu banyak percobaan (termasuk 10 kali per jam untuk satu
   nomor). Pesan "Terlalu banyak percobaan" menyebut sisa waktunya; tunggu sampai habis.
 - **Top up manual** harus disetujui operator (atau sub-pengguna dengan izin **Top Up Reseller**) di

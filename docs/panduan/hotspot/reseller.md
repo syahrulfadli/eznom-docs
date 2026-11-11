@@ -21,12 +21,37 @@ Tabel menampilkan semua reseller beserta jumlah batch yang pernah dibuat.
 
 | Field | Keterangan |
 |---|---|
-| **Nama** | Nama reseller atau nama toko |
-| **Nomor Telepon** | Nomor kontak reseller (opsional) |
-| **Alamat** | Alamat reseller (opsional) |
-| **Catatan** | Catatan internal, misal area distribusi |
+| **Nama Reseller** | Nama reseller atau nama toko |
+| **No. HP / WhatsApp** | Opsional, tetapi **wajib diisi** kalau reseller akan memakai Portal Reseller: nomor ini dipakai untuk login |
+| **Alamat** | Opsional |
+| **Catatan** | Opsional. Catatan internal, misal area distribusi |
+| **Status** | Aktif / Nonaktif |
+| **PIN Portal Reseller** | PIN login portal (minimal 4 karakter), diisi dua kali. Boleh dikosongkan dan diatur nanti |
 
 3. Klik **Simpan**
+
+---
+
+## Login Reseller: Nomor HP + PIN
+
+Reseller masuk ke Portal Reseller dengan **No. HP / WhatsApp** dan **PIN Portal Reseller** yang Anda
+isi di form reseller. Kolom **PIN** di tabel reseller menunjukkan apakah PIN-nya sudah diatur.
+
+- **Mengatur atau mengganti PIN:** klik **Edit / Set PIN** di baris reseller, isi **PIN Baru** dan
+  **Konfirmasi PIN**, lalu simpan. Kosongkan kedua kolom itu kalau tidak ingin mengubah PIN.
+  eznom tidak bisa menampilkan PIN lama; kalau reseller lupa, atur PIN baru.
+- **Nomor harus sama persis** dengan yang tersimpan. Kalau tersimpan `6281234567890`, login dengan
+  `081234567890` ditolak.
+
+Pesan *"Nomor telepon atau PIN tidak sesuai"* berarti salah satu dari ini:
+
+1. nomor yang diketik berbeda dengan yang tersimpan,
+2. PIN salah atau belum pernah diatur, atau
+3. reseller berstatus **Nonaktif**.
+
+**Ingat saya di perangkat ini:** kalau dicentang saat login, reseller tetap masuk di perangkat itu
+selama 90 hari tanpa mengetik PIN lagi. Portal juga bisa dipasang sebagai aplikasi di ponsel lewat
+tawaran **Pasang Portal Reseller**.
 
 ---
 
@@ -128,7 +153,10 @@ Portal terpisah agar reseller bisa **top up saldo dan membeli voucher sendiri**,
 
 1. Buka **Pengaturan Router → Portal Reseller**
 2. Aktifkan toggle **Portal Reseller**
-3. Bagikan URL portal ke reseller: `https://<domain-eznom>/reseller/<id-router>/login`
+3. Pastikan setiap reseller punya **No. HP / WhatsApp** dan **PIN Portal Reseller** (lihat
+   [Login Reseller](#login-reseller-nomor-hp-pin))
+4. Bagikan URL portal ke reseller: `https://<domain-eznom>/reseller/<id-router>/login`. URL ini
+   bisa disalin dari kolom di atas tabel **Hotspot → Reseller**
 
 Portal default **nonaktif** — selama belum diaktifkan, alur lama (Anda generate voucher manual untuk reseller) tetap berjalan normal.
 
