@@ -77,11 +77,12 @@ Anda keluar.
 ## Port Remote Modem
 
 Port ini tidak perlu dibuka manual. Saat Anda memulai remote mode **VPN Tunnel** dari
-[Remote Perangkat](/panduan/remote-perangkat) atau Remote Modem pelanggan, eznom membukanya untuk
-**IP Anda saja selama 2 jam**, dan menutupnya lagi saat remote dihentikan.
+[Remote Perangkat](/panduan/remote-perangkat) atau Remote Modem pelanggan, eznom membukanya
+**selama 2 jam**, lalu menutupnya lagi saat remote dihentikan atau saat 2 jam itu habis.
 
-Kalau Anda terhubung lewat IPv6, port dibuka untuk semua IP selama sesi itu, karena IPv4 Anda tidak
-bisa diketahui.
+Selama terbuka, port bisa dijangkau dari IP mana pun. Port ini sengaja tidak dikunci ke IP Anda,
+karena jaringan dengan load balance beberapa ISP atau internet seluler sering memakai IP yang
+berbeda untuk eznom dan untuk server VPN, sehingga remote gagal tersambung.
 
 Tombol **Tutup** di baris Remote Modem bisa dipakai untuk menutup port yang masih terbuka.
 
