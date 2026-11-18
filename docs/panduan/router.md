@@ -16,6 +16,7 @@ Router adalah unit utama di eznom. Setiap router MikroTik yang Anda kelola perlu
 | **Nama Router** | Label yang tampil di dasbor, misal: `Router Blok A` |
 | **Deskripsi** | Opsional, misal lokasi atau catatan |
 | **Hostname** | Sufiks username pelanggan, misal: `rt-blok-a` → username jadi `budi@rt-blok-a` |
+| **Isolir otomatis saat tagihan jatuh tempo** | Aktif secara bawaan. Matikan bila pembayaran pelanggan belum dicatat di eznom, supaya pelanggan yang sebenarnya sudah bayar tidak ikut diputus. Bisa diubah kapan saja di [Isolir Otomatis](#isolir-otomatis) |
 
 > **Aturan hostname:** huruf kecil, angka, tanda hubung (`-`), dan titik (`.`). Tidak boleh diawali atau diakhiri tanda hubung/titik.
 
@@ -121,6 +122,17 @@ layanan pelanggan di router ini secara otomatis.
 Jika dinonaktifkan, pelanggan yang melewati jatuh tempo **tidak** diisolir — tapi tagihannya tetap
 berubah ke status *overdue* dan billing berjalan normal. Isolir manual dari halaman pelanggan tetap
 bisa dilakukan kapan saja.
+
+Menonaktifkan saklar **tidak** membuka isolir yang sudah terjadi. Pelanggan yang sudah terisolir tetap
+terisolir sampai tagihannya lunas, atau sampai Anda menyambungkannya ulang dari daftar pelanggan
+(filter status **Isolir**, pilih pelanggan, lalu **Reconnect**).
+
+**Peringatan "pelanggan sedang diisolir"** — bila isolir otomatis aktif dan lebih dari separuh pelanggan
+aktif di satu router sedang terisolir (minimal 5 pelanggan), pemilik akun melihat peringatan di bagian
+atas panel. Kondisi ini sering berarti pembayaran pelanggan belum dicatat di eznom. Catat pembayarannya,
+atau nonaktifkan isolir otomatis bila Anda memang menagih di luar eznom. Bila isolir massal setelah
+tanggal tagih memang cara kerja Anda, cukup tutup peringatannya; peringatan itu tidak muncul lagi untuk
+router yang sama.
 
 ### Notifikasi WhatsApp Default
 
